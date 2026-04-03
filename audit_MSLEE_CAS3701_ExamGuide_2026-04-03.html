@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audit Report — MSLEE CAS3701 ExamGuide | 2026-04-03</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #080808;
+    --bg-card:   #0d0d0d;
+    --bg-raised: #111111;
+    --border:    #1a1a1a;
+    --border-m:  #222222;
+    --accent:    #C9A84C;
+    --accent-dim:#8a6e2f;
+    --accent-glow: rgba(201,168,76,0.12);
+    --text:      #E8E8E8;
+    --text-2:    #9a9a9a;
+    --text-3:    #555555;
+    --warn:      #c0392b;
+    --warn-dim:  rgba(192,57,43,0.12);
+    --ok:        #27ae60;
+    --ok-dim:    rgba(39,174,96,0.1);
+    --mid:       #e67e22;
+    --mid-dim:   rgba(230,126,34,0.1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Epilogue', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 16px;
+    line-height: 1.85;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Grain overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.35;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)' opacity='1'/%3E%3C/svg%3E");
+  }
+
+  /* Top accent bar */
+  .topbar {
+    height: 5px;
+    background: linear-gradient(90deg, var(--accent), #e8c97a, var(--accent-dim));
+    position: relative;
+    z-index: 10;
+  }
+
+  /* ── MASTHEAD ── */
+  .masthead {
+    position: relative;
+    z-index: 1;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 80px 48px 72px;
+    border-bottom: 1px solid var(--border-m);
+    opacity: 0;
+    animation: fadeIn 0.9s ease 0.1s forwards;
+  }
+
+  .masthead-eyebrow {
+    font-family: 'Epilogue', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .masthead-eyebrow::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+  }
+
+  .masthead h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 700;
+    line-height: 1.0;
+    letter-spacing: -2px;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  .masthead h1 em {
+    font-style: italic;
+    background: linear-gradient(135deg, var(--accent), #f0d080, var(--accent-dim));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+  }
+
+  .masthead-tagline {
+    font-size: 1.05rem;
+    color: var(--text-2);
+    font-weight: 300;
+    max-width: 560px;
+    margin-bottom: 40px;
+    line-height: 1.7;
+  }
+
+  .masthead-meta {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .meta-item {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-3);
+  }
+
+  .meta-item span { color: var(--accent); }
+
+  /* ── CONTENT WRAPPER ── */
+  .content {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 48px 120px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    padding: 72px 0 0;
+    opacity: 0;
+    animation: fadeIn 0.7s ease both;
+  }
+
+  .section:nth-child(1) { animation-delay: 0.2s; }
+  .section:nth-child(2) { animation-delay: 0.35s; }
+  .section:nth-child(3) { animation-delay: 0.5s; }
+  .section:nth-child(4) { animation-delay: 0.65s; }
+  .section:nth-child(5) { animation-delay: 0.8s; }
+  .section:nth-child(6) { animation-delay: 0.95s; }
+  .section:nth-child(7) { animation-delay: 1.1s; }
+  .section:nth-child(8) { animation-delay: 1.25s; }
+  .section:nth-child(9) { animation-delay: 1.4s; }
+  .section:nth-child(10) { animation-delay: 1.55s; }
+
+  .section-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 10px;
+  }
+
+  .section h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.15;
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+  }
+
+  .section h2 .accent {
+    background: linear-gradient(135deg, var(--accent), #e8c97a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(90deg, var(--accent-dim), transparent);
+    margin-top: 72px;
+    opacity: 0.4;
+  }
+
+  /* ── PROSE ── */
+  .prose {
+    color: var(--text-2);
+    font-size: 0.95rem;
+    line-height: 1.85;
+    font-weight: 300;
+    margin-bottom: 32px;
+  }
+
+  .prose strong { color: var(--text); font-weight: 500; }
+  .prose em { color: var(--accent); font-style: italic; }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-m);
+    border-radius: 4px;
+    padding: 28px 32px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .card-title {
+    font-family: 'Epilogue', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 8px;
+    letter-spacing: 0.3px;
+  }
+
+  .card-body {
+    font-size: 0.9rem;
+    color: var(--text-2);
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  /* ── FEATURE GRID ── */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .feature-item {
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 20px 22px;
+  }
+
+  .feature-tag {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent-dim);
+    margin-bottom: 8px;
+  }
+
+  .feature-item p {
+    font-size: 0.85rem;
+    color: var(--text-2);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  /* ── WARNING FLAG ── */
+  .flag {
+    border-left: 3px solid var(--warn);
+    background: var(--warn-dim);
+    border-radius: 0 3px 3px 0;
+    padding: 18px 22px;
+    margin-bottom: 14px;
+  }
+
+  .flag-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .flag-badge {
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    background: var(--warn);
+    color: white;
+    padding: 3px 8px;
+    border-radius: 2px;
+  }
+
+  .flag-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #e07070;
+  }
+
+  .flag-body {
+    font-size: 0.85rem;
+    color: var(--text-2);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .flag-fix {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(192,57,43,0.2);
+    font-size: 0.82rem;
+    color: #9a9a9a;
+    font-style: italic;
+  }
+
+  /* ── CLEAR FLAG ── */
+  .flag-clear {
+    border-left: 3px solid var(--ok);
+    background: var(--ok-dim);
+    border-radius: 0 3px 3px 0;
+    padding: 14px 22px;
+    margin-bottom: 14px;
+    font-size: 0.85rem;
+    color: #7dd4a0;
+    font-weight: 300;
+  }
+
+  /* ── PULLQUOTE ── */
+  .pullquote {
+    border-left: 3px solid var(--accent);
+    padding: 20px 28px;
+    margin: 32px 0;
+    box-shadow: -4px 0 20px var(--accent-glow);
+  }
+
+  .pullquote p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-style: italic;
+    color: var(--text);
+    line-height: 1.5;
+    font-weight: 300;
+  }
+
+  /* ── GAP LIST ── */
+  .gap-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px;
+  }
+
+  .gap-list li {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+    color: var(--text-2);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .gap-list li:last-child { border-bottom: none; }
+
+  .gap-num {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid var(--accent-dim);
+    color: var(--accent);
+    font-size: 9px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+    text-shadow: 0 0 8px var(--accent-glow);
+  }
+
+  .gap-list strong { color: var(--text); font-weight: 500; }
+
+  /* ── ARCH BLOCKS ── */
+  .arch-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .arch-block {
+    background: var(--bg-raised);
+    border: 1px solid var(--border-m);
+    border-top: 2px solid var(--accent-dim);
+    border-radius: 3px;
+    padding: 20px 18px;
+  }
+
+  .arch-block-title {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .arch-block ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .arch-block li {
+    font-size: 0.78rem;
+    color: var(--text-2);
+    padding: 4px 0;
+    border-bottom: 1px solid var(--border);
+    font-weight: 300;
+  }
+
+  .arch-block li:last-child { border-bottom: none; }
+
+  /* ── ROADMAP ── */
+  .roadmap {
+    position: relative;
+    padding-left: 40px;
+    margin-bottom: 24px;
+  }
+
+  .roadmap::before {
+    content: '';
+    position: absolute;
+    left: 11px;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent-dim), transparent);
+  }
+
+  .roadmap-step {
+    position: relative;
+    margin-bottom: 28px;
+  }
+
+  .roadmap-step::before {
+    content: '';
+    position: absolute;
+    left: -32px;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 12px var(--accent-glow);
+  }
+
+  .roadmap-step-num {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent-dim);
+    margin-bottom: 4px;
+  }
+
+  .roadmap-step-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .roadmap-step p {
+    font-size: 0.85rem;
+    color: var(--text-2);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* ── MONEY CARD ── */
+  .money-card {
+    background: linear-gradient(135deg, #100e08, #141108);
+    border: 1px solid var(--accent-dim);
+    border-radius: 4px;
+    padding: 40px 36px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 0 60px rgba(201,168,76,0.04), 0 0 30px rgba(201,168,76,0.06);
+  }
+
+  .money-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  }
+
+  .money-range {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    color: var(--accent);
+    text-shadow: 0 0 30px rgba(201,168,76,0.3);
+    margin-bottom: 8px;
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+
+  .money-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent-dim);
+    margin-bottom: 20px;
+  }
+
+  .money-desc {
+    font-size: 0.88rem;
+    color: var(--text-2);
+    line-height: 1.7;
+    font-weight: 300;
+    max-width: 600px;
+  }
+
+  /* ── TARGET MARKET ── */
+  .target-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .target-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border-m);
+    border-radius: 3px;
+    padding: 20px 22px;
+  }
+
+  .target-item-name {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .target-item p {
+    font-size: 0.82rem;
+    color: var(--text-2);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  /* ── VERDICT ── */
+  .verdict-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--mid-dim);
+    border: 1px solid var(--mid);
+    border-radius: 4px;
+    padding: 20px 32px;
+    margin-bottom: 24px;
+  }
+
+  .verdict-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--mid);
+    box-shadow: 0 0 16px rgba(230,126,34,0.5);
+    flex-shrink: 0;
+  }
+
+  .verdict-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--mid);
+    letter-spacing: 1px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 48px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+
+  footer p {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-3);
+  }
+
+  footer .closing {
+    margin-top: 8px;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--text-3);
+    font-weight: 300;
+    text-transform: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .content { padding: 0 24px 80px; }
+    .masthead { padding: 60px 24px 56px; }
+    .feature-grid { grid-template-columns: 1fr; }
+    .arch-row { grid-template-columns: 1fr; }
+    .target-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    body { background: #080808; color: #e8e8e8; }
+    .section { opacity: 1; animation: none; }
+    .masthead { opacity: 1; animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar"></div>
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <p class="masthead-eyebrow">App Audit Report · April 03, 2026</p>
+  <h1><em>CAS3701</em><br>ExamGuide</h1>
+  <p class="masthead-tagline">A static HTML academic study guide for a university accounting exam — fully audited for transformation into a production-ready React + FastAPI + PostgreSQL platform.</p>
+  <div class="masthead-meta">
+    <p class="meta-item">File: <span>MSLEE_CAS3701_ExamGuide.html</span></p>
+    <p class="meta-item">Lines: <span>~1,334</span></p>
+    <p class="meta-item">Stack: <span>React · FastAPI · PostgreSQL</span></p>
+    <p class="meta-item">Date: <span>2026-04-03</span></p>
+  </div>
+</header>
+
+<main class="content">
+
+  <!-- ══ SECTION 1: FILE OVERVIEW ══ -->
+  <article class="section">
+    <p class="section-label">Overview · Section 01</p>
+    <h2>What This <span class="accent">File Is</span></h2>
+
+    <p class="prose">
+      <strong>MSLEE_CAS3701_ExamGuide.html</strong> is a sophisticated, single-file static HTML academic study guide produced for a university-level accounting and business module — CAS3701, a South African postgraduate programme examination due 7 April 2026. The file is not a marketing page, a SaaS product, or an onboarding flow. It is an <em>educational content delivery artifact</em> — a beautifully designed, exam-specific reference tool authored by someone identified as "Ms. Lee."
+    </p>
+
+    <p class="prose">
+      The file covers two major examination questions: <strong>Question 1</strong> addresses consolidated financial reporting under IFRS 10/3 and IFRS 15 (Mabaso Health Holdings Ltd scenario), and <strong>Question 2</strong> covers business structure advisory, strategic analysis, and start-up cost planning for a fictional e-commerce wellness brand (WellCore / BrightPath Consulting). The guide is exceptional in quality — it features theoretical model answers, question-by-question breakdowns, examiner coaching notes ("Your Writing Coach Says"), SWOT grids, comparison tables, and IFRS-anchored critique structures.
+    </p>
+
+    <div class="pullquote">
+      <p>"This is not a demo page. It is a precision-engineered academic coaching tool — and one of the more intellectually rich HTML files audited in this series. The product hiding inside it is a full-featured EdTech study platform."</p>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature-item">
+        <p class="feature-tag">Core Product</p>
+        <p>Exam preparation platform — structured study guides with model answers, coaching commentary, and structured frameworks for professional-level accounting examinations.</p>
+      </div>
+      <div class="feature-item">
+        <p class="feature-tag">Implied User Roles</p>
+        <p>Student (primary consumer of content), Educator/Author (Ms. Lee — content creator), and potentially an Admin role for managing guide libraries across modules and cohorts.</p>
+      </div>
+      <div class="feature-item">
+        <p class="feature-tag">Implied User Journey</p>
+        <p>Student receives/accesses guide → navigates by question section → reads model answers → applies coaching tips → prepares submission. No auth, no persistence, no progress tracking.</p>
+      </div>
+      <div class="feature-item">
+        <p class="feature-tag">Academic Domain</p>
+        <p>South African higher education accounting — IFRS, Companies Act 71 of 2008, Income Tax Act, POPIA. Content is jurisdiction-specific and professionally authoritative.</p>
+      </div>
+    </div>
+  </article>
+
+  <div class="section-divider"></div>
+
+  <!-- ══ SECTION 2: FEATURE INVENTORY ══ -->
+  <article class="section">
+    <p class="section-label">Feature Inventory · Section 02</p>
+    <h2>What the <span class="accent">File Contains</span></h2>
+
+    <p class="prose">The file is a single-page document with a sticky navigation bar, animated hero header, and 9 interactive question cards — each containing structured content blocks. The following features and UI sections were identified:</p>
+
+    <div class="feature-grid">
+      <div class="feature-item">
+        <p class="feature-tag">Navigation</p>
+        <p>Sticky TOC nav with scroll-linked anchor links to Q1 and Q2 sections. Color-coded by question (indigo = Q1, gold = Q2). Mobile-scrollable with hidden scrollbar.</p>
+      </div>
+      <div class="feature-item">
+        <p class="feature-tag">Hero / Masthead</p>
+        <p>Animated hero with module code, exam due date, total marks, format badge chips. Gradient text headline with staggered fade-in animations. Noise texture background overlay.</p>
+      </div>
+      <div class="feature-item">
+        <p class="feature-tag">Context Boxes</p>
+        <p>Scenario summary cards for each question (Mabaso Health Holdings, WellCore). Teal accent top border. Bulleted entity/data summaries to orient the student.</p>
+      </div>
+      <div class="feature-item">
+        <p class="feature-tag">Question Cards (×9)</p>
+        <p>Card-per-question layout: header with question text in italic serif, numbered badge, answer body with styled list items, insight boxes, and writing coach tips.</p>
+      </div>
+      <div class="feature-item">
+        <p class="feature-tag">Styled Tables (×3)</p>
+        <p>Management questions vs. documents table (Q1.1), sole proprietor vs. (Pty) Ltd comparison table (Q2.1), tax criterion table (Q2.4). All fully styled, hover states, monospace headers.</p>
+      </div>
+      <div class="feature-item">
+        <p class="feature-tag">SWOT Grid</p>
+        <p>2×2 SWOT analysis grid for WellCore (Q2.3) — color-coded cells (teal=S, coral=W, indigo=O, gold=T) with bullet lists per quadrant.</p>
+      </div>
+      <div class="feature-item">
+        <p class="feature-tag">Insight Boxes</p>
+        <p>Callout blocks in four accent variants (teal, gold, coral, indigo) with ALL-CAPS labels — used for key principles, warnings, and additional context per question.</p>
+      </div>
+      <div class="feature-item">
+        <p class="feature-tag">Writing Coach Tips</p>
+        <p>Styled "Your Writing Coach Says" panels with italic motivational/strategic guidance per question — a differentiated coaching layer above the raw model answers.</p>
+      </div>
+      <div class="feature-item">
+        <p class="feature-tag">Typography System</p>
+        <p>Dual-font system: Playfair Display (serif headings) + DM Sans (body) + DM Mono (labels, badges). Systematic use of text-fill gradients, letter-spacing, and hierarchy.</p>
+      </div>
+      <div class="feature-item">
+        <p class="feature-tag">Animations</p>
+        <p>CSS @keyframes fadeUp and slideIn on all cards and sections. Staggered delays. Noise texture overlay. Radial gradient hero glow. Fully CSS-only — no JavaScript dependencies.</p>
+      </div>
+    </div>
+  </article>
+
+  <div class="section-divider"></div>
+
+  <!-- ══ SECTION 3: TECHNOLOGY AUDIT ══ -->
+  <article class="section">
+    <p class="section-label">Technology Audit · Section 03</p>
+    <h2>Violations &amp; <span class="accent">Dependency Flags</span></h2>
+
+    <p class="prose">No prohibited platform code was detected. The file is remarkably clean — pure HTML, CSS, and Google Fonts. Zero Firebase, zero Databutton, zero Riff, zero vendor-locked backend. The violations that follow are <em>architectural gaps</em> rather than platform contamination.</p>
+
+    <div class="flag-clear">✓ No Firebase. No Databutton. No Riff. No embedded widget. No proprietary platform dependencies detected. Clean slate.</div>
+
+    <div class="flag">
+      <div class="flag-head">
+        <span class="flag-badge">Violation 01</span>
+        <span class="flag-title">Zero Backend — Fully Static HTML</span>
+      </div>
+      <p class="flag-body">The entire file is a static HTML document with no server-side logic, no API calls, no authentication layer, and no data persistence. Every question, answer, coaching note, and table is hardcoded. Content cannot be updated without direct HTML editing.</p>
+      <p class="flag-fix">→ Replace with: React frontend consuming a FastAPI content management API. All Q&amp;A content stored in PostgreSQL. Educators author/edit via admin CMS, students consume dynamically rendered content.</p>
+    </div>
+
+    <div class="flag">
+      <div class="flag-head">
+        <span class="flag-badge">Violation 02</span>
+        <span class="flag-title">Google Fonts External Dependency</span>
+      </div>
+      <p class="flag-body">The file loads Playfair Display, DM Sans, and DM Mono from Google Fonts CDN via a <code>&lt;link&gt;</code> tag. In a production app, this creates a GDPR/POPIA privacy issue (IP passed to Google) and a single point of failure.</p>
+      <p class="flag-fix">→ Replace with: Self-hosted font files in the React app's <code>/public/fonts/</code> directory. Use <code>@font-face</code> declarations in global CSS.</p>
+    </div>
+
+    <div class="flag">
+      <div class="flag-head">
+        <span class="flag-badge">Violation 03</span>
+        <span class="flag-title">No User Identity or Access Control</span>
+      </div>
+      <p class="flag-body">Any person with the file URL can access all content — full model answers, writing coach tips, everything. There is no concept of a student account, a paid subscription gate, or an educator-only authoring view. Access is completely undifferentiated.</p>
+      <p class="flag-fix">→ Replace with: JWT-based authentication via FastAPI. Role-based access control (RBAC) with Student, Educator, and Admin roles. Stripe or PayFast integration for premium content gating.</p>
+    </div>
+
+    <div class="flag">
+      <div class="flag-head">
+        <span class="flag-badge">Violation 04</span>
+        <span class="flag-title">No Progress Tracking or Engagement State</span>
+      </div>
+      <p class="flag-body">The sticky nav shows which sections exist but provides no indication of which sections a student has read, highlighted, or bookmarked. There is no mechanism to track study completion, note personal annotations, or return to a specific reading position across sessions.</p>
+      <p class="flag-fix">→ Replace with: PostgreSQL <code>user_progress</code> table tracking per-question read status, bookmarks, and notes. React state synced to backend on interaction.</p>
+    </div>
+
+    <div class="flag">
+      <div class="flag-head">
+        <span class="flag-badge">Violation 05</span>
+        <span class="flag-title">Single-Module, Single-File — Not Scalable</span>
+      </div>
+      <p class="flag-body">The guide covers exactly one exam for one module (CAS3701). Scaling to multiple modules, multiple cohorts, multiple exam cycles, or multiple educators requires duplicating the entire HTML file and manually editing hardcoded content — a non-scalable, error-prone workflow.</p>
+      <p class="flag-fix">→ Replace with: A module/exam/question hierarchical data model in PostgreSQL. Dynamic routing in React (<code>/module/:id/exam/:id/question/:id</code>). Educator CMS for multi-module management.</p>
+    </div>
+
+    <div class="flag">
+      <div class="flag-head">
+        <span class="flag-badge">Violation 06</span>
+        <span class="flag-title">No Self-Assessment or Feedback Loop</span>
+      </div>
+      <p class="flag-body">The file presents model answers but provides no mechanism for students to test their understanding, submit practice responses, or receive feedback. The "Writing Coach Says" coaching layer is static text — it cannot respond to what a student actually writes.</p>
+      <p class="flag-fix">→ Replace with: A self-assessment submission flow backed by FastAPI. Optional AI-powered feedback layer using the Anthropic API to evaluate student draft answers against rubric criteria.</p>
+    </div>
+  </article>
+
+  <div class="section-divider"></div>
+
+  <!-- ══ SECTION 4: GAP ANALYSIS ══ -->
+  <article class="section">
+    <p class="section-label">Gap Analysis · Section 04</p>
+    <h2>What It <span class="accent">Needs</span></h2>
+
+    <p class="prose">The following functional requirements are entirely absent from the current file and must be built from scratch to produce a real, production-ready EdTech platform:</p>
+
+    <ul class="gap-list">
+      <li>
+        <span class="gap-num">01</span>
+        <div><strong>Authentication &amp; Authorization.</strong> JWT-based auth with bcrypt password hashing. Role definitions: Student, Educator, Admin. Social login optional (Google OAuth). Session refresh token rotation. Protected API routes per role.</div>
+      </li>
+      <li>
+        <span class="gap-num">02</span>
+        <div><strong>PostgreSQL Data Model.</strong> Tables: <code>users</code>, <code>modules</code>, <code>exams</code>, <code>questions</code>, <code>answers</code>, <code>coaching_notes</code>, <code>user_progress</code>, <code>user_notes</code>, <code>subscriptions</code>, <code>cohorts</code>, <code>cohort_members</code>. Full relational schema with foreign key constraints and soft deletes.</div>
+      </li>
+      <li>
+        <span class="gap-num">03</span>
+        <div><strong>FastAPI Backend — Content API.</strong> Routers: <code>/auth</code>, <code>/modules</code>, <code>/exams</code>, <code>/questions</code>, <code>/progress</code>, <code>/notes</code>, <code>/admin</code>. Pydantic schemas for all request/response shapes. SQLAlchemy ORM with Alembic migrations.</div>
+      </li>
+      <li>
+        <span class="gap-num">04</span>
+        <div><strong>React Frontend Architecture.</strong> Pages: Login, Register, Dashboard, ModuleList, ExamView (question-by-question), NoteEditor, AdminCMS, AnalyticsDashboard. React Query for server state. Zustand or Context for auth state.</div>
+      </li>
+      <li>
+        <span class="gap-num">05</span>
+        <div><strong>Educator Content Management System.</strong> Rich text editor (TipTap or Quill) for authoring model answers and coaching notes. Question builder with mark allocation fields. Draft/published states. Preview mode matching student view.</div>
+      </li>
+      <li>
+        <span class="gap-num">06</span>
+        <div><strong>Student Self-Assessment Module.</strong> Per-question answer submission form. Optional timed mode. Draft save with autosave. Optional AI feedback integration (Anthropic API) for rubric-aligned answer evaluation.</div>
+      </li>
+      <li>
+        <span class="gap-num">07</span>
+        <div><strong>Subscription / Access Control.</strong> Free tier (access to question text only) vs. Premium tier (model answers + coaching notes). Stripe integration for ZAR and USD billing. PayFast integration for South African market. Per-module or per-exam licensing options.</div>
+      </li>
+      <li>
+        <span class="gap-num">08</span>
+        <div><strong>Progress Tracking.</strong> Per-student read status per question. Bookmark system. Personal annotations synced to backend. Study session timestamps. Exam readiness score calculated from self-assessment results.</div>
+      </li>
+      <li>
+        <span class="gap-num">09</span>
+        <div><strong>Admin Analytics Dashboard.</strong> Active students per module, average time-on-page per question, self-assessment completion rates, subscription conversion rates. Exportable CSV report per cohort.</div>
+      </li>
+      <li>
+        <span class="gap-num">10</span>
+        <div><strong>Security &amp; Compliance.</strong> POPIA-compliant data handling (ironic given WellCore's POPIA discussion in the content). Input sanitisation, SQL injection prevention via ORM, rate limiting on auth endpoints (slowapi), CORS configuration, HTTPS enforcement.</div>
+      </li>
+    </ul>
+  </article>
+
+  <div class="section-divider"></div>
+
+  <!-- ══ SECTION 5: TARGET ARCHITECTURE ══ -->
+  <article class="section">
+    <p class="section-label">Target Architecture · Section 05</p>
+    <h2>Proposed <span class="accent">Stack Structure</span></h2>
+
+    <p class="prose">The target codebase follows a clean monorepo structure with separated <code>/frontend</code> and <code>/backend</code> directories, each independently deployable. Environment configuration is fully separated from code.</p>
+
+    <div class="arch-row">
+      <div class="arch-block">
+        <p class="arch-block-title">React Frontend</p>
+        <ul>
+          <li>src/pages/ (route-level components)</li>
+          <li>src/components/ (shared UI)</li>
+          <li>src/features/ (domain modules)</li>
+          <li>src/services/ (API client layer)</li>
+          <li>src/hooks/ (data fetching)</li>
+          <li>src/store/ (auth + UI state)</li>
+          <li>src/styles/ (design tokens, globals)</li>
+          <li>React Router v6 for routing</li>
+          <li>React Query for server state</li>
+          <li>Axios for HTTP</li>
+        </ul>
+      </div>
+      <div class="arch-block">
+        <p class="arch-block-title">FastAPI Backend</p>
+        <ul>
+          <li>app/routers/ (API route handlers)</li>
+          <li>app/schemas/ (Pydantic models)</li>
+          <li>app/services/ (business logic)</li>
+          <li>app/repositories/ (data access)</li>
+          <li>app/models/ (SQLAlchemy ORM)</li>
+          <li>app/core/ (config, security, deps)</li>
+          <li>app/middleware/ (auth, logging)</li>
+          <li>Alembic for migrations</li>
+          <li>pytest for testing</li>
+          <li>slowapi for rate limiting</li>
+        </ul>
+      </div>
+      <div class="arch-block">
+        <p class="arch-block-title">PostgreSQL Schema</p>
+        <ul>
+          <li>users (id, role, email, hash)</li>
+          <li>modules (id, code, title, level)</li>
+          <li>exams (id, module_id, year, due)</li>
+          <li>questions (id, exam_id, num, marks)</li>
+          <li>answers (id, question_id, body, tips)</li>
+          <li>user_progress (user_id, question_id)</li>
+          <li>user_notes (user_id, question_id, text)</li>
+          <li>subscriptions (user_id, plan, stripe_id)</li>
+          <li>cohorts + cohort_members</li>
+          <li>audit_log (all write ops)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Environment Variables Required</p>
+      <p class="card-body">
+        <strong>Backend:</strong> DATABASE_URL, SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES, STRIPE_SECRET_KEY, PAYFAST_MERCHANT_ID, ANTHROPIC_API_KEY, CORS_ORIGINS<br>
+        <strong>Frontend:</strong> VITE_API_BASE_URL, VITE_STRIPE_PUBLISHABLE_KEY<br>
+        <strong>Infrastructure:</strong> Deployable to Railway, Render, or Fly.io with a managed PostgreSQL instance. Static frontend via Vercel or Netlify.
+      </p>
+    </div>
+  </article>
+
+  <div class="section-divider"></div>
+
+  <!-- ══ SECTION 6: IMPLEMENTATION PLAN ══ -->
+  <article class="section">
+    <p class="section-label">Implementation Roadmap · Section 06</p>
+    <h2>Build <span class="accent">Sequence</span></h2>
+
+    <div class="roadmap">
+      <div class="roadmap-step">
+        <p class="roadmap-step-num">Step 01</p>
+        <p class="roadmap-step-title">Repo Setup &amp; Project Scaffolding</p>
+        <p>Initialize monorepo with <code>/frontend</code> (Vite + React + TypeScript) and <code>/backend</code> (FastAPI + Poetry). Configure ESLint, Prettier, Black, isort. Set up GitHub Actions CI pipeline. Write initial README and .env.example files.</p>
+      </div>
+      <div class="roadmap-step">
+        <p class="roadmap-step-num">Step 02</p>
+        <p class="roadmap-step-title">PostgreSQL Schema &amp; Alembic Migrations</p>
+        <p>Define all SQLAlchemy models: users, modules, exams, questions, answers, coaching_notes, user_progress, user_notes, subscriptions, cohorts. Generate initial Alembic migration. Seed the database with CAS3701 content from the existing HTML file.</p>
+      </div>
+      <div class="roadmap-step">
+        <p class="roadmap-step-num">Step 03</p>
+        <p class="roadmap-step-title">FastAPI Auth Layer</p>
+        <p>Implement <code>/auth/register</code>, <code>/auth/login</code>, <code>/auth/refresh</code>, <code>/auth/me</code> endpoints. JWT token generation with RS256. Bcrypt password hashing. RBAC middleware. Rate limiting on auth routes with slowapi.</p>
+      </div>
+      <div class="roadmap-step">
+        <p class="roadmap-step-num">Step 04</p>
+        <p class="roadmap-step-title">Content API Routers</p>
+        <p>Build <code>/modules</code>, <code>/exams</code>, <code>/questions</code>, <code>/answers</code> CRUD routers with Pydantic schema validation. Implement access control — premium answers gated behind active subscription check. Add pagination and filtering to list endpoints.</p>
+      </div>
+      <div class="roadmap-step">
+        <p class="roadmap-step-num">Step 05</p>
+        <p class="roadmap-step-title">React Frontend — Auth + Routing</p>
+        <p>Build Login and Register pages with form validation (React Hook Form + Zod). Implement auth context with Zustand. Protected route wrapper component. React Router v6 with nested layouts (public vs. authenticated shell).</p>
+      </div>
+      <div class="roadmap-step">
+        <p class="roadmap-step-num">Step 06</p>
+        <p class="roadmap-step-title">ExamView Page — Core Study UX</p>
+        <p>Port the HTML design system into React components: QuestionCard, InsightBox, WritingTip, StyledTable, SWOTGrid, AnswerSection. Implement sticky section nav. Connect to content API via React Query. Match the original visual design fidelity.</p>
+      </div>
+      <div class="roadmap-step">
+        <p class="roadmap-step-num">Step 07</p>
+        <p class="roadmap-step-title">Progress Tracking &amp; Annotations</p>
+        <p>Build <code>/progress</code> and <code>/notes</code> FastAPI endpoints. Implement per-question read tracking, bookmark toggle, and personal annotation editor on the frontend. Persist to PostgreSQL. Display progress indicator in the section nav.</p>
+      </div>
+      <div class="roadmap-step">
+        <p class="roadmap-step-num">Step 08</p>
+        <p class="roadmap-step-title">Educator CMS &amp; Admin Dashboard</p>
+        <p>Build admin routes behind the Admin role guard. Implement TipTap rich-text editor for answer/coaching note authoring. Question builder form with mark field. Draft/publish workflow. Admin analytics page: student metrics, module engagement, subscription stats.</p>
+      </div>
+      <div class="roadmap-step">
+        <p class="roadmap-step-num">Step 09 (Optional — High Value)</p>
+        <p class="roadmap-step-title">AI Self-Assessment Layer</p>
+        <p>Integrate Anthropic API for student answer evaluation. Student submits draft answer → FastAPI sends to Claude with the model answer and rubric criteria → returns structured feedback JSON → frontend renders per-criterion feedback panel. Gate behind premium subscription.</p>
+      </div>
+      <div class="roadmap-step">
+        <p class="roadmap-step-num">Step 10</p>
+        <p class="roadmap-step-title">QA, Security Hardening &amp; Deployment</p>
+        <p>End-to-end pytest coverage ≥ 80%. Playwright or Cypress E2E test for exam view and self-assessment flow. OWASP Top 10 review. HTTPS enforcement. PostgreSQL connection pooling (PgBouncer). Deploy to Railway (backend + DB) + Vercel (frontend). Configure monitoring with Sentry.</p>
+      </div>
+    </div>
+  </article>
+
+  <div class="section-divider"></div>
+
+  <!-- ══ SECTION 7: MONETIZATION ══ -->
+  <article class="section">
+    <p class="section-label">Monetization Potential · Section 07</p>
+    <h2>Revenue <span class="accent">Ceiling</span></h2>
+
+    <div class="money-card">
+      <p class="money-label">Estimated Annual Revenue Range</p>
+      <p class="money-range">$45k – $320k</p>
+      <p class="money-desc">
+        At the low end: a niche South African accounting exam prep tool charging R199/month per student with 200 active subscribers. At the high end: a full EdTech platform serving multiple professional bodies (SAICA, CIMA, ACCA, CPA Australia) with institutional licensing, cohort management, and AI-powered marking — priced at $500–$1,500/month per institution.
+      </p>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Pricing Model A — Student Subscription (Direct-to-Consumer)</p>
+      <p class="card-body">R99/month (free tier: question text only) · R249/month (premium: model answers + coaching + AI feedback). Target: 500–2,000 active students across 5–10 accounting modules. Revenue: $15k–$80k/year ARR at scale.</p>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Pricing Model B — Institutional Licensing (B2B EdTech)</p>
+      <p class="card-body">$500–$1,500/month per institution (university department, professional tutoring academy, SAICA-accredited training provider) for cohort management, branded content portals, bulk student accounts, and usage analytics. 20–50 institutions = $120k–$900k ARR. This is the higher-ceiling, lower-churn model.</p>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Basis for Estimate</p>
+      <p class="card-body">The South African chartered accountancy market is large — SAICA has over 45,000 members and thousands of CA(SA) candidates annually. The CAS module indicates postgraduate-level content. Comparable global platforms (Kaplan, BPP, AnalystPrep) charge $200–$600/year per student. The AI self-assessment differentiator (if built) commands a 30–50% premium over static study material competitors.</p>
+    </div>
+  </article>
+
+  <div class="section-divider"></div>
+
+  <!-- ══ SECTION 8: TARGET MARKET ══ -->
+  <article class="section">
+    <p class="section-label">Target Market · Section 08</p>
+    <h2>Ideal <span class="accent">Customers</span></h2>
+
+    <div class="target-grid">
+      <div class="target-item">
+        <p class="target-item-name">CTA / CA(SA) Exam Candidates</p>
+        <p>Students preparing for the South African Institute of Chartered Accountants professional exams. Under enormous academic pressure, high willingness to pay for exam-specific, high-quality preparation material. <em>Why they'd buy:</em> Model answers for their exact exam paper are worth more than generic textbooks — scarcity drives premium pricing.</p>
+      </div>
+      <div class="target-item">
+        <p class="target-item-name">Private Accounting Tutors</p>
+        <p>Independent tutors serving university accounting students who need curated, exam-specific content they can use in sessions or share with students under a licensed model. <em>Why they'd buy:</em> Quality study guides save them authoring time and justify their own session fees — it becomes a tool multiplier.</p>
+      </div>
+      <div class="target-item">
+        <p class="target-item-name">University Accounting Departments</p>
+        <p>Department heads and lecturers at UNISA, Wits, UCT, UP who want a supplementary digital study platform integrated into their module offering. <em>Why they'd buy:</em> Institutional license removes per-student pricing friction and provides analytics on student engagement that replaces informal tracking spreadsheets.</p>
+      </div>
+      <div class="target-item">
+        <p class="target-item-name">CIMA / ACCA Training Providers</p>
+        <p>Accredited professional qualification training providers operating in South Africa, East Africa, and the UK who need content management platforms for their own study material authoring. <em>Why they'd buy:</em> White-label option — they need the platform, they'll provide the content.</p>
+      </div>
+      <div class="target-item">
+        <p class="target-item-name">Postgraduate Business School Students</p>
+        <p>MBA, MPhil, and Honours-level students in accounting, finance, and strategy courses who benefit from structured answer guides and AI-powered feedback on complex, framework-driven questions. <em>Why they'd buy:</em> High-stakes, time-pressured environment. Self-assessment tools reduce reliance on overworked lecturers for feedback.</p>
+      </div>
+      <div class="target-item">
+        <p class="target-item-name">African Diaspora Professionals Re-skilling</p>
+        <p>Accounting professionals from Zimbabwe, Kenya, Nigeria and other African markets pursuing SAICA or South African university qualifications remotely. <em>Why they'd buy:</em> Online-first delivery removes geographic barriers. This is a large, underserved demographic with high qualification-driven motivation.</p>
+      </div>
+    </div>
+  </article>
+
+  <div class="section-divider"></div>
+
+  <!-- ══ SECTION 9: VERDICT ══ -->
+  <article class="section">
+    <p class="section-label">Go / No-Go Verdict · Section 09</p>
+    <h2>Readiness <span class="accent">Assessment</span></h2>
+
+    <div class="verdict-badge">
+      <div class="verdict-dot"></div>
+      <p class="verdict-text">MEDIUM READINESS</p>
+    </div>
+
+    <p class="prose">The content is extraordinary. The design system is production-quality. The academic depth — IFRS 10/3, IFRS 15 bill-and-hold, S12E SBC tax treatment, POPIA compliance — is genuinely authoritative. <em>What this is not, yet, is an app.</em> It is a document. The entire backend, auth layer, data model, and interactive UX must be built from zero.</p>
+
+    <div class="card">
+      <p class="card-title">Primary Blockers</p>
+      <p class="card-body">
+        1. No backend whatsoever — zero FastAPI, zero API layer, zero database<br>
+        2. No user identity — content is fully public, no monetisation possible<br>
+        3. No content management — Ms. Lee must hand-edit HTML to update any answer<br>
+        4. Single-module, single-exam — structurally unscalable without a database<br>
+        5. No progress tracking, self-assessment, or student feedback loop
+      </p>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Effort Estimate</p>
+      <p class="card-body">
+        <strong>MVP (auth + content API + React ExamView + progress tracking):</strong> 180–240 hours<br>
+        <strong>Full platform (CMS + admin + subscriptions + AI feedback):</strong> 380–520 hours<br>
+        <strong>Team recommendation:</strong> 1 full-stack engineer + 1 UI engineer for MVP in 6–8 weeks. Add 1 backend specialist for AI integration sprint.
+      </p>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Top 3 Next Actions</p>
+      <p class="card-body">
+        <strong>1.</strong> Parse the CAS3701 HTML into structured JSON — extract every question, model answer, and coaching note into a seed data file that will populate the initial PostgreSQL database.<br><br>
+        <strong>2.</strong> Design the PostgreSQL schema and Pydantic contracts before writing any frontend code — the content hierarchy (module → exam → question → answer → coaching_note) is the product's backbone.<br><br>
+        <strong>3.</strong> Validate the pricing model with 5–10 real accounting students before building the subscription layer — confirm willingness to pay R199–R249/month for premium content access + AI feedback.
+      </p>
+    </div>
+  </article>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <p>MSLEE · CAS3701 ExamGuide · Audit Report · 2026-04-03</p>
+  <p class="closing">Target stack: React + FastAPI + PostgreSQL. No proprietary platforms. No demo widgets. Full production readiness.</p>
+</footer>
+
+</body>
+</html>

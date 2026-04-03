@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Justice Path — App Audit Report · 2026-04-03</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #080808;
+    --bg2:       #0d0d0b;
+    --bg3:       #131310;
+    --accent:    #C9A84C;
+    --accent-dim:#7a6030;
+    --accent-glow: rgba(201,168,76,0.18);
+    --accent-muted: rgba(201,168,76,0.35);
+    --text:      #E2DDD4;
+    --text-dim:  #7a7870;
+    --text-mid:  #b0a898;
+    --red:       #C0392B;
+    --green:     #3d9970;
+    --line:      rgba(201,168,76,0.15);
+    --line-bright: rgba(201,168,76,0.3);
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Sora', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.8;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* GRAIN OVERLAY */
+  body::before {
+    content:'';
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    background-size: 256px 256px;
+    opacity: 0.55;
+  }
+
+  /* TOP ACCENT BAR */
+  .masthead-bar {
+    height: 5px;
+    background: linear-gradient(90deg, var(--accent-dim), var(--accent), var(--accent-dim));
+    width: 100%;
+  }
+
+  /* WRAPPER */
+  .wrapper {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 40px;
+    position: relative; z-index: 1;
+  }
+
+  /* ── MASTHEAD ── */
+  .masthead {
+    padding: 80px 0 72px;
+    border-bottom: 1px solid var(--line);
+  }
+  .masthead-label {
+    font-size: 0.68rem; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--accent-dim); font-weight: 500;
+    margin-bottom: 20px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .masthead-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.2rem, 8vw, 5.8rem);
+    font-weight: 700;
+    line-height: 1.0;
+    background: linear-gradient(135deg, var(--accent) 0%, #e8c97a 50%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    margin-bottom: 16px;
+    animation: fadeUp 0.6s ease 0.1s both;
+  }
+  .masthead-tagline {
+    font-size: 1.05rem; color: var(--text-mid);
+    font-style: italic; font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; color: var(--text-dim);
+    letter-spacing: 0.5px;
+    margin-bottom: 36px;
+    animation: fadeUp 0.6s ease 0.2s both;
+  }
+  .masthead-meta {
+    display: flex; gap: 32px; flex-wrap: wrap;
+    animation: fadeUp 0.6s ease 0.3s both;
+  }
+  .meta-item { font-size: 0.78rem; color: var(--text-dim); letter-spacing: 1px; }
+  .meta-item span { color: var(--accent); font-weight: 600; }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 64px 0;
+    border-bottom: 1px solid var(--line);
+    animation: fadeUp 0.7s ease both;
+  }
+
+  .section-label {
+    font-size: 0.63rem; letter-spacing: 3.5px; text-transform: uppercase;
+    color: var(--accent-dim); font-weight: 600;
+    margin-bottom: 14px;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 700;
+    background: linear-gradient(135deg, #e8c97a, var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.15;
+    margin-bottom: 28px;
+  }
+
+  p {
+    color: var(--text);
+    font-size: 0.97rem;
+    line-height: 1.85;
+    margin-bottom: 18px;
+  }
+
+  /* PULL QUOTE */
+  .pull-quote {
+    border-left: 3px solid var(--accent);
+    padding: 20px 28px;
+    margin: 32px 0;
+    background: var(--accent-glow);
+    border-radius: 0 8px 8px 0;
+  }
+  .pull-quote p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-style: italic;
+    color: var(--text);
+    margin: 0;
+  }
+
+  /* FEATURE GRID */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 24px;
+  }
+  @media(max-width: 620px) { .feature-grid { grid-template-columns: 1fr; } }
+
+  .feature-item {
+    background: var(--bg3);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+  .feature-item-title {
+    font-size: 0.82rem; font-weight: 600;
+    color: var(--accent); margin-bottom: 6px;
+    letter-spacing: 0.5px;
+  }
+  .feature-item p {
+    font-size: 0.83rem; color: var(--text-dim);
+    margin: 0; line-height: 1.6;
+  }
+
+  /* WARNING BADGE / VIOLATION */
+  .violation-list { margin-top: 24px; display: flex; flex-direction: column; gap: 16px; }
+  .violation {
+    background: rgba(192,57,43,0.07);
+    border: 1px solid rgba(192,57,43,0.25);
+    border-radius: 10px;
+    padding: 20px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .violation::before {
+    content: '⚠ VIOLATION';
+    position: absolute; top: 0; right: 0;
+    background: rgba(192,57,43,0.15);
+    border-bottom-left-radius: 8px;
+    border-left: 1px solid rgba(192,57,43,0.25);
+    border-bottom: 1px solid rgba(192,57,43,0.25);
+    font-size: 0.6rem; letter-spacing: 2px;
+    color: var(--red); padding: 5px 12px; font-weight: 700;
+  }
+  .violation-title {
+    font-weight: 600; color: var(--red);
+    font-size: 0.92rem; margin-bottom: 6px;
+  }
+  .violation p { font-size: 0.85rem; color: var(--text-mid); margin-bottom: 6px; }
+  .violation-fix {
+    font-size: 0.82rem; color: var(--green);
+    font-weight: 500; padding-top: 8px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    margin-top: 8px;
+  }
+
+  /* CHECK / GAP LIST */
+  .gap-list { display: flex; flex-direction: column; gap: 12px; margin-top: 24px; }
+  .gap-item {
+    display: flex; gap: 14px; align-items: flex-start;
+    background: var(--bg3); border: 1px solid var(--line);
+    border-radius: 8px; padding: 14px 18px;
+  }
+  .gap-item-icon { color: var(--accent); font-size: 1rem; flex-shrink: 0; padding-top: 2px; }
+  .gap-item-text { font-size: 0.87rem; color: var(--text-mid); line-height: 1.6; }
+  .gap-item-text strong { color: var(--text); font-weight: 600; }
+
+  /* ARCHITECTURE BOX */
+  .arch-block {
+    background: var(--bg3);
+    border: 1px solid var(--line-bright);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-top: 20px;
+  }
+  .arch-block-title {
+    font-size: 0.7rem; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--accent); font-weight: 600; margin-bottom: 14px;
+  }
+  .arch-block ul { padding-left: 18px; }
+  .arch-block li {
+    font-size: 0.86rem; color: var(--text-mid);
+    line-height: 1.65; margin-bottom: 4px;
+    list-style: disc;
+  }
+  .arch-block li strong { color: var(--text); }
+
+  /* ROADMAP / TIMELINE */
+  .roadmap { margin-top: 28px; display: flex; flex-direction: column; gap: 0; }
+  .roadmap-item {
+    display: flex; gap: 24px; position: relative;
+    padding-bottom: 32px;
+  }
+  .roadmap-item:last-child { padding-bottom: 0; }
+  .roadmap-left {
+    display: flex; flex-direction: column; align-items: center;
+    flex-shrink: 0; width: 36px;
+  }
+  .roadmap-num {
+    width: 36px; height: 36px;
+    border: 2px solid var(--accent);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; font-weight: 700;
+    color: var(--accent);
+    box-shadow: 0 0 14px var(--accent-glow);
+    background: var(--bg);
+    flex-shrink: 0;
+  }
+  .roadmap-line {
+    width: 1px; flex: 1; margin-top: 8px;
+    background: var(--line-bright);
+  }
+  .roadmap-item:last-child .roadmap-line { display: none; }
+  .roadmap-content { padding-top: 4px; }
+  .roadmap-title {
+    font-weight: 600; color: var(--text);
+    font-size: 0.95rem; margin-bottom: 6px;
+  }
+  .roadmap-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.65; }
+
+  /* MONETIZATION CALLOUT */
+  .money-card {
+    background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(201,168,76,0.03));
+    border: 1px solid var(--accent-muted);
+    border-radius: 14px;
+    padding: 36px 40px;
+    margin-top: 28px;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(201,168,76,0.06);
+  }
+  .money-range {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent), #e8c97a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 10px;
+    text-shadow: none;
+  }
+  .money-label {
+    font-size: 0.75rem; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--accent-dim); margin-bottom: 20px;
+  }
+  .money-basis {
+    font-size: 0.88rem; color: var(--text-mid);
+    line-height: 1.7; max-width: 560px; margin: 0 auto;
+  }
+  .money-models {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 14px; margin-top: 24px; text-align: left;
+  }
+  @media(max-width:600px) { .money-models { grid-template-columns: 1fr; } }
+  .money-model {
+    background: rgba(201,168,76,0.07);
+    border: 1px solid var(--line);
+    border-radius: 8px; padding: 16px 18px;
+  }
+  .money-model-title { color: var(--accent); font-size: 0.8rem; font-weight: 600; margin-bottom: 6px; letter-spacing: 0.5px; }
+  .money-model p { font-size: 0.82rem; color: var(--text-dim); margin: 0; }
+
+  /* TARGET MARKET BULLETS */
+  .target-list { display: flex; flex-direction: column; gap: 14px; margin-top: 24px; }
+  .target-item {
+    background: var(--bg3); border: 1px solid var(--line);
+    border-radius: 8px; padding: 16px 20px;
+    display: flex; gap: 14px;
+  }
+  .target-icon { font-size: 1.2rem; flex-shrink: 0; }
+  .target-name { font-weight: 600; color: var(--text); font-size: 0.9rem; margin-bottom: 3px; }
+  .target-why { font-size: 0.83rem; color: var(--text-dim); line-height: 1.6; }
+
+  /* VERDICT */
+  .verdict-box {
+    text-align: center;
+    padding: 48px 40px;
+    background: rgba(61,153,112,0.06);
+    border: 2px solid rgba(61,153,112,0.3);
+    border-radius: 16px;
+    margin-top: 28px;
+    box-shadow: 0 0 50px rgba(61,153,112,0.05);
+  }
+  .verdict-badge {
+    display: inline-block;
+    padding: 8px 28px;
+    border: 2px solid var(--green);
+    border-radius: 100px;
+    font-size: 0.68rem; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--green); font-weight: 700;
+    margin-bottom: 20px;
+    background: rgba(61,153,112,0.08);
+  }
+  .verdict-rating {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-weight: 700;
+    color: var(--green);
+    line-height: 1;
+    margin-bottom: 8px;
+    text-shadow: 0 0 40px rgba(61,153,112,0.25);
+  }
+  .verdict-sub { font-size: 0.9rem; color: var(--text-dim); margin-bottom: 28px; }
+  .verdict-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  @media(max-width: 640px) { .verdict-grid { grid-template-columns: 1fr; } }
+  .verdict-cell {
+    background: var(--bg3); border: 1px solid var(--line);
+    border-radius: 8px; padding: 14px 16px;
+    text-align: left;
+  }
+  .verdict-cell-title { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-dim); margin-bottom: 6px; }
+  .verdict-cell-value { font-size: 0.85rem; color: var(--text-mid); line-height: 1.55; }
+
+  /* NEXT ACTIONS */
+  .next-actions { margin-top: 28px; display: flex; flex-direction: column; gap: 10px; }
+  .next-action {
+    display: flex; gap: 12px; align-items: flex-start;
+    background: rgba(201,168,76,0.06);
+    border: 1px solid var(--line-bright);
+    border-radius: 8px; padding: 14px 18px;
+  }
+  .next-action-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 700;
+    color: var(--accent); line-height: 1; flex-shrink: 0;
+  }
+  .next-action-text { font-size: 0.87rem; color: var(--text-mid); line-height: 1.6; padding-top: 2px; }
+  .next-action-text strong { color: var(--text); }
+
+  /* FOOTER */
+  footer {
+    padding: 48px 0 56px;
+    text-align: center;
+    position: relative; z-index: 1;
+  }
+  .footer-line {
+    width: 48px; height: 1px;
+    background: var(--accent-dim);
+    margin: 0 auto 20px;
+  }
+  footer p {
+    font-size: 0.78rem; color: var(--text-dim);
+    letter-spacing: 1px; margin: 0;
+  }
+  footer em { font-style: italic; color: var(--accent-dim); }
+
+  /* STAGGER ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  section:nth-child(1) { animation-delay: 0.1s; }
+  section:nth-child(2) { animation-delay: 0.18s; }
+  section:nth-child(3) { animation-delay: 0.26s; }
+  section:nth-child(4) { animation-delay: 0.32s; }
+  section:nth-child(5) { animation-delay: 0.38s; }
+  section:nth-child(6) { animation-delay: 0.44s; }
+  section:nth-child(7) { animation-delay: 0.5s; }
+  section:nth-child(8) { animation-delay: 0.55s; }
+  section:nth-child(9) { animation-delay: 0.6s; }
+
+  @media print {
+    body { background: #080808; }
+    body::before { display: none; }
+    section { animation: none; }
+    .masthead-title, .section-title { -webkit-text-fill-color: var(--accent); }
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead-bar"></div>
+
+<div class="wrapper">
+
+  <!-- MASTHEAD -->
+  <header class="masthead">
+    <div class="masthead-label">App Audit Report &nbsp;·&nbsp; React + FastAPI + PostgreSQL Gap Analysis</div>
+    <h1 class="masthead-title">Justice Path</h1>
+    <p class="masthead-tagline">Empowering People to Navigate the Legal System</p>
+    <div class="masthead-meta">
+      <div class="meta-item">File: <span>index2.html</span></div>
+      <div class="meta-item">Audited: <span>April 03, 2026</span></div>
+      <div class="meta-item">Lines: <span>1,344</span></div>
+      <div class="meta-item">Stack Target: <span>React · FastAPI · PostgreSQL</span></div>
+    </div>
+  </header>
+
+  <!-- SECTION 01 — FILE OVERVIEW -->
+  <section>
+    <div class="section-label">File Overview &nbsp;·&nbsp; Section 01</div>
+    <h2 class="section-title">What This File Is</h2>
+    <p>Justice Path is a fully rendered, single-file HTML legal empowerment platform — a purpose-built case management tool pre-loaded with the real legal situations of two named individuals. The file presents as a password-gated dashboard with a left-nav sidebar, tabbed case views, an AI-powered legal chat interface, an automated legal document generator, a law library browser, and a new-case intake analyzer. The entire frontend is production-quality, lovingly styled, and functionally wired.</p>
+
+    <div class="pull-quote">
+      <p>"This is the most socially impactful file in this audit series — a real legal operations platform for people who cannot afford an attorney. The mission is urgent, the design is complete, the backend does not exist."</p>
+    </div>
+
+    <p><strong>Core product:</strong> A case-specific legal management dashboard that gives ordinary people — navigating real disputes against corporations, insurers, and government entities — the tools, contacts, documents, and AI counsel they need to fight back without a lawyer.</p>
+    <p><strong>Implied user roles:</strong> Authenticated case clients (Erica, Luke — two real named users hardcoded). An implied admin role (absent) for onboarding new clients. General public users via the "Analyze New Case" tool.</p>
+    <p><strong>User journey:</strong> Login → Case Dashboard → Action Plan → Generate Documents → AI Attorney Chat → File Complaints → Track Progress.</p>
+  </section>
+
+  <!-- SECTION 02 — FEATURE INVENTORY -->
+  <section>
+    <div class="section-label">UI / Feature Inventory &nbsp;·&nbsp; Section 02</div>
+    <h2 class="section-title">What It Has</h2>
+    <p>This file contains an unusually complete frontend for its class. The following features are visually and structurally present:</p>
+
+    <div class="feature-grid">
+      <div class="feature-item">
+        <div class="feature-item-title">🔐 Login Screen</div>
+        <p>Full username/password UI with error messaging. Credentials are hardcoded in plaintext JavaScript. Two users: erica / erica1, luke / luke1. No session persistence.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-item-title">📋 Case Overview Dashboard</div>
+        <p>Renders case summary, damages table, respondent list, legal theories, and jurisdiction info. All content is hardcoded per user in a JS CASES object — not fetched from any API.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-item-title">🎯 Action Plan</div>
+        <p>Prioritized action items (URGENT / HIGH / MEDIUM) with descriptions, links to agency portals, and contact numbers. 9–10 actions per case. Entirely static.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-item-title">📞 Contacts Directory</div>
+        <p>7 pre-populated contacts per case: attorneys general, regulatory boards, advocacy groups. Includes phone, email, and physical addresses. No click-to-call or email integration.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-item-title">📄 AI Document Generator</div>
+        <p>6 document templates (Demand Letter, BBB Complaint, AG Complaint, Licensing Board, Small Claims, Media Statement). Each calls the Anthropic API live with the user's case context injected into the prompt. Copy-to-clipboard output. Functional — requires user-supplied API key.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-item-title">🤖 AI Attorney Chat</div>
+        <p>Full conversational chat interface with multi-turn history. System prompt pre-loaded with complete case facts per user. Calls Anthropic API live. Working — requires user-supplied API key.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-item-title">📚 Law Library</div>
+        <p>19 legal topics across 5 categories. Clicking any topic fires an Anthropic API call for a plain-English explanation. No static content — fully AI-driven. Requires API key.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-item-title">➕ New Case Analyzer</div>
+        <p>Free-text intake form. User describes their situation; a structured AI analysis returns legal theories, agency contacts, prioritized actions, document recommendations, and statute of limitations warnings. Requires API key. The most generalizable feature in the app.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 03 — TECHNOLOGY AUDIT -->
+  <section>
+    <div class="section-label">Technology & Dependency Audit &nbsp;·&nbsp; Section 03</div>
+    <h2 class="section-title">What Breaks the Requirements</h2>
+    <p>Justice Path is remarkably clean of prohibited third-party platforms. There is no Firebase, no Databutton, no Riff, no vendor-locked backend. The violations are structural — not technological — but they are critical blockers for production deployment.</p>
+
+    <div class="violation-list">
+
+      <div class="violation">
+        <div class="violation-title">Plaintext Credentials in Client-Side JavaScript</div>
+        <p>The USERS object in the script block stores usernames and passwords in cleartext: <code>erica: { password: 'erica1' }</code>. Any user who opens DevTools sees every credential. This is a catastrophic security vulnerability — not a design oversight, a showstopper.</p>
+        <div class="violation-fix">→ Replace with: FastAPI JWT auth endpoint (/auth/login), bcrypt-hashed passwords in PostgreSQL, HttpOnly cookie or Bearer token session management in React.</div>
+      </div>
+
+      <div class="violation">
+        <div class="violation-title">User-Supplied Anthropic API Key Passed in Browser</div>
+        <p>The app asks users to paste their personal Anthropic API key into a text field. Every AI feature (document gen, attorney chat, law library, case analysis) passes this key directly in browser fetch headers. This means the key is exposed in network logs, browser history, localStorage state, and any browser extension. It also means each user must provision their own API account — a non-starter for a real product.</p>
+        <div class="violation-fix">→ Replace with: A FastAPI proxy endpoint (/api/ai/*) that holds the Anthropic API key server-side in an environment variable. React calls your own backend; your backend calls Anthropic. Users never touch the key.</div>
+      </div>
+
+      <div class="violation">
+        <div class="violation-title">All Case Data Hardcoded in JavaScript</div>
+        <p>Two complete legal cases — Erica Morales and Luke Ferguson — are defined as static JS objects inside the HTML file, including full names, incident details, dollar amounts, agency contacts, and legal theories. This is not a proof-of-concept shortcut; it is the only data layer in the app. Adding a third client requires editing source code and redeploying.</p>
+        <div class="violation-fix">→ Replace with: PostgreSQL tables (cases, users, actions, contacts, documents). FastAPI CRUD endpoints. React fetches case data on load from /api/cases/{case_id}. Admin interface for onboarding new clients without touching code.</div>
+      </div>
+
+      <div class="violation">
+        <div class="violation-title">No Session Persistence — Login Resets on Refresh</div>
+        <p>The authentication is purely DOM-based: the login div hides and the app div shows. Refreshing the page resets everything. There is no session token, no localStorage strategy, no cookie — just CSS display toggling.</p>
+        <div class="violation-fix">→ Replace with: JWT stored in HttpOnly cookie (secure, sameSite=strict). FastAPI dependency injection for protected routes. React auth context that re-validates on app mount.</div>
+      </div>
+
+      <div class="violation">
+        <div class="violation-title">No Case Progress Tracking or State Persistence</div>
+        <p>The Action Plan contains 9–10 prioritized action items per case, but there is zero ability to mark items complete, add notes, log complaint confirmation numbers, or track what has been filed. Every session starts from the same static state. For real legal cases with real deadlines, this is a critical missing layer.</p>
+        <div class="violation-fix">→ Replace with: PostgreSQL action_items table with status enum (pending/in_progress/complete), notes field, completion_date, confirmation_number. FastAPI PATCH endpoint. React checkbox UI with optimistic updates.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION 04 — GAP ANALYSIS -->
+  <section>
+    <div class="section-label">Missing Functional Requirements &nbsp;·&nbsp; Section 04</div>
+    <h2 class="section-title">What It Needs to Become Real</h2>
+
+    <div class="gap-list">
+      <div class="gap-item">
+        <div class="gap-item-icon">⚖</div>
+        <div class="gap-item-text"><strong>Secure Authentication System</strong> — JWT-based auth with refresh tokens, bcrypt password hashing, role system (client / admin / attorney), rate-limited login endpoint, account recovery flow.</div>
+      </div>
+      <div class="gap-item">
+        <div class="gap-item-icon">🗄</div>
+        <div class="gap-item-text"><strong>Full PostgreSQL Data Model</strong> — users, cases, actions, contacts, documents, generated_docs, law_library_topics, case_notes, audit_log. Alembic migrations for version control.</div>
+      </div>
+      <div class="gap-item">
+        <div class="gap-item-icon">🔗</div>
+        <div class="gap-item-text"><strong>FastAPI AI Proxy Layer</strong> — Server-side Anthropic integration so no API key ever touches the browser. Streaming support for long document generation. Per-user usage tracking and rate limiting.</div>
+      </div>
+      <div class="gap-item">
+        <div class="gap-item-icon">✅</div>
+        <div class="gap-item-text"><strong>Action Item Progress Tracking</strong> — Checkbox state persisted to DB, status transitions (pending → in progress → complete), deadline tracking with alert logic, confirmation number logging per complaint filed.</div>
+      </div>
+      <div class="gap-item">
+        <div class="gap-item-icon">📁</div>
+        <div class="gap-item-text"><strong>Document Storage & History</strong> — Generated documents saved to DB (not just copied to clipboard). Version history. PDF export. Ability to re-open, edit, and regenerate. S3-compatible storage for attachments.</div>
+      </div>
+      <div class="gap-item">
+        <div class="gap-item-icon">🛡</div>
+        <div class="gap-item-text"><strong>Admin Interface</strong> — Onboard new cases without editing source code. Manage users and their cases. View action progress across all clients. Dashboard for case statuses, outstanding deadlines, and generated document history.</div>
+      </div>
+      <div class="gap-item">
+        <div class="gap-item-icon">📬</div>
+        <div class="gap-item-text"><strong>Notification System</strong> — Email alerts for upcoming deadlines (statute of limitations, notice of claim windows). Confirmation of filed complaints. Weekly action item summaries. FastAPI background tasks + SMTP or SendGrid.</div>
+      </div>
+      <div class="gap-item">
+        <div class="gap-item-icon">🔒</div>
+        <div class="gap-item-text"><strong>Security Hardening</strong> — Input validation (Pydantic schemas), SQL injection prevention (SQLAlchemy ORM), CSRF protection, HTTPS enforcement, API rate limiting (slowapi), audit logging of all AI calls and document generations.</div>
+      </div>
+      <div class="gap-item">
+        <div class="gap-item-icon">📱</div>
+        <div class="gap-item-text"><strong>Mobile Responsiveness</strong> — The layout collapses at small breakpoints but the sidebar and chat interface need mobile-specific reworking. Most users navigating a legal crisis will be on a phone.</div>
+      </div>
+      <div class="gap-item">
+        <div class="gap-item-icon">⚠</div>
+        <div class="gap-item-text"><strong>Legal Disclaimer & Compliance Layer</strong> — Conspicuous "not legal advice" disclaimers per feature, user acknowledgment on first login, state-specific disclaimer logic for regulated legal information services.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 05 — ARCHITECTURE -->
+  <section>
+    <div class="section-label">Target Architecture &nbsp;·&nbsp; Section 05</div>
+    <h2 class="section-title">Proposed Final Structure</h2>
+
+    <div class="arch-block">
+      <div class="arch-block-title">React Frontend — /frontend</div>
+      <ul>
+        <li><strong>src/pages/</strong> — Login, Dashboard, Actions, Contacts, Documents, Attorney, Library, NewCase, Admin</li>
+        <li><strong>src/components/</strong> — CaseHeader, ActionItem, ContactCard, DocTile, ChatBubble, LibraryTopic, PriorityBadge, Spinner</li>
+        <li><strong>src/services/</strong> — api.js (Axios instance), auth.js, cases.js, ai.js, documents.js</li>
+        <li><strong>src/context/</strong> — AuthContext, CaseContext</li>
+        <li><strong>src/hooks/</strong> — useCase, useChat, useDocGen, useActions</li>
+        <li>React Router v6 with protected routes. Zustand or Context for global state. React Query for data fetching and caching.</li>
+      </ul>
+    </div>
+
+    <div class="arch-block">
+      <div class="arch-block-title">FastAPI Backend — /backend</div>
+      <ul>
+        <li><strong>routers/</strong> — auth.py, cases.py, actions.py, contacts.py, documents.py, ai.py, admin.py, library.py</li>
+        <li><strong>schemas/</strong> — Pydantic models for all request/response shapes</li>
+        <li><strong>services/</strong> — anthropic_service.py (proxy), document_service.py, email_service.py, auth_service.py</li>
+        <li><strong>repositories/</strong> — SQLAlchemy data access layer for each entity</li>
+        <li><strong>models/</strong> — User, Case, ActionItem, Contact, GeneratedDocument, LawTopic, CaseNote</li>
+        <li>FastAPI Depends() for auth injection. Background tasks for email notifications. Streaming response for AI generation.</li>
+      </ul>
+    </div>
+
+    <div class="arch-block">
+      <div class="arch-block-title">PostgreSQL Schema — Core Tables</div>
+      <ul>
+        <li><strong>users</strong> (id, email, hashed_password, role, created_at)</li>
+        <li><strong>cases</strong> (id, user_id, name, subtitle, state, case_type, summary, created_at)</li>
+        <li><strong>damages</strong> (id, case_id, item, amount, order)</li>
+        <li><strong>respondents</strong> (id, case_id, name, role)</li>
+        <li><strong>legal_theories</strong> (id, case_id, theory)</li>
+        <li><strong>action_items</strong> (id, case_id, priority, title, desc, link, contact, status, deadline, completion_date, notes)</li>
+        <li><strong>contacts</strong> (id, case_id, name, title, phone, email, note)</li>
+        <li><strong>generated_documents</strong> (id, case_id, user_id, doc_type, content, created_at)</li>
+        <li><strong>chat_history</strong> (id, case_id, user_id, role, content, timestamp)</li>
+        <li><strong>law_topics</strong> (id, category, name, cached_explanation, last_fetched)</li>
+      </ul>
+    </div>
+
+    <div class="arch-block">
+      <div class="arch-block-title">Environment Variables</div>
+      <ul>
+        <li>ANTHROPIC_API_KEY, DATABASE_URL, SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES</li>
+        <li>SMTP_HOST, SMTP_USER, SMTP_PASS, FROM_EMAIL, FRONTEND_URL</li>
+        <li>AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, S3_BUCKET (for document attachments)</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SECTION 06 — IMPLEMENTATION ROADMAP -->
+  <section>
+    <div class="section-label">Implementation Roadmap &nbsp;·&nbsp; Section 06</div>
+    <h2 class="section-title">Step-by-Step Build Plan</h2>
+
+    <div class="roadmap">
+      <div class="roadmap-item">
+        <div class="roadmap-left"><div class="roadmap-num">1</div><div class="roadmap-line"></div></div>
+        <div class="roadmap-content">
+          <div class="roadmap-title">Scaffold the Monorepo</div>
+          <div class="roadmap-desc">Create /frontend (Vite + React) and /backend (FastAPI) directory structure. Set up Docker Compose with postgres, backend, frontend services. Initialize Alembic for migrations. Establish .env strategy across environments.</div>
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-left"><div class="roadmap-num">2</div><div class="roadmap-line"></div></div>
+        <div class="roadmap-content">
+          <div class="roadmap-title">PostgreSQL Schema + Migrations</div>
+          <div class="roadmap-desc">Define all SQLAlchemy models. Run initial Alembic migration. Seed the database with Erica and Luke's case data extracted from the hardcoded JS objects. Confirm data integrity before building any API layer.</div>
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-left"><div class="roadmap-num">3</div><div class="roadmap-line"></div></div>
+        <div class="roadmap-content">
+          <div class="roadmap-title">Authentication System</div>
+          <div class="roadmap-desc">Build FastAPI /auth/register, /auth/login, /auth/refresh, /auth/logout endpoints. Implement JWT with HttpOnly cookies. Build React AuthContext with protected route wrappers. Convert the existing login UI to real auth.</div>
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-left"><div class="roadmap-num">4</div><div class="roadmap-line"></div></div>
+        <div class="roadmap-content">
+          <div class="roadmap-title">Case Data API + React Pages</div>
+          <div class="roadmap-desc">Build FastAPI CRUD endpoints for cases, actions, contacts, respondents, damages. Convert all hardcoded CASES JS objects to API calls. Wire React pages (Overview, Actions, Contacts) to live data. Action item status update endpoints.</div>
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-left"><div class="roadmap-num">5</div><div class="roadmap-line"></div></div>
+        <div class="roadmap-content">
+          <div class="roadmap-title">AI Proxy Layer</div>
+          <div class="roadmap-desc">Build /api/ai/chat, /api/ai/generate-document, /api/ai/explain-topic, /api/ai/analyze-case endpoints in FastAPI. Server holds ANTHROPIC_API_KEY. Strip the client-side API key input from the React UI. Implement streaming responses for document generation. Save all generated docs to DB.</div>
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-left"><div class="roadmap-num">6</div><div class="roadmap-line"></div></div>
+        <div class="roadmap-content">
+          <div class="roadmap-title">Document History + Export</div>
+          <div class="roadmap-desc">Wire document generation to persist output in generated_documents table. Build document history UI in the Documents tab. Add PDF export via weasyprint or pdfkit. Optional: S3 upload for permanent storage.</div>
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-left"><div class="roadmap-num">7</div><div class="roadmap-line"></div></div>
+        <div class="roadmap-content">
+          <div class="roadmap-title">Admin Interface</div>
+          <div class="roadmap-desc">React admin panel (role-gated) for creating new users and cases, editing action items and contacts, viewing all generated documents, and monitoring deadlines across the client base. FastAPI admin router with admin-only dependency.</div>
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-left"><div class="roadmap-num">8</div><div class="roadmap-line"></div></div>
+        <div class="roadmap-content">
+          <div class="roadmap-title">QA, Security Hardening, Repo Readiness</div>
+          <div class="roadmap-desc">Comprehensive Pydantic validation on all inputs. Rate limiting on AI endpoints. CORS configuration. E2E test suite (Playwright). README with quickstart, environment setup, and seeding instructions. GitHub Actions CI for lint + test. Deployment docs for Railway or Render.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 07 — MONETIZATION -->
+  <section>
+    <div class="section-label">Monetization Potential &nbsp;·&nbsp; Section 07</div>
+    <h2 class="section-title">The Business Case</h2>
+
+    <div class="money-card">
+      <div class="money-label">Estimated Monetization Range — Annual</div>
+      <div class="money-range">$60k – $480k</div>
+      <p class="money-basis">A fully functional Justice Path competes in the legal tech / access-to-justice SaaS space — a sector with documented willingness to pay from nonprofits, legal aid organizations, law school clinics, community organizations, and individual litigants. The AI-powered document generation and contextual legal counsel are the core differentiating value.</p>
+
+      <div class="money-models">
+        <div class="money-model">
+          <div class="money-model-title">Model A — B2B Institutional SaaS</div>
+          <p>License to legal aid organizations, law school clinics, civil rights nonprofits, and county public defender offices. $500–$2,000/month per organization. 25–50 paying orgs = $150k–$1.2M ARR. Grant-eligible: DOJ Access to Justice, IOLTA foundations, LSC-funded orgs.</p>
+        </div>
+        <div class="money-model">
+          <div class="money-model-title">Model B — B2C Consumer Subscription</div>
+          <p>$19–$49/month for individuals with active legal disputes. Free tier: new case analysis only. Paid tier: full case dashboard, document generator, AI attorney, deadline tracking. 200–500 paying users = $50k–$300k ARR. Churn risk: cases resolve (a good problem).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 08 — TARGET MARKET -->
+  <section>
+    <div class="section-label">Target Market &nbsp;·&nbsp; Section 08</div>
+    <h2 class="section-title">Who Buys This</h2>
+
+    <div class="target-list">
+      <div class="target-item">
+        <div class="target-icon">⚖️</div>
+        <div>
+          <div class="target-name">Legal Aid Organizations</div>
+          <div class="target-why">Chronically understaffed, serving clients with complex multi-agency cases. Justice Path multiplies attorney bandwidth by handling intake analysis, document generation, and action plan structuring — freeing attorneys for court appearances. Will pay $800–$2k/month without flinching if it saves one FTE.</div>
+        </div>
+      </div>
+      <div class="target-item">
+        <div class="target-icon">🎓</div>
+        <div>
+          <div class="target-name">Law School Clinical Programs</div>
+          <div class="target-why">Law clinics handle exactly the types of cases in this file — civil rights, medical malpractice, consumer protection. Students need structured case management. Faculty need oversight tools. A per-school SaaS license ($500–$1,500/mo) is well within clinic budgets.</div>
+        </div>
+      </div>
+      <div class="target-item">
+        <div class="target-icon">✊</div>
+        <div>
+          <div class="target-name">Civil Rights & Advocacy Nonprofits</div>
+          <div class="target-why">NAACP chapters, ACLU state affiliates, domestic violence organizations, disability rights groups — all run intake processes for people in legal distress. Justice Path's New Case Analyzer alone would transform their triage capacity. Grant-fundable, mission-aligned.</div>
+        </div>
+      </div>
+      <div class="target-item">
+        <div class="target-icon">🏛️</div>
+        <div>
+          <div class="target-name">County / Municipal Courts — Pro Se Assistance</div>
+          <div class="target-why">Courts are required in many states to provide pro se litigant assistance. A white-labeled Justice Path deployed at the courthouse or on the court's website serves a mandate. Government procurement contracts = reliable, large contracts ($50k–$200k/year).</div>
+        </div>
+      </div>
+      <div class="target-item">
+        <div class="target-icon">👤</div>
+        <div>
+          <div class="target-name">Individual Pro Se Litigants</div>
+          <div class="target-why">The original target user — people like Erica and Luke, fighting real legal battles without money for an attorney. At $19–$29/month with a free trial, this is the most direct path to product-market fit and word-of-mouth growth. Every person who wins their case becomes a testimonial.</div>
+        </div>
+      </div>
+      <div class="target-item">
+        <div class="target-icon">💼</div>
+        <div>
+          <div class="target-name">Solo & Small Firm Attorneys (White Label)</div>
+          <div class="target-why">A solo employment attorney or civil rights lawyer could white-label Justice Path to offer clients a structured self-help portal — reducing the time the attorney spends on basic case management while differentiating their practice. $200–$500/month per attorney.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 09 — VERDICT -->
+  <section>
+    <div class="section-label">Go / No-Go Readiness Check &nbsp;·&nbsp; Section 09</div>
+    <h2 class="section-title">The Verdict</h2>
+
+    <div class="verdict-box">
+      <div class="verdict-badge">Readiness Rating</div>
+      <div class="verdict-rating">Medium</div>
+      <div class="verdict-sub">Exceptional frontend. Dangerous security model. Zero backend infrastructure. Highest mission value of any file in this audit series.</div>
+
+      <div class="verdict-grid">
+        <div class="verdict-cell">
+          <div class="verdict-cell-title">Primary Blockers</div>
+          <div class="verdict-cell-value">Plaintext client credentials · Browser-exposed API key · All data hardcoded · Zero session persistence · No document storage</div>
+        </div>
+        <div class="verdict-cell">
+          <div class="verdict-cell-title">Effort Estimate</div>
+          <div class="verdict-cell-value">Large<br>180–260 hrs to full MVP<br>350–450 hrs for full platform with admin, notifications, document history, mobile polish</div>
+        </div>
+        <div class="verdict-cell">
+          <div class="verdict-cell-title">Strategic Note</div>
+          <div class="verdict-cell-value">The AI Attorney and Document Generator are genuinely differentiated. The New Case Analyzer alone has standalone SaaS potential. The mission framing unlocks nonprofit and government funding paths unavailable to most SaaS startups.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="next-actions">
+      <div class="next-action">
+        <div class="next-action-num">1</div>
+        <div class="next-action-text"><strong>Eliminate the client-side API key immediately.</strong> Build a FastAPI /api/ai/* proxy that holds ANTHROPIC_API_KEY server-side. This single change removes the most dangerous vulnerability and unlocks the ability to control costs, rate-limit users, and track usage — which is the foundation of any billing model.</div>
+      </div>
+      <div class="next-action">
+        <div class="next-action-num">2</div>
+        <div class="next-action-text"><strong>Extract all hardcoded case data to a PostgreSQL seed file.</strong> Define the full SQLAlchemy schema from the CASES JS object structure. Run Alembic migration. Seed with Erica and Luke's data. Now the app has a real data layer and onboarding a third client becomes an admin operation, not a code change.</div>
+      </div>
+      <div class="next-action">
+        <div class="next-action-num">3</div>
+        <div class="next-action-text"><strong>Deploy the New Case Analyzer as a standalone public tool first.</strong> This feature requires no auth and no case data — just the AI proxy. A public-facing "Analyze Your Legal Situation" tool generates leads, demonstrates the product, and can go live in days. It is the fastest path to a real user in front of the product.</div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /wrapper -->
+
+<footer>
+  <div class="wrapper">
+    <div class="footer-line"></div>
+    <p>Justice Path &nbsp;·&nbsp; App Audit Report &nbsp;·&nbsp; April 03, 2026<br>
+    <em>Produced under the React + FastAPI + PostgreSQL Gap Analysis Framework. Every recommendation herein targets a clean, GitHub-ready, vendor-independent codebase.</em></p>
+  </div>
+</footer>
+
+</body>
+</html>

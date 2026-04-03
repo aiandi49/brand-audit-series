@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audit Report — Navigating Alignable: Hidden Functionalities</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #080808;
+    --bg2: #0d0d0d;
+    --bg3: #111111;
+    --bg4: #161616;
+    --accent: #C9A84C;
+    --accent-dim: rgba(201,168,76,0.18);
+    --accent-glow: rgba(201,168,76,0.08);
+    --accent-muted: rgba(201,168,76,0.35);
+    --text: #E8E8E8;
+    --text-muted: #888;
+    --text-dim: #555;
+    --white: #fff;
+    --warn: #E05A3A;
+    --warn-dim: rgba(224,90,58,0.15);
+    --ok: #3ACD7A;
+    --ok-dim: rgba(58,205,122,0.12);
+    --mid: #F0A500;
+    --border: rgba(201,168,76,0.12);
+    --rule: rgba(201,168,76,0.2);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  /* ── GRAIN OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    height: 5px;
+    background: linear-gradient(90deg, #8B6A1A, var(--accent), #E8C96A, var(--accent), #8B6A1A);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+  }
+
+  /* ── MASTHEAD ── */
+  header {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 120px 40px 80px;
+    animation: fadeIn 1s ease forwards;
+  }
+
+  .masthead-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    display: block;
+  }
+
+  h1.product-name {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 700;
+    line-height: 1.0;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  h1.product-name span {
+    background: linear-gradient(135deg, var(--accent), #E8C96A, var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+  }
+
+  .tagline {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    font-weight: 300;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    line-height: 1.7;
+  }
+
+  .meta-row {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    border-top: 1px solid var(--rule);
+    padding-top: 1.5rem;
+  }
+
+  .meta-row span { color: var(--accent); }
+
+  /* ── ARTICLE WRAPPER ── */
+  article {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 40px 120px;
+  }
+
+  /* ── SECTION ── */
+  section {
+    padding: 70px 0;
+    border-bottom: 1px solid var(--border);
+    animation: fadeIn 0.8s ease forwards;
+  }
+
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent-muted);
+    margin-bottom: 1.25rem;
+    display: block;
+    font-weight: 500;
+  }
+
+  h2 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 1.75rem;
+    background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  h3 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin: 2rem 0 0.75rem;
+    text-shadow: 0 0 30px rgba(201,168,76,0.2);
+  }
+
+  p {
+    color: var(--text);
+    margin-bottom: 1.25rem;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.85;
+  }
+
+  strong { color: var(--white); font-weight: 600; }
+  em { color: var(--accent); font-style: normal; font-weight: 400; }
+
+  /* ── LISTS ── */
+  ul.dot-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 1.5rem;
+  }
+
+  ul.dot-list li {
+    padding: 0.5rem 0 0.5rem 1.5rem;
+    position: relative;
+    color: var(--text);
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.7;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  ul.dot-list li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 1.1rem;
+  }
+
+  /* ── CALLOUT / PULL QUOTE ── */
+  .callout {
+    border-left: 3px solid var(--accent);
+    background: var(--accent-glow);
+    padding: 1.5rem 2rem;
+    margin: 2rem 0;
+    border-radius: 0 6px 6px 0;
+  }
+
+  .callout p {
+    margin: 0;
+    font-size: 1.05rem;
+    color: var(--text);
+    line-height: 1.75;
+  }
+
+  .callout strong { color: var(--accent); }
+
+  /* ── WARNING BADGE ── */
+  .warn-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--warn-dim);
+    border: 1px solid rgba(224,90,58,0.3);
+    color: var(--warn);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 3px;
+    margin-bottom: 0.75rem;
+  }
+
+  .warn-badge::before { content: '⚠'; font-size: 0.8rem; }
+
+  .warn-block {
+    background: var(--warn-dim);
+    border: 1px solid rgba(224,90,58,0.25);
+    border-left: 3px solid var(--warn);
+    padding: 1.25rem 1.5rem;
+    border-radius: 0 6px 6px 0;
+    margin: 1rem 0;
+  }
+
+  .warn-block p { margin: 0; color: #D4A090; font-size: 15px; }
+  .warn-block strong { color: var(--warn); }
+
+  /* ── OK BADGE ── */
+  .ok-block {
+    background: var(--ok-dim);
+    border: 1px solid rgba(58,205,122,0.25);
+    border-left: 3px solid var(--ok);
+    padding: 1.25rem 1.5rem;
+    border-radius: 0 6px 6px 0;
+    margin: 1rem 0;
+  }
+
+  .ok-block p { margin: 0; color: #A0D4B0; font-size: 15px; }
+  .ok-block strong { color: var(--ok); }
+
+  /* ── VIOLATION TABLE ── */
+  .violation-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 1.25rem 0;
+  }
+
+  .violation-card .vc-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--warn);
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .violation-card h4 {
+    font-size: 1rem;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+
+  .violation-card p { margin: 0.3rem 0; font-size: 14px; color: #aaa; }
+  .violation-card .fix { color: var(--ok); font-size: 14px; margin-top: 0.5rem; }
+  .violation-card .fix::before { content: '✓ Fix: '; font-weight: 600; }
+
+  /* ── ARCHITECTURE BLOCK ── */
+  .arch-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  @media (max-width: 640px) { .arch-grid { grid-template-columns: 1fr; } }
+
+  .arch-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+  }
+
+  .arch-card .arch-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  .arch-card h4 {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .arch-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .arch-card ul li {
+    font-size: 13px;
+    color: var(--text-muted);
+    padding: 0.2rem 0;
+    line-height: 1.5;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  /* ── ROADMAP TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 2.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+  }
+
+  .tl-item {
+    position: relative;
+    padding: 0 0 2rem 1.5rem;
+  }
+
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -1.5rem;
+    top: 0.4rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 12px rgba(201,168,76,0.5);
+  }
+
+  .tl-num {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .tl-item h4 {
+    font-size: 1rem;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+
+  .tl-item p { font-size: 14px; color: var(--text-muted); margin: 0; line-height: 1.65; }
+
+  /* ── MONETIZATION CARD ── */
+  .money-card {
+    background: linear-gradient(135deg, var(--bg3) 0%, #1A1400 100%);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 12px;
+    padding: 2.5rem;
+    margin: 2rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .money-card::before {
+    content: '$';
+    position: absolute;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12rem;
+    color: rgba(201,168,76,0.04);
+    line-height: 1;
+  }
+
+  .money-range {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 700;
+    color: var(--accent);
+    text-shadow: 0 0 40px rgba(201,168,76,0.3);
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .money-card p { color: #aaa; font-size: 15px; margin: 0.5rem 0; }
+
+  /* ── TARGET MARKET ── */
+  .target-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  @media (max-width: 580px) { .target-grid { grid-template-columns: 1fr; } }
+
+  .target-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .target-card h4 {
+    font-size: 0.9rem;
+    color: var(--white);
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+
+  .target-card p { font-size: 13px; color: var(--text-muted); margin: 0; line-height: 1.6; }
+
+  /* ── VERDICT ── */
+  .verdict-block {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin: 2rem 0;
+  }
+
+  .verdict-badge {
+    display: inline-block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    padding: 1rem 3rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  .verdict-badge.medium {
+    background: rgba(240,165,0,0.15);
+    border: 2px solid var(--mid);
+    color: var(--mid);
+    text-shadow: 0 0 30px rgba(240,165,0,0.3);
+  }
+
+  .verdict-block p { font-size: 15px; color: var(--text-muted); max-width: 500px; margin: 0.5rem auto; }
+  .verdict-block strong { color: var(--white); }
+
+  /* ── FOOTER ── */
+  footer {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 3rem 40px 6rem;
+    text-align: center;
+    border-top: 1px solid var(--border);
+  }
+
+  footer p {
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+
+  footer span { color: var(--accent); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    body { background: #080808; color: #e8e8e8; }
+    .topbar { position: static; }
+    * { animation: none !important; }
+  }
+
+  /* ── STAT ROW ── */
+  .stat-row {
+    display: flex;
+    gap: 1.5rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+  }
+
+  .stat-box {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem 1.75rem;
+    flex: 1;
+    min-width: 160px;
+    text-align: center;
+  }
+
+  .stat-box .stat-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    display: block;
+    text-shadow: 0 0 20px rgba(201,168,76,0.25);
+  }
+
+  .stat-box .stat-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-top: 0.4rem;
+    display: block;
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar"></div>
+
+<!-- MASTHEAD -->
+<header>
+  <span class="masthead-label">App Audit Report &nbsp;·&nbsp; April 03, 2026 &nbsp;·&nbsp; React + FastAPI + PostgreSQL</span>
+  <h1 class="product-name">Navigating<br><span>Alignable</span></h1>
+  <p class="tagline">A deep-dive audit of a static HTML knowledge guide into a production-ready, GitHub-deployable SaaS micro-application — from design document to living platform.</p>
+  <div class="meta-row">
+    <div>File: <span>index.html</span></div>
+    <div>Author Credit: <span>Darren Oates / DarrenSites.Pro</span></div>
+    <div>Stack Target: <span>React · FastAPI · PostgreSQL</span></div>
+    <div>Readiness: <span>Medium</span></div>
+  </div>
+</header>
+
+<article>
+
+  <!-- ── SECTION 1: FILE OVERVIEW ── -->
+  <section>
+    <span class="section-label">Section 01 &nbsp;·&nbsp; File Overview</span>
+    <h2>What This File Is</h2>
+
+    <p>This HTML file is a <strong>beautifully designed static guide document</strong> titled <em>"Navigating Alignable: Hidden Functionalities"</em> — a 9-tip educational walkthrough credited to Darren Oates of DarrenSites.Pro. It is a polished, mobile-responsive content page that teaches small business owners how to use the Alignable networking platform more effectively.</p>
+
+    <p>The file is not a functional application. It is a <strong>static marketing/content asset</strong> — essentially a long-form digital brochure that, with the right engineering, can be transformed into a dynamic, monetizable, multi-user SaaS learning platform.</p>
+
+    <div class="stat-row">
+      <div class="stat-box"><span class="stat-val">9</span><span class="stat-label">Tips / Modules</span></div>
+      <div class="stat-box"><span class="stat-val">0</span><span class="stat-label">API Calls</span></div>
+      <div class="stat-box"><span class="stat-val">0</span><span class="stat-label">DB Interactions</span></div>
+      <div class="stat-box"><span class="stat-val">905</span><span class="stat-label">Lines of HTML</span></div>
+    </div>
+
+    <h3>Core Product Identity</h3>
+    <p>At its heart, this represents a <strong>small business education product</strong> — specifically a guided tutorial series around the Alignable platform. The implied product is a curated knowledge base or "insider guide" for Alignable users, likely intended as a lead magnet, paid digital product, or community resource.</p>
+
+    <h3>Implied User Roles</h3>
+    <ul class="dot-list">
+      <li><strong>Anonymous visitors</strong> — read-only access to the tips guide (current state)</li>
+      <li><strong>Registered learners</strong> — track progress through tips, bookmark sections (implied next step)</li>
+      <li><strong>Admin / Content creator (Darren)</strong> — manages tip content, analytics, email list</li>
+      <li><strong>Premium members</strong> — access expanded tips, downloadable resources, video content</li>
+    </ul>
+
+    <h3>Implied User Journey</h3>
+    <ul class="dot-list">
+      <li>Visitor discovers the guide via social/SEO → lands on the hero</li>
+      <li>Scrolls through the 9 tips sequentially</li>
+      <li>Reaches the closing section with Quick Reference and Darren's credit/link</li>
+      <li>Clicks through to DarrenSites.Pro (implicit CTA / lead conversion)</li>
+    </ul>
+  </section>
+
+  <!-- ── SECTION 2: FEATURE INVENTORY ── -->
+  <section>
+    <span class="section-label">Section 02 &nbsp;·&nbsp; Feature Inventory</span>
+    <h2>What the File Contains</h2>
+
+    <h3>Pages & Sections</h3>
+    <ul class="dot-list">
+      <li><strong>Hero / Landing</strong> — Full-viewport intro with product name, subtitle, author credit, 3×3 tip-preview grid, animated scroll hint</li>
+      <li><strong>9 Tip Blocks</strong> — Each tip has: a section divider with number/tagline, a two-column layout (image + content), numbered steps, and a descriptive paragraph</li>
+      <li><strong>Special: Tip 5 (Video Meetings)</strong> — Single-column layout with a "Wrong vs Right" comparison card and a caution callout box</li>
+      <li><strong>Closing Section</strong> — Quick Reference summary of all 9 tips, author credit with link to DarrenSites.Pro</li>
+    </ul>
+
+    <h3>UI Components Identified</h3>
+    <ul class="dot-list">
+      <li>Animated hero with staggered CSS keyframe reveals</li>
+      <li>3×3 clickable tip-preview grid (anchor links, no routing)</li>
+      <li>Alternating left/right tip layouts using CSS <code>direction: rtl</code></li>
+      <li>Numbered step indicators (circle badges)</li>
+      <li>Caution/callout boxes (gold-bordered)</li>
+      <li>Wrong/Right comparison cards (red/green)</li>
+      <li>IntersectionObserver scroll-reveal via vanilla JS</li>
+      <li>Section dividers with large decorative numbers</li>
+      <li>Quick Reference summary cards</li>
+    </ul>
+
+    <h3>Implied Functionality (Not Implemented)</h3>
+    <ul class="dot-list">
+      <li>No forms — no email capture, no signup, no contact</li>
+      <li>No authentication or user state</li>
+      <li>No progress tracking (tip completion)</li>
+      <li>No backend or API of any kind</li>
+      <li>No analytics integration</li>
+      <li>No content management — tips are hardcoded HTML</li>
+      <li>Images referenced as <code>src</code> attributes pointing to what appear to be static or placeholder paths</li>
+    </ul>
+
+    <div class="callout">
+      <p><strong>Design Quality Note:</strong> The HTML is genuinely well-designed — using Playfair Display + DM Sans, a deep purple/gold palette, CSS custom properties, smooth animations, and responsive grid layouts. The visual design of this file is production-quality and should be faithfully translated into React components.</p>
+    </div>
+  </section>
+
+  <!-- ── SECTION 3: TECHNOLOGY AUDIT ── -->
+  <section>
+    <span class="section-label">Section 03 &nbsp;·&nbsp; Technology & Dependency Audit</span>
+    <h2>Violations & Constraints Check</h2>
+
+    <p>This file is notably clean in terms of third-party dependencies. Here is the full audit of every technical element and its status:</p>
+
+    <div class="ok-block">
+      <p><strong>✓ No prohibited platforms detected.</strong> No Firebase, no Databutton, no Riff, no proprietary backend code, no vendor-locked services. The file is a pure static HTML document.</p>
+    </div>
+
+    <div class="violation-card">
+      <span class="vc-label">⚠ Constraint Item 01</span>
+      <h4>Google Fonts External Dependency</h4>
+      <p><strong>What it is:</strong> Two Google Fonts loaded via CDN: <em>Playfair Display</em> and <em>DM Sans</em>.</p>
+      <p><strong>Why it's noted:</strong> Not a violation, but introduces a network dependency. For self-contained production, fonts should be self-hosted.</p>
+      <p class="fix">Self-host fonts via <code>/public/fonts/</code> in the React app, import in CSS with <code>@font-face</code>. Vite makes this trivial.</p>
+    </div>
+
+    <div class="violation-card">
+      <span class="vc-label">⚠ Constraint Item 02</span>
+      <h4>Static Image Sources</h4>
+      <p><strong>What it is:</strong> Tip blocks reference <code>&lt;img src="..."&gt;</code> elements — these appear to point to local files or placeholder paths that will break in any new environment.</p>
+      <p><strong>Why it's noted:</strong> Images are not bundled or managed — they'll 404 in production without proper asset handling.</p>
+      <p class="fix">Store tip images in PostgreSQL (as URLs pointing to an S3-compatible bucket or Cloudinary), served via FastAPI endpoints. React components fetch dynamically.</p>
+    </div>
+
+    <div class="violation-card">
+      <span class="vc-label">⚠ Constraint Item 03</span>
+      <h4>Hardcoded Content in HTML</h4>
+      <p><strong>What it is:</strong> All 9 tips, steps, descriptions, tags, and section dividers are hardcoded directly in the HTML. There is no CMS or data layer.</p>
+      <p><strong>Why it's noted:</strong> Makes content updates require developer involvement. Not scalable for a product that may grow to 20, 50, or 100 tips.</p>
+      <p class="fix">Model tips as database records. FastAPI provides a tips CRUD API. React fetches and renders dynamically. Admin dashboard allows Darren to edit tips without touching code.</p>
+    </div>
+
+    <div class="violation-card">
+      <span class="vc-label">⚠ Constraint Item 04</span>
+      <h4>Vanilla JS IntersectionObserver (Scroll Reveal)</h4>
+      <p><strong>What it is:</strong> A small vanilla JS block handles scroll-triggered <code>.reveal</code> animations.</p>
+      <p><strong>Why it's noted:</strong> No violation — but must be translated to React idioms.</p>
+      <p class="fix">Replace with a React hook using <code>useRef</code> + <code>IntersectionObserver</code>, or the lightweight <code>react-intersection-observer</code> library.</p>
+    </div>
+
+    <div class="ok-block">
+      <p><strong>✓ No jQuery, no Bootstrap, no Angular, no Vue, no embedded widgets, no proprietary scripts.</strong> The entire JS footprint is a 10-line scroll observer. Excellent baseline for migration.</p>
+    </div>
+  </section>
+
+  <!-- ── SECTION 4: GAP ANALYSIS ── -->
+  <section>
+    <span class="section-label">Section 04 &nbsp;·&nbsp; Gap Analysis</span>
+    <h2>What Is Missing</h2>
+
+    <p>To transform this static guide into a real, revenue-generating application, the following functional gaps must be closed:</p>
+
+    <h3>Authentication & Authorization</h3>
+    <ul class="dot-list">
+      <li>No user registration, login, or session management exists whatsoever</li>
+      <li>Need: JWT-based auth via FastAPI + <code>python-jose</code>, with refresh token rotation</li>
+      <li>Role system: <strong>Admin</strong> (Darren) vs <strong>Free User</strong> vs <strong>Premium User</strong></li>
+      <li>Optional: OAuth2 social login (Google) for frictionless onboarding</li>
+    </ul>
+
+    <h3>Database Models Required</h3>
+    <ul class="dot-list">
+      <li><strong>users</strong> — id, email, hashed_password, role, created_at, stripe_customer_id</li>
+      <li><strong>tips</strong> — id, number, tag, title, description, steps (JSON), image_url, is_premium, order, created_at</li>
+      <li><strong>user_progress</strong> — id, user_id (FK), tip_id (FK), completed_at</li>
+      <li><strong>email_subscribers</strong> — id, email, source, subscribed_at, confirmed</li>
+      <li><strong>subscriptions</strong> — id, user_id, stripe_subscription_id, plan, status, current_period_end</li>
+    </ul>
+
+    <h3>Backend API Endpoints Needed</h3>
+    <ul class="dot-list">
+      <li><code>POST /auth/register</code> — user signup with email verification</li>
+      <li><code>POST /auth/login</code> — returns JWT access + refresh tokens</li>
+      <li><code>GET /tips</code> — returns all tips (free ones without auth, premium gated)</li>
+      <li><code>GET /tips/{id}</code> — single tip detail</li>
+      <li><code>POST /tips</code> — admin-only tip creation</li>
+      <li><code>PUT /tips/{id}</code> — admin-only tip update</li>
+      <li><code>POST /progress/{tip_id}</code> — mark tip as completed (authenticated)</li>
+      <li><code>GET /progress</code> — current user's completion status</li>
+      <li><code>POST /subscribe/email</code> — email capture (Mailchimp/Resend integration)</li>
+      <li><code>POST /billing/checkout</code> — Stripe checkout session</li>
+      <li><code>POST /billing/webhook</code> — Stripe webhook for subscription events</li>
+      <li><code>GET /admin/stats</code> — admin analytics dashboard data</li>
+    </ul>
+
+    <h3>Frontend State Management</h3>
+    <ul class="dot-list">
+      <li>Global auth state: user object, tokens, role — managed via React Context or Zustand</li>
+      <li>Tips data: fetched via React Query with caching and loading states</li>
+      <li>Progress state: per-user completion map, synced with backend</li>
+      <li>Subscription state: free vs premium, gates access to premium tips</li>
+    </ul>
+
+    <h3>Email Capture & Lead Generation</h3>
+    <ul class="dot-list">
+      <li>The closing section links to DarrenSites.Pro but captures no leads inline</li>
+      <li>Need: email opt-in form (before or after the guide, or as a gated "download PDF" CTA)</li>
+      <li>Integration: Resend or Mailchimp API via FastAPI</li>
+    </ul>
+
+    <h3>Subscription / Billing</h3>
+    <ul class="dot-list">
+      <li>No pricing, no paywall, no premium differentiation currently exists</li>
+      <li>Need: Stripe integration for monthly/annual subscriptions or one-time purchase</li>
+      <li>Premium tips (e.g., Tips 7–9) can be locked behind paywall</li>
+    </ul>
+
+    <h3>Error Handling & UX States</h3>
+    <ul class="dot-list">
+      <li>No loading spinners, error messages, empty states, or retry logic</li>
+      <li>Need: React Query handles loading/error states; toast notifications for user actions</li>
+    </ul>
+
+    <h3>Admin Tooling</h3>
+    <ul class="dot-list">
+      <li>No way for Darren to update tips without editing HTML manually</li>
+      <li>Need: A simple admin panel — CRUD for tips, view subscriber list, see progress analytics</li>
+    </ul>
+
+    <h3>Security Concerns</h3>
+    <ul class="dot-list">
+      <li>Input validation needed on all POST endpoints — Pydantic schemas in FastAPI handle this</li>
+      <li>Rate limiting on auth endpoints — use <code>slowapi</code> or a middleware approach</li>
+      <li>CORS configuration for React frontend domain only</li>
+      <li>Stripe webhook signature verification (never skip this)</li>
+      <li>Environment variable management — never commit secrets; use <code>.env</code> + <code>python-dotenv</code></li>
+    </ul>
+  </section>
+
+  <!-- ── SECTION 5: ARCHITECTURE ── -->
+  <section>
+    <span class="section-label">Section 05 &nbsp;·&nbsp; Target Architecture</span>
+    <h2>Proposed Final Structure</h2>
+
+    <div class="arch-grid">
+      <div class="arch-card">
+        <span class="arch-icon">⚛️</span>
+        <h4>React Frontend</h4>
+        <ul>
+          <li>pages/Home.jsx</li>
+          <li>pages/TipDetail.jsx</li>
+          <li>pages/Login.jsx</li>
+          <li>pages/Register.jsx</li>
+          <li>pages/Dashboard.jsx</li>
+          <li>pages/Admin.jsx</li>
+          <li>components/TipCard.jsx</li>
+          <li>components/ProgressBar.jsx</li>
+          <li>components/PremiumGate.jsx</li>
+          <li>components/EmailCapture.jsx</li>
+          <li>context/AuthContext.jsx</li>
+          <li>hooks/useTips.js</li>
+          <li>hooks/useProgress.js</li>
+          <li>services/api.js</li>
+        </ul>
+      </div>
+      <div class="arch-card">
+        <span class="arch-icon">⚡</span>
+        <h4>FastAPI Backend</h4>
+        <ul>
+          <li>routers/auth.py</li>
+          <li>routers/tips.py</li>
+          <li>routers/progress.py</li>
+          <li>routers/billing.py</li>
+          <li>routers/admin.py</li>
+          <li>schemas/user.py</li>
+          <li>schemas/tip.py</li>
+          <li>schemas/billing.py</li>
+          <li>services/email.py</li>
+          <li>services/stripe.py</li>
+          <li>repositories/tips.py</li>
+          <li>repositories/users.py</li>
+          <li>models/database.py</li>
+          <li>core/security.py</li>
+        </ul>
+      </div>
+      <div class="arch-card">
+        <span class="arch-icon">🐘</span>
+        <h4>PostgreSQL Schema</h4>
+        <ul>
+          <li>users (auth + billing)</li>
+          <li>tips (content CMS)</li>
+          <li>tip_steps (1:N)</li>
+          <li>user_progress (N:M)</li>
+          <li>email_subscribers</li>
+          <li>subscriptions</li>
+          <li>Alembic migrations</li>
+          <li>Indexes on user_id FK</li>
+          <li>Soft-delete pattern</li>
+          <li>created_at / updated_at</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Environment Variables Required</h3>
+    <ul class="dot-list">
+      <li><code>DATABASE_URL</code> — PostgreSQL connection string</li>
+      <li><code>SECRET_KEY</code> — JWT signing secret (256-bit random)</li>
+      <li><code>STRIPE_SECRET_KEY</code> — Stripe API key</li>
+      <li><code>STRIPE_WEBHOOK_SECRET</code> — Stripe webhook signing secret</li>
+      <li><code>RESEND_API_KEY</code> (or Mailchimp) — transactional email</li>
+      <li><code>FRONTEND_URL</code> — CORS origin allowlist</li>
+      <li><code>VITE_API_URL</code> — React env var pointing to FastAPI base URL</li>
+    </ul>
+
+    <div class="callout">
+      <p><strong>Deployment Strategy:</strong> Frontend → Vercel or Netlify (static build). Backend → Railway, Render, or Fly.io (Docker containerized FastAPI). PostgreSQL → Railway managed Postgres or Supabase as the database layer only (no auth, no realtime — just Postgres).</p>
+    </div>
+  </section>
+
+  <!-- ── SECTION 6: IMPLEMENTATION PLAN ── -->
+  <section>
+    <span class="section-label">Section 06 &nbsp;·&nbsp; Implementation Roadmap</span>
+    <h2>Step-by-Step Build Plan</h2>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-num">Step 01</div>
+        <h4>Scaffold the Monorepo</h4>
+        <p>Create <code>/frontend</code> (Vite + React) and <code>/backend</code> (FastAPI) directories. Initialize git, add <code>.gitignore</code>, configure <code>README.md</code>, add Docker Compose for local dev (postgres + fastapi + vite).</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-num">Step 02</div>
+        <h4>Port HTML to React Components</h4>
+        <p>Convert each UI section (hero, tip blocks, dividers, closing) into reusable React components. Preserve all CSS as Tailwind classes or CSS Modules. Implement scroll-reveal via <code>useIntersectionObserver</code> hook.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-num">Step 03</div>
+        <h4>Define Data Contracts</h4>
+        <p>Write Pydantic schemas for all entities: <code>TipResponse</code>, <code>UserCreate</code>, <code>UserLogin</code>, <code>ProgressCreate</code>, <code>SubscriptionStatus</code>. These become the API contract between frontend and backend.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-num">Step 04</div>
+        <h4>Build PostgreSQL Models + Migrations</h4>
+        <p>Define SQLAlchemy ORM models for all tables. Initialize Alembic. Run first migration. Seed the database with the 9 existing tips from the HTML (write a one-time seed script in Python).</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-num">Step 05</div>
+        <h4>Build FastAPI Routes</h4>
+        <p>Implement all routers in order: tips (read-only first), auth, progress, admin. Add JWT middleware. Add rate limiting to auth endpoints. Write integration tests with <code>pytest</code> + <code>httpx</code>.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-num">Step 06</div>
+        <h4>Connect React to FastAPI</h4>
+        <p>Create <code>services/api.js</code> using Axios with JWT interceptors. Implement React Query for tips fetching with stale-while-revalidate caching. Wire up login/register flows to auth endpoints.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-num">Step 07</div>
+        <h4>Implement Email Capture + Stripe Billing</h4>
+        <p>Add email opt-in form (before guide or as a modal after tip 3). Integrate Stripe Checkout for premium tier. Implement webhook handler for subscription lifecycle events. Gate premium tips via <code>&lt;PremiumGate&gt;</code> component.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-num">Step 08</div>
+        <h4>Build Admin Panel</h4>
+        <p>Simple <code>/admin</code> React page (role-gated). CRUD interface for tips (add, edit, reorder, toggle premium). View subscriber list and user progress stats. No third-party admin framework needed — keep it custom.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-num">Step 09</div>
+        <h4>QA Checklist</h4>
+        <p>All 9 tips render from the database. Auth signup/login/logout works. Premium tips are gated behind subscription. Stripe checkout completes and unlocks content. Admin can edit a tip and see it reflected immediately. Mobile responsive. All API errors show user-friendly messages.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-num">Step 10</div>
+        <h4>Repo Readiness</h4>
+        <p>Write <code>README.md</code> with local dev setup instructions, env var documentation, and deployment guide. Add GitHub Actions CI (lint + test on PR). Tag v1.0.0. Push to GitHub.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 7: MONETIZATION ── -->
+  <section>
+    <span class="section-label">Section 07 &nbsp;·&nbsp; Monetization Potential</span>
+    <h2>Revenue Opportunity</h2>
+
+    <div class="money-card">
+      <div class="money-range">$8k – $40k / yr</div>
+      <p><strong>SaaS subscription model</strong> for small business owners on Alignable</p>
+      <p>Plus: $3k–$15k one-time license potential for white-label resale to agencies or Alignable power-users</p>
+    </div>
+
+    <h3>Pricing Models</h3>
+    <ul class="dot-list">
+      <li><strong>Model A — Subscription:</strong> Free tier (tips 1–6) + Premium at $9–$19/month (all 9 tips + downloadable PDF + new content drip). With 50–200 paying subscribers this generates $5.4k–$45.6k ARR.</li>
+      <li><strong>Model B — One-Time Purchase:</strong> $47–$97 lifetime access. With 100–300 buyers this generates $4.7k–$29.1k. Lower recurring but faster validation.</li>
+      <li><strong>Model C — Agency White-Label:</strong> Sell the full codebase as a white-label SaaS to Alignable coaches, consultants, or small business agencies for $1k–$5k per license.</li>
+    </ul>
+
+    <div class="callout">
+      <p><strong>Basis for estimate:</strong> The Alignable user base consists of ~7–9 million small business owners (per Alignable's own claims). Niche education products targeting active Alignable users are a tight but highly motivated audience. Darren's brand (DarrenSites.Pro) as the author gives it authentic authority, reducing customer acquisition cost significantly.</p>
+    </div>
+  </section>
+
+  <!-- ── SECTION 8: TARGET MARKET ── -->
+  <section>
+    <span class="section-label">Section 08 &nbsp;·&nbsp; Target Market</span>
+    <h2>Ideal Customers</h2>
+
+    <div class="target-grid">
+      <div class="target-card">
+        <h4>Small Business Owners on Alignable</h4>
+        <p>The primary audience — solopreneurs, local service providers, and main-street businesses who are already on Alignable and want to maximize their investment. They'll pay for a guide that makes the platform "click."</p>
+      </div>
+      <div class="target-card">
+        <h4>Digital Marketing Consultants</h4>
+        <p>Consultants who advise small businesses on social and professional networking. They'd buy this product to resell the knowledge to their clients, or to offer as a branded add-on to their services.</p>
+      </div>
+      <div class="target-card">
+        <h4>Alignable Premium Members</h4>
+        <p>Users who've already paid for Alignable Premium are self-selected as people willing to invest in the platform. They're the highest-intent buyers for a guide that unlocks more value from their existing subscription.</p>
+      </div>
+      <div class="target-card">
+        <h4>New Alignable Signups</h4>
+        <p>Recently joined users feeling overwhelmed by the platform. This product positions perfectly as an "Alignable onboarding accelerator" — they discover it early and it shapes their entire platform experience.</p>
+      </div>
+      <div class="target-card">
+        <h4>Real Estate Agents & Brokers</h4>
+        <p>A heavily represented demographic on Alignable. They rely on local networking and would immediately grasp the value of a guide that helps them land clients through the Events feature (Tip 9).</p>
+      </div>
+      <div class="target-card">
+        <h4>Coaches & Freelancers</h4>
+        <p>Coaches, life coaches, copywriters, designers — independent professionals who use Alignable to fill their pipeline. Darren's personal story (finding his first client via a video one-on-one) resonates deeply with this group.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 9: GO/NO-GO ── -->
+  <section>
+    <span class="section-label">Section 09 &nbsp;·&nbsp; Go / No-Go Verdict</span>
+    <h2>Readiness Assessment</h2>
+
+    <div class="verdict-block">
+      <div class="verdict-badge medium">MEDIUM</div>
+      <p><strong>Readiness Rating: Medium</strong></p>
+      <p>The visual design and content are strong. The gap to a functional product is significant but well-defined — no exotic technical challenges, no blocked architecture decisions.</p>
+    </div>
+
+    <h3>Primary Blockers</h3>
+    <ul class="dot-list">
+      <li>Zero backend exists — the entire API layer must be built from scratch</li>
+      <li>No authentication system — users cannot sign up, log in, or track progress</li>
+      <li>No database — all content is hardcoded; no persistence of any kind</li>
+      <li>No monetization layer — Stripe integration is fully absent</li>
+      <li>Image assets are unmanaged — likely broken outside the original machine</li>
+    </ul>
+
+    <h3>Strengths to Build On</h3>
+    <ul class="dot-list">
+      <li>The UI design is production-quality and requires minimal redesign work</li>
+      <li>Content is complete, well-structured, and ready to seed into a database</li>
+      <li>No prohibited platforms or technical debt — a clean slate for the real stack</li>
+      <li>Author brand (DarrenSites.Pro) provides immediate marketing credibility</li>
+    </ul>
+
+    <h3>Effort Estimate</h3>
+    <div class="callout">
+      <p><strong>Total estimated effort: 80–140 hours</strong> for a solo developer, or 3–5 sprints (2 weeks each) for a small team. A senior full-stack developer could ship v1 in 2–3 weeks at full pace. This is a <strong>medium effort</strong> project with very high clarity — no ambiguous requirements, clean design reference, well-understood domain.</p>
+    </div>
+
+    <h3>Top 3 Next Actions</h3>
+    <ul class="dot-list">
+      <li><strong>Action 1:</strong> Scaffold the monorepo — create <code>/frontend</code> (Vite + React 18) and <code>/backend</code> (FastAPI + SQLAlchemy + Alembic), connect via Docker Compose, push initial commit to GitHub.</li>
+      <li><strong>Action 2:</strong> Write the PostgreSQL seed script — extract all 9 tips, their steps, tags, and titles from the HTML into a Python seed file. This validates the data model and immediately makes the content database-driven.</li>
+      <li><strong>Action 3:</strong> Port the hero and first tip block into React components with real API data — this proves the full stack works end-to-end and gives Darren a live demo to share within the first week.</li>
+    </ul>
+  </section>
+
+</article>
+
+<footer>
+  <p>Audit prepared April 03, 2026 &nbsp;·&nbsp; Target Stack: <span>React + FastAPI + PostgreSQL</span> &nbsp;·&nbsp; File: <span>index.html</span></p>
+  <p style="margin-top: 0.5rem;">The content analyzed belongs to Darren Oates / DarrenSites.Pro. This audit is a technical planning document.</p>
+</footer>
+
+</body>
+</html>

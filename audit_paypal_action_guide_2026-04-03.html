@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audit — PayPal Action Guide · 2026-04-03</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080808;
+    --bg2: #0d0d0d;
+    --bg3: #111111;
+    --accent: #E8A020;
+    --accent-dim: rgba(232,160,32,0.18);
+    --accent-glow: rgba(232,160,32,0.08);
+    --text: #D8D0C4;
+    --text-soft: #888;
+    --text-muted: #444;
+    --border: #1e1e1e;
+    --border-mid: #2a2a2a;
+    --warn: #C0392B;
+    --warn-dim: rgba(192,57,43,0.15);
+    --ok: #27AE60;
+    --ok-dim: rgba(39,174,96,0.12);
+    --mid: #D4A55A;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Sora', sans-serif;
+    font-size: 16px;
+    line-height: 1.8;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    opacity: 0.028;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 200px;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* Top accent bar */
+  .top-bar {
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, transparent 0%, var(--accent) 20%, var(--mid) 50%, var(--accent) 80%, transparent 100%);
+    position: fixed;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 0 30px 4px rgba(232,160,32,0.25);
+  }
+
+  article {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 80px 32px 120px;
+  }
+
+  /* ===== MASTHEAD ===== */
+  header {
+    padding-top: 40px;
+    padding-bottom: 72px;
+    border-bottom: 1px solid var(--border-mid);
+    margin-bottom: 72px;
+    animation: fadeIn 0.8s ease both;
+  }
+
+  .masthead-label {
+    display: inline-block;
+    font-family: 'Sora', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 28px;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--accent-dim);
+  }
+
+  .product-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 9vw, 100px);
+    font-weight: 700;
+    line-height: 0.92;
+    letter-spacing: -1px;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  .product-name em {
+    font-style: italic;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--mid) 60%, #fff5 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    filter: drop-shadow(0 0 20px rgba(232,160,32,0.3));
+  }
+
+  .tagline {
+    font-size: 17px;
+    color: var(--text-soft);
+    margin-top: 18px;
+    font-weight: 300;
+    letter-spacing: 0.3px;
+    max-width: 560px;
+    line-height: 1.7;
+  }
+
+  .audit-meta {
+    margin-top: 32px;
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .audit-meta span {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-family: 'Sora', sans-serif;
+  }
+
+  .audit-meta span strong {
+    color: var(--text-soft);
+  }
+
+  /* ===== SECTION CHROME ===== */
+  section {
+    margin-bottom: 72px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    opacity: 0.8;
+  }
+
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 24px;
+    letter-spacing: -0.3px;
+  }
+
+  h2 em {
+    font-style: italic;
+    color: var(--accent);
+    -webkit-text-fill-color: var(--accent);
+  }
+
+  h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 10px;
+    margin-top: 28px;
+    letter-spacing: 0.1px;
+  }
+
+  p { margin-bottom: 16px; color: var(--text); }
+
+  hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-mid) 20%, var(--border-mid) 80%, transparent);
+    margin: 64px 0;
+  }
+
+  strong { color: #E0D8CC; font-weight: 600; }
+  em { font-style: italic; color: var(--accent); font-style: normal; }
+
+  ul, ol {
+    padding-left: 0;
+    list-style: none;
+    margin-bottom: 16px;
+  }
+
+  li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 10px;
+    color: var(--text);
+    font-size: 15.5px;
+    line-height: 1.75;
+  }
+
+  li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  ol { counter-reset: ol-counter; }
+  ol li { counter-increment: ol-counter; }
+  ol li::before {
+    content: counter(ol-counter) '.';
+    font-variant-numeric: tabular-nums;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 1px;
+  }
+
+  /* ===== CALLOUT BLOCKS ===== */
+  .callout {
+    border-left: 3px solid var(--accent);
+    background: var(--accent-glow);
+    padding: 24px 28px;
+    margin: 28px 0;
+    border-radius: 0 8px 8px 0;
+  }
+
+  .callout p { margin: 0; font-size: 15px; line-height: 1.75; }
+
+  .warn-block {
+    border-left: 3px solid var(--warn);
+    background: var(--warn-dim);
+    padding: 20px 24px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+  }
+
+  .warn-block p { margin: 0; font-size: 14.5px; }
+
+  .ok-block {
+    border-left: 3px solid var(--ok);
+    background: var(--ok-dim);
+    padding: 20px 24px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+  }
+
+  .ok-block p { margin: 0; font-size: 14.5px; }
+
+  /* Warning badge */
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 4px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+
+  .badge-warn { background: var(--warn); color: #fff; }
+  .badge-ok   { background: var(--ok); color: #fff; }
+  .badge-info { background: var(--accent); color: #080808; }
+
+  /* ===== FLAG TABLE ===== */
+  .flag-item {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px 26px;
+    margin-bottom: 14px;
+    transition: border-color 0.2s;
+  }
+
+  .flag-item:hover { border-color: var(--border-mid); }
+
+  .flag-item .flag-title {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .flag-item p {
+    font-size: 14.5px;
+    color: #a09888;
+    margin: 6px 0 0;
+    line-height: 1.7;
+  }
+
+  /* ===== STAT CARD ===== */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin: 28px 0;
+  }
+
+  .stat-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px 20px;
+    text-align: center;
+  }
+
+  .stat-card .num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    display: block;
+    filter: drop-shadow(0 0 12px rgba(232,160,32,0.25));
+  }
+
+  .stat-card .lbl {
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    display: block;
+    margin-top: 8px;
+  }
+
+  /* ===== MONEY CALLOUT ===== */
+  .money-box {
+    background: linear-gradient(135deg, #100d05 0%, #1a1200 100%);
+    border: 1px solid rgba(232,160,32,0.3);
+    border-radius: 14px;
+    padding: 36px 40px;
+    margin: 32px 0;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(232,160,32,0.06);
+  }
+
+  .money-box .range {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(38px, 6vw, 64px);
+    font-weight: 700;
+    color: var(--accent);
+    display: block;
+    line-height: 1;
+    filter: drop-shadow(0 0 20px rgba(232,160,32,0.4));
+  }
+
+  .money-box .range-label {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+
+  .money-box p {
+    font-size: 14.5px;
+    color: var(--text-soft);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.75;
+  }
+
+  /* ===== VERDICT ===== */
+  .verdict {
+    text-align: center;
+    padding: 60px 40px;
+    border: 1px solid var(--border-mid);
+    border-radius: 16px;
+    background: var(--bg3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .verdict::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--ok), transparent);
+  }
+
+  .verdict-badge {
+    display: inline-block;
+    font-family: 'Sora', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    padding: 10px 30px;
+    border-radius: 6px;
+    margin-bottom: 24px;
+    background: var(--ok-dim);
+    color: var(--ok);
+    border: 1px solid rgba(39,174,96,0.3);
+  }
+
+  .verdict-badge.medium {
+    background: var(--accent-dim);
+    color: var(--accent);
+    border-color: rgba(232,160,32,0.3);
+  }
+
+  .verdict-badge.low {
+    background: var(--warn-dim);
+    color: var(--warn);
+    border-color: rgba(192,57,43,0.3);
+  }
+
+  .verdict h2 {
+    font-size: clamp(32px, 5vw, 52px);
+    margin-bottom: 16px;
+  }
+
+  .verdict p {
+    max-width: 500px;
+    margin: 0 auto;
+    color: var(--text-soft);
+    font-size: 15px;
+  }
+
+  /* ===== TIMELINE ===== */
+  .timeline { position: relative; padding-left: 28px; }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+  }
+
+  .tl-item {
+    position: relative;
+    margin-bottom: 32px;
+  }
+
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -26px;
+    top: 7px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 10px rgba(232,160,32,0.5);
+  }
+
+  .tl-item h3 {
+    font-size: 17px;
+    margin-top: 0;
+    margin-bottom: 6px;
+  }
+
+  .tl-item p {
+    font-size: 14.5px;
+    color: #998f84;
+    margin: 0;
+    line-height: 1.7;
+  }
+
+  /* ===== ARCH BLOCK ===== */
+  .arch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin: 24px 0;
+  }
+
+  .arch-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 22px;
+  }
+
+  .arch-card .arch-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .arch-card p {
+    font-size: 14px;
+    color: #908880;
+    margin: 0;
+    line-height: 1.7;
+  }
+
+  /* ===== TARGET MARKET ===== */
+  .target-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+    margin: 24px 0;
+  }
+
+  .target-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 22px;
+  }
+
+  .target-card h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .target-card p {
+    font-size: 13.5px;
+    color: #908880;
+    margin: 0;
+    line-height: 1.65;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    border-top: 1px solid var(--border);
+    padding-top: 40px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
+
+  footer p { color: var(--text-muted); }
+
+  /* ===== ANIMATIONS ===== */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  section:nth-child(1) { animation-delay: 0.1s; }
+  section:nth-child(2) { animation-delay: 0.2s; }
+  section:nth-child(3) { animation-delay: 0.3s; }
+  section:nth-child(4) { animation-delay: 0.4s; }
+  section:nth-child(5) { animation-delay: 0.5s; }
+  section:nth-child(6) { animation-delay: 0.6s; }
+  section:nth-child(7) { animation-delay: 0.65s; }
+  section:nth-child(8) { animation-delay: 0.7s; }
+  section:nth-child(9) { animation-delay: 0.75s; }
+  section:nth-child(10) { animation-delay: 0.8s; }
+
+  @media print {
+    body { background: #080808; color: var(--text); }
+    .top-bar { display: none; }
+    section { animation: none; }
+    header { animation: none; }
+  }
+
+  @media (max-width: 600px) {
+    article { padding: 60px 20px 80px; }
+    .audit-meta { gap: 14px; }
+    .stat-grid { grid-template-columns: 1fr 1fr; }
+    .money-box { padding: 28px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar"></div>
+
+<article>
+
+  <!-- ===== MASTHEAD ===== -->
+  <header>
+    <div class="masthead-label">App Audit Series · 2026-04-03</div>
+    <div class="product-name">
+      <em>PayPal</em><br>
+      Action Guide
+    </div>
+    <p class="tagline">A personal financial emergency guide masquerading as a product — and the only file in this audit series that raises serious ethical and design questions about what a "product" actually is.</p>
+    <div class="audit-meta">
+      <span>File · <strong>paypal_action_guide.html</strong></span>
+      <span>Lines · <strong>685</strong></span>
+      <span>Readiness · <strong>LOW</strong></span>
+      <span>Auditor · <strong>App Audit System</strong></span>
+    </div>
+  </header>
+
+  <!-- ===== SECTION 01: FILE OVERVIEW ===== -->
+  <section>
+    <div class="section-label">File Overview · Section 01</div>
+    <h2>What <em>Is</em> This File?</h2>
+
+    <p>This is not a SaaS product. It is not an app. It is a <strong>personal advocacy document</strong> — a beautifully designed, emotionally urgent, single-page HTML guide created to help one specific person ("Miss Lee") navigate a PayPal funds-hold emergency in real time. The design is polished: animated background, dark theme, step-by-step action cards, a phone script, rights disclosure, and live external links to CFPB and BBB complaint portals.</p>
+
+    <div class="callout">
+      <p>The document was clearly built with care and urgency — the kind of thing created when someone needed help <em>right now</em> and a document was the fastest way to deliver structured, actionable guidance. It is the only file in this audit series that is, at its core, a <strong>personal communication tool</strong>, not a business application.</p>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <span class="num">685</span>
+        <span class="lbl">Lines of HTML</span>
+      </div>
+      <div class="stat-card">
+        <span class="num">5</span>
+        <span class="lbl">Immediate Action Steps</span>
+      </div>
+      <div class="stat-card">
+        <span class="num">4</span>
+        <span class="lbl">Escalation Tactics</span>
+      </div>
+      <div class="stat-card">
+        <span class="num">0</span>
+        <span class="lbl">Prohibited Dependencies</span>
+      </div>
+    </div>
+
+    <p>There are no implied user roles beyond a single consumer in distress. There is no onboarding flow, no dashboard, no account. The entire document serves a single user journey: <em>open it → read the steps → take action immediately.</em></p>
+
+    <h3>Implied Product Type</h3>
+    <p>If this file were to be developed into a <em>real product</em>, the closest analogues would be: a <strong>consumer financial rights advocacy platform</strong>, a <strong>dispute resolution tool</strong>, or a <strong>legal tech assistant for payment holds</strong>. That transformation is significant — the distance from this document to a deployable app is large.</p>
+  </section>
+
+  <hr>
+
+  <!-- ===== SECTION 02: FEATURE INVENTORY ===== -->
+  <section>
+    <div class="section-label">Feature Inventory · Section 02</div>
+    <h2>What <em>It Has</em></h2>
+
+    <p>Despite being a static document, the file is feature-rich from a content and UX perspective:</p>
+
+    <ul>
+      <li><strong>Animated hero with display typography</strong> — Bebas Neue headline at 110px, with CSS gradient text and staggered fade-in animations</li>
+      <li><strong>Urgency banner</strong> — pulsing red glow animation, emotionally calibrated messaging, financial emergency framing</li>
+      <li><strong>5 immediate action step cards</strong> — numbered, grid-based, with hover lift animation, each containing specific instructions and contextual tips</li>
+      <li><strong>4 escalation tactic cards</strong> — CFPB, State AG, BBB, Social Media — with icons and concise descriptions</li>
+      <li><strong>Phone script box</strong> — verbatim language for a PayPal support call, formatted as a styled blockquote</li>
+      <li><strong>Know Your Rights section</strong> — 6 bullet points citing PayPal's user agreement, regulatory context, and CFPB leverage</li>
+      <li><strong>3 live external links</strong> — PayPal Contact page, CFPB complaint portal, BBB complaint form — all functional with target="_blank"</li>
+      <li><strong>SVG swirl animation</strong> — rotating decorative overlay, pure CSS, no JS</li>
+      <li><strong>Fully responsive layout</strong> — mobile breakpoint at 560px</li>
+      <li><strong>Zero JavaScript</strong> — 100% CSS animations and HTML structure</li>
+    </ul>
+
+    <div class="ok-block">
+      <p><span class="badge badge-ok">CLEAN</span> No Firebase. No Databutton. No Riff. No proprietary platform code. No external JavaScript dependencies. The external links point only to legitimate government and consumer protection websites.</p>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ===== SECTION 03: TECH AUDIT ===== -->
+  <section>
+    <div class="section-label">Technology Audit · Section 03</div>
+    <h2>What <em>Breaks</em> Requirements</h2>
+
+    <p>Technical violations are minimal — this file is remarkably clean. The constraint violations are architectural, not technical.</p>
+
+    <div class="flag-item">
+      <div class="flag-title">
+        <span class="badge badge-info">NOTE</span>
+        Google Fonts CDN Dependency
+      </div>
+      <p>Bebas Neue, DM Sans, and Courier Prime are loaded via Google Fonts <code>&lt;link&gt;</code>. This is a soft external dependency — the file will still render gracefully with system fonts if the CDN is unavailable, but for production use, fonts should be self-hosted.</p>
+    </div>
+
+    <div class="flag-item">
+      <div class="flag-title">
+        <span class="badge badge-warn">FLAG</span>
+        Static, Non-Updateable Content
+      </div>
+      <p>All content is hardcoded. If PayPal changes their complaint flow, updates their support URL, or the CFPB portal URL changes, this document is immediately stale with no update mechanism. A real product would require a CMS or at minimum a structured content layer.</p>
+    </div>
+
+    <div class="flag-item">
+      <div class="flag-title">
+        <span class="badge badge-warn">FLAG</span>
+        Zero Personalization or Data State
+      </div>
+      <p>The document references "Miss Lee" and "[amount]" in the phone script as placeholder text. In a real tool, these would be dynamic fields pulled from user input or a session — neither of which exist here.</p>
+    </div>
+
+    <div class="flag-item">
+      <div class="flag-title">
+        <span class="badge badge-warn">FLAG</span>
+        No Tracking or Outcome Measurement
+      </div>
+      <p>There is no way to know if any of these steps were taken, which worked, or whether the user's situation was resolved. A product-grade version needs outcome tracking — did the funds get released? Which step worked?</p>
+    </div>
+
+    <div class="ok-block">
+      <p><span class="badge badge-ok">VERDICT</span> This file has zero prohibited dependencies and zero vendor-lock. If anything, it is the most technically conservative and compliant file in the entire audit series.</p>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ===== SECTION 04: GAP ANALYSIS ===== -->
+  <section>
+    <div class="section-label">Gap Analysis · Section 04</div>
+    <h2>What It <em>Needs</em> to Become Real</h2>
+
+    <p>The transformation from this personal guide to a deployable product requires building essentially every backend layer from scratch:</p>
+
+    <h3>Authentication & User State</h3>
+    <ul>
+      <li>User registration and login (email/password, optionally OAuth)</li>
+      <li>Session state so the document can be personalized to the specific user's case</li>
+      <li>Role differentiation if an advisor or attorney is on the platform alongside end users</li>
+    </ul>
+
+    <h3>Case Management Database</h3>
+    <ul>
+      <li>A <strong>Case</strong> entity — user, platform (PayPal/Venmo/Cash App), hold amount, hold date, release date if resolved</li>
+      <li>A <strong>Steps Taken</strong> log — which steps were attempted, dates, outcomes</li>
+      <li>A <strong>Documents</strong> table — screenshots, reference numbers, complaint confirmation IDs</li>
+      <li>A <strong>Complaint Record</strong> — CFPB/BBB/AG complaint IDs and statuses</li>
+    </ul>
+
+    <h3>Dynamic Content Generation</h3>
+    <ul>
+      <li>The phone script must be auto-populated with the user's real name, amount, and case details</li>
+      <li>The step-by-step guide should adapt based on platform (PayPal vs Venmo vs Stripe), hold type (new seller vs F&F vs goods), and hold age</li>
+      <li>Regulatory content (CFPB, AG office URLs, BBB links) must be maintained and verified</li>
+    </ul>
+
+    <h3>Notification & Follow-Up System</h3>
+    <ul>
+      <li>Email/SMS reminders for time-sensitive steps ("You filed the CFPB complaint 12 days ago — follow up today")</li>
+      <li>Resolution tracking — did the funds release? What worked?</li>
+      <li>Outcome reporting for aggregate insight ("67% of users who used Confirm Receipt got funds within 2 hours")</li>
+    </ul>
+
+    <h3>Admin & Content Management</h3>
+    <ul>
+      <li>A CMS for maintaining step content, scripts, regulatory links, and escalation tactics</li>
+      <li>An admin panel to see active cases and escalation patterns</li>
+    </ul>
+
+    <h3>Security</h3>
+    <ul>
+      <li>Input validation on all form fields (hold amount, dates, personal info)</li>
+      <li>PII handling — this tool processes sensitive financial distress information</li>
+      <li>Rate limiting on complaint submission flows</li>
+      <li>HTTPS enforced, CSP headers configured</li>
+    </ul>
+  </section>
+
+  <hr>
+
+  <!-- ===== SECTION 05: ARCHITECTURE ===== -->
+  <section>
+    <div class="section-label">Target Architecture · Section 05</div>
+    <h2>The Proposed <em>Stack</em></h2>
+
+    <div class="arch-grid">
+      <div class="arch-card">
+        <span class="arch-label">React Frontend</span>
+        <p>Pages: Onboarding, Case Setup, Step Tracker, Script Generator, Complaint Filer, Dashboard. Components: StepCard, ScriptBox, ComplaintForm, CaseTimeline, OutcomeSummary. State: React Context or Zustand for active case session.</p>
+      </div>
+      <div class="arch-card">
+        <span class="arch-label">FastAPI Backend</span>
+        <p>Routers: /auth, /cases, /steps, /complaints, /content, /admin. Services: CaseService, NotificationService, ContentService, ComplaintTrackerService. Pydantic schemas for all models. Async throughout.</p>
+      </div>
+      <div class="arch-card">
+        <span class="arch-label">PostgreSQL Schema</span>
+        <p>Tables: users, cases, steps_log, complaint_records, documents, content_blocks (CMS), outcome_events. JSONB for step metadata. Timestamps on all mutation events. Full audit trail.</p>
+      </div>
+      <div class="arch-card">
+        <span class="arch-label">Environment & Config</span>
+        <p>DATABASE_URL, SECRET_KEY, SMTP credentials for notifications, optional Twilio for SMS. Alembic for migrations. Docker Compose for local dev. .env.example committed.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ===== SECTION 06: IMPLEMENTATION PLAN ===== -->
+  <section>
+    <div class="section-label">Implementation Roadmap · Section 06</div>
+    <h2>Step-by-Step <em>Build Plan</em></h2>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <h3>1. Case Intake Flow (React)</h3>
+        <p>Build the onboarding wizard: platform selection, hold amount, hold date, transaction type (F&F vs Goods), and account age. This populates the Case model and personalizes all downstream content.</p>
+      </div>
+      <div class="tl-item">
+        <h3>2. Define Data Contracts (Pydantic)</h3>
+        <p>Schema-first: CaseCreate, CaseRead, StepLog, ComplaintRecord, UserCreate/Read. All input models include strict validation — no unvalidated strings hit the DB layer.</p>
+      </div>
+      <div class="tl-item">
+        <h3>3. FastAPI Routes + Business Logic</h3>
+        <p>Implement /cases CRUD, /steps/log, /complaints/create, /auth/register+login. Add dependency injection for DB sessions. Integrate async email via SMTP (fastapi-mail).</p>
+      </div>
+      <div class="tl-item">
+        <h3>4. PostgreSQL Models + Alembic Migrations</h3>
+        <p>SQLAlchemy models for all entities. Run initial migration. Seed content_blocks table with the 5 steps, 4 tactics, and phone script from the current HTML — these become CMS-managed.</p>
+      </div>
+      <div class="tl-item">
+        <h3>5. Dynamic Script Generator</h3>
+        <p>React component + FastAPI endpoint that injects user's real name, hold amount, platform name, and dates into the phone script template. Render as copyable formatted text. Add a "Copy to clipboard" button.</p>
+      </div>
+      <div class="tl-item">
+        <h3>6. Step Tracker Component</h3>
+        <p>Each step card becomes interactive: checkable, with a timestamp logged to steps_log via POST /steps/log. Progress bar at the top. "Steps completed: 3 of 5" status indicator.</p>
+      </div>
+      <div class="tl-item">
+        <h3>7. Auth, Validation, Persistence</h3>
+        <p>JWT-based auth (python-jose + passlib). bcrypt password hashing. Protected routes on all case endpoints. CORS configured. Input sanitization on all user-submitted text fields.</p>
+      </div>
+      <div class="tl-item">
+        <h3>8. QA + Repo Readiness</h3>
+        <p>Write pytest suite for all FastAPI routes. Playwright E2E test for full case flow. README with Docker Compose setup, env variable docs, and seeding instructions. .github/workflows for CI on push.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ===== SECTION 07: MONETIZATION ===== -->
+  <section>
+    <div class="section-label">Monetization Potential · Section 07</div>
+    <h2>The <em>Revenue</em> Picture</h2>
+
+    <div class="money-box">
+      <span class="range">$18k – $120k</span>
+      <span class="range-label">Estimated Annual Revenue Range · At Scale</span>
+      <p>A freemium consumer tool monetized through premium case tracking, attorney referral partnerships, and white-label licensing to financial advocacy NGOs, credit unions, and legal aid organizations.</p>
+    </div>
+
+    <h3>Pricing Model A — Consumer Freemium</h3>
+    <p>Free: basic step guide, generic script. Paid ($4.99/month or $29 one-time case unlock): personalized script generation, step tracking with timestamps, CFPB complaint pre-fill, outcome analytics, email follow-up reminders. Target: gig workers, small sellers, freelancers — the population most exposed to payment holds.</p>
+
+    <h3>Pricing Model B — Institutional Licensing</h3>
+    <p>White-label the platform to <strong>credit unions, CDFIs, legal aid clinics, and consumer advocacy orgs</strong> as a member benefit. $200–$800/month per institutional seat. This is the higher-ceiling model — one credit union with 10,000 members is worth more than 1,000 individual subscribers.</p>
+
+    <div class="callout">
+      <p><strong>The honest ceiling:</strong> This is a niche tool for a specific problem. It is not a $1M ARR business on its own. But as a component of a broader <em>consumer financial rights platform</em> — covering PayPal, Venmo, Cash App, Stripe, and chargebacks — the addressable market grows substantially. The moat is content accuracy, regulatory freshness, and outcome data.</p>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ===== SECTION 08: TARGET MARKET ===== -->
+  <section>
+    <div class="section-label">Target Market · Section 08</div>
+    <h2>Who <em>Pays</em> For This</h2>
+
+    <div class="target-grid">
+      <div class="target-card">
+        <h4>Freelancers & Gig Workers</h4>
+        <p>Designers, writers, Etsy sellers, Fiverr contractors — anyone who receives irregular payments through PayPal and is disproportionately hit by new-seller holds. They'd pay for this the day a hold hits.</p>
+      </div>
+      <div class="target-card">
+        <h4>Small Online Sellers</h4>
+        <p>eBay, Facebook Marketplace, and Depop resellers operating at low volume who lack the account history to avoid holds. A resolved hold is worth more than the subscription cost by a factor of 10–100x.</p>
+      </div>
+      <div class="target-card">
+        <h4>Credit Unions & CDFIs</h4>
+        <p>Community financial institutions whose low-income members are most harmed by fintech holds. A white-label tool becomes a differentiated member benefit and financial wellness offering.</p>
+      </div>
+      <div class="target-card">
+        <h4>Legal Aid Clinics</h4>
+        <p>Consumer protection attorneys and legal aid orgs advising clients on payment disputes. The platform reduces triage time per client — from 2 hours of custom advice to 20 minutes of guided tool use.</p>
+      </div>
+      <div class="target-card">
+        <h4>Consumer Advocacy NGOs</h4>
+        <p>Organizations focused on fintech fairness, predatory financial practices, and low-income consumer rights. Would license the tool to distribute to constituents and use outcome data for policy advocacy.</p>
+      </div>
+      <div class="target-card">
+        <h4>Financial Coaches & Advisors</h4>
+        <p>Independent financial coaches serving gig economy clients who repeatedly encounter payment platform problems. A branded version becomes a client resource that saves coaching hours.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ===== SECTION 09: ETHICAL NOTE ===== -->
+  <section>
+    <div class="section-label">Ethical Note · Section 09</div>
+    <h2>A Word About <em>What This Actually Is</em></h2>
+
+    <div class="callout">
+      <p>This file is unique in this audit series. It was not built to be productized — it was built to help a specific person in a specific crisis. The ethical question before productizing it is not "can we build this?" but <strong>"should the person who built it be compensated for the IP, and should the person it was built for consent to its use as a product foundation?"</strong></p>
+    </div>
+
+    <p>Any commercialization of this template should acknowledge its origin. The content is clear, the advice is legally sound, and the document represents real intellectual and emotional labor. If this becomes a product, the right move is to treat the original document as a founding artifact and its creator as a stakeholder — not just a source file to be repurposed.</p>
+
+    <p>The platform built on this foundation must also be careful about one specific risk: <strong>providing content that could be mistaken for legal advice</strong>. Every user interaction that involves regulatory filings, rights claims, or dispute language must be clearly labeled as <em>informational guidance, not legal counsel</em>.</p>
+  </section>
+
+  <hr>
+
+  <!-- ===== SECTION 10: VERDICT ===== -->
+  <section>
+    <div class="section-label">Go / No-Go Verdict · Section 10</div>
+    <h2>The <em>Verdict</em></h2>
+
+    <div class="verdict">
+      <div class="verdict-badge low">LOW READINESS · AS-IS</div>
+      <h2>Exceptional Document.<br>Minimal Product.</h2>
+      <p>This file is not a product — it is a moment of care, rendered in code. It works perfectly at what it was designed to do. The path to a real product is long, and the market ceiling is modest. But the content is accurate, the design is strong, and the need is real.</p>
+    </div>
+
+    <h3>Primary Blockers</h3>
+    <ul>
+      <li>No user accounts, no session state, no persistence of any kind</li>
+      <li>Static content with no update mechanism — regulatory links will go stale</li>
+      <li>No business model validation — is this a consumer app, a B2B tool, or an NGO partnership play?</li>
+      <li>Legal review required before productizing — consumer financial advice has compliance implications</li>
+      <li>No outcome data — the core value proposition ("this works") is unverified at scale</li>
+    </ul>
+
+    <h3>Effort Estimate</h3>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <span class="num">80–120</span>
+        <span class="lbl">Hours · MVP Build</span>
+      </div>
+      <div class="stat-card">
+        <span class="num">200–280</span>
+        <span class="lbl">Hours · Full Platform</span>
+      </div>
+      <div class="stat-card">
+        <span class="num">3–5</span>
+        <span class="lbl">Weeks to Functional Beta</span>
+      </div>
+    </div>
+
+    <h3>Top 3 Next Actions</h3>
+    <ol>
+      <li><strong>Validate the market:</strong> Before writing a single line of backend code, identify 10 potential institutional partners (credit unions, legal aid orgs, financial coaches) and present them the document. Do they want a platform version? What would they pay? One paid institutional partnership changes the entire build justification.</li>
+      <li><strong>Legal review:</strong> Get a consumer protection attorney to review the content — specifically the "Know Your Rights" section and any language that touches on PayPal's user agreement. Confirm what's permissible to publish as informational content vs. what constitutes advice.</li>
+      <li><strong>Build the Case Intake + Script Generator MVP:</strong> The highest-value single feature is the personalized phone script. Build just that — a 3-field form (name, amount, platform) that generates a formatted, copy-ready script. Ship that in 2 weeks. Test it with real users. The rest of the platform follows if there's traction.</li>
+    </ol>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <p>App Audit Series · paypal_action_guide.html · Produced 2026-04-03</p>
+    <p style="margin-top:8px; font-size:12px;">Every audit in this series is a planning document. Build decisions require human judgment, legal review, and market validation.</p>
+  </footer>
+
+</article>
+
+</body>
+</html>

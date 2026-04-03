@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AUDIT REPORT — The Prostate Truth | Sam & Lamar Advocacy Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,700;0,900;1,300;1,700&family=Epilogue:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #080808;
+    --bg2:      #0d0d0d;
+    --bg3:      #111;
+    --bg4:      #161616;
+    --accent:   #00D4FF;
+    --accent2:  #007A99;
+    --accent3:  rgba(0,212,255,0.12);
+    --warn:     #FF6B35;
+    --warn-bg:  rgba(255,107,53,0.08);
+    --go:       #00E5A0;
+    --go-bg:    rgba(0,229,160,0.1);
+    --text:     #E8E8E8;
+    --muted:    #888;
+    --dim:      #444;
+    --border:   rgba(0,212,255,0.15);
+    --border2:  rgba(0,212,255,0.3);
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Epilogue', sans-serif;
+    font-size: 16px;
+    line-height: 1.75;
+    overflow-x: hidden;
+  }
+
+  /* NOISE GRAIN */
+  body::before {
+    content:'';
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:9999;
+    opacity:0.35;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)' opacity='0.05'/%3E%3C/svg%3E");
+  }
+
+  /* TOP BAR */
+  .top-bar {
+    height:5px;
+    background:linear-gradient(90deg, #007A99, #00D4FF, #00E5A0, #00D4FF, #007A99);
+    background-size:200% 100%;
+    animation: barShift 6s linear infinite;
+  }
+  @keyframes barShift { 0%{background-position:0% 0%} 100%{background-position:200% 0%} }
+
+  /* WRAPPER */
+  .wrap {
+    max-width:860px;
+    margin:0 auto;
+    padding:0 40px;
+  }
+
+  /* ---- FADE IN ANIMATIONS ---- */
+  .fade { opacity:0; transform:translateY(28px); animation:fadeUp 0.7s ease forwards; }
+  .fade:nth-child(1){ animation-delay:0.1s }
+  .fade:nth-child(2){ animation-delay:0.25s }
+  .fade:nth-child(3){ animation-delay:0.4s }
+  .fade:nth-child(4){ animation-delay:0.55s }
+  .fade:nth-child(5){ animation-delay:0.7s }
+  @keyframes fadeUp { to{ opacity:1; transform:translateY(0) } }
+
+  /* ---- MASTHEAD ---- */
+  .masthead {
+    padding:100px 40px 80px;
+    max-width:860px;
+    margin:0 auto;
+    border-bottom:1px solid var(--border);
+  }
+
+  .masthead-label {
+    font-size:10px;
+    letter-spacing:0.5em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:32px;
+    display:flex;
+    align-items:center;
+    gap:16px;
+  }
+  .masthead-label::after { content:''; flex:1; max-width:80px; height:1px; background:var(--accent2); }
+
+  .masthead h1 {
+    font-family:'Fraunces', serif;
+    font-size:clamp(56px, 9vw, 108px);
+    font-weight:900;
+    line-height:0.9;
+    letter-spacing:-0.03em;
+    margin-bottom:20px;
+    background:linear-gradient(135deg, #fff 0%, #a0eeff 40%, var(--accent) 100%);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+    text-shadow:none;
+  }
+
+  .masthead-tagline {
+    font-family:'Fraunces', serif;
+    font-size:clamp(18px, 2.5vw, 24px);
+    font-style:italic;
+    font-weight:300;
+    color:var(--muted);
+    margin-bottom:36px;
+    line-height:1.4;
+  }
+
+  .masthead-meta {
+    display:flex;
+    gap:32px;
+    flex-wrap:wrap;
+    align-items:center;
+  }
+
+  .meta-pill {
+    font-size:11px;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--muted);
+    padding:6px 16px;
+    border:1px solid var(--border);
+    background:var(--bg3);
+  }
+
+  .meta-pill span { color:var(--accent); }
+
+  /* ---- SECTION ANATOMY ---- */
+  .section {
+    padding:80px 40px;
+    max-width:860px;
+    margin:0 auto;
+    border-bottom:1px solid var(--border);
+    position:relative;
+  }
+
+  .section-label {
+    font-size:9px;
+    letter-spacing:0.6em;
+    text-transform:uppercase;
+    color:var(--accent2);
+    margin-bottom:12px;
+  }
+
+  .section h2 {
+    font-family:'Fraunces', serif;
+    font-size:clamp(30px, 4vw, 48px);
+    font-weight:700;
+    line-height:1.1;
+    letter-spacing:-0.02em;
+    margin-bottom:20px;
+    background:linear-gradient(120deg, var(--text) 60%, var(--accent));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+  }
+
+  .section-intro {
+    font-size:16px;
+    color:var(--muted);
+    max-width:680px;
+    line-height:1.85;
+    margin-bottom:48px;
+  }
+
+  /* ---- CALLOUT / PULLQUOTE ---- */
+  .callout {
+    border-left:3px solid var(--accent);
+    padding:24px 28px;
+    background:var(--accent3);
+    margin:40px 0;
+    box-shadow:0 0 40px rgba(0,212,255,0.04);
+  }
+
+  .callout p {
+    font-family:'Fraunces', serif;
+    font-size:18px;
+    font-style:italic;
+    color:var(--text);
+    line-height:1.6;
+  }
+
+  /* ---- FEATURE GRID ---- */
+  .feature-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:2px;
+    background:var(--border);
+    margin-top:40px;
+  }
+
+  .feature-cell {
+    background:var(--bg2);
+    padding:28px;
+    position:relative;
+  }
+
+  .feature-cell-label {
+    font-size:10px;
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:10px;
+  }
+
+  .feature-cell-title {
+    font-family:'Fraunces', serif;
+    font-size:20px;
+    font-weight:700;
+    color:var(--text);
+    margin-bottom:10px;
+  }
+
+  .feature-cell p {
+    font-size:14px;
+    color:var(--muted);
+    line-height:1.7;
+  }
+
+  /* ---- WARN BADGE ---- */
+  .warn-badge {
+    display:inline-block;
+    background:var(--warn-bg);
+    border:1px solid rgba(255,107,53,0.4);
+    color:var(--warn);
+    font-size:9px;
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+    padding:4px 12px;
+    margin-bottom:8px;
+  }
+
+  .violation-block {
+    padding:24px;
+    border:1px solid rgba(255,107,53,0.2);
+    background:rgba(255,107,53,0.04);
+    margin-bottom:16px;
+  }
+
+  .violation-title {
+    font-family:'Fraunces', serif;
+    font-size:18px;
+    font-weight:700;
+    color:var(--warn);
+    margin-bottom:8px;
+  }
+
+  .violation-desc { font-size:14px; color:var(--muted); line-height:1.7; }
+  .violation-fix { font-size:13px; color:var(--text); margin-top:10px; }
+  .violation-fix strong { color:var(--go); }
+
+  /* ---- GAP LIST ---- */
+  .gap-list {
+    list-style:none;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    margin-top:32px;
+  }
+
+  .gap-list li {
+    display:flex;
+    gap:16px;
+    font-size:15px;
+    color:var(--muted);
+    padding:16px 20px;
+    background:var(--bg3);
+    border-left:2px solid var(--accent);
+    line-height:1.6;
+  }
+
+  .gap-list li strong { color:var(--text); }
+
+  .gap-num {
+    font-family:'Fraunces', serif;
+    font-size:24px;
+    font-weight:900;
+    color:var(--border2);
+    flex-shrink:0;
+    line-height:1;
+    margin-top:2px;
+  }
+
+  /* ---- ARCHITECTURE BLOCK ---- */
+  .arch-grid {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+    margin-top:40px;
+  }
+
+  .arch-card {
+    background:var(--bg3);
+    border:1px solid var(--border);
+    padding:28px 24px;
+    border-top:3px solid var(--accent);
+  }
+
+  .arch-card-title {
+    font-family:'Fraunces', serif;
+    font-size:16px;
+    font-weight:700;
+    color:var(--accent);
+    margin-bottom:16px;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+  }
+
+  .arch-card ul { list-style:none; display:flex; flex-direction:column; gap:8px; }
+  .arch-card ul li { font-size:13px; color:var(--muted); padding-left:14px; position:relative; }
+  .arch-card ul li::before { content:'›'; position:absolute; left:0; color:var(--accent); font-weight:700; }
+
+  /* ---- ROADMAP TIMELINE ---- */
+  .roadmap { margin-top:48px; position:relative; padding-left:48px; }
+
+  .roadmap::before {
+    content:'';
+    position:absolute;
+    left:12px; top:0; bottom:0;
+    width:2px;
+    background:linear-gradient(180deg, var(--accent), var(--accent2), transparent);
+  }
+
+  .roadmap-step {
+    position:relative;
+    padding:28px 0 28px 32px;
+    border-bottom:1px solid rgba(255,255,255,0.04);
+  }
+
+  .roadmap-step:last-child { border-bottom:none; }
+
+  .roadmap-dot {
+    position:absolute;
+    left:-40px;
+    top:32px;
+    width:16px; height:16px;
+    border-radius:50%;
+    border:2px solid var(--accent);
+    background:var(--bg);
+    box-shadow:0 0 10px rgba(0,212,255,0.3);
+  }
+
+  .step-num {
+    font-size:9px;
+    letter-spacing:0.4em;
+    text-transform:uppercase;
+    color:var(--accent2);
+    margin-bottom:6px;
+  }
+
+  .step-title {
+    font-family:'Fraunces', serif;
+    font-size:20px;
+    font-weight:700;
+    color:var(--text);
+    margin-bottom:8px;
+  }
+
+  .step-desc { font-size:14px; color:var(--muted); line-height:1.7; max-width:640px; }
+
+  /* ---- MONETIZATION CARD ---- */
+  .money-card {
+    background:linear-gradient(135deg, #060e12, #0a1a22);
+    border:1px solid var(--border2);
+    padding:48px;
+    margin-top:40px;
+    position:relative;
+    overflow:hidden;
+  }
+
+  .money-card::before {
+    content:'$';
+    position:absolute;
+    right:-10px; top:-30px;
+    font-family:'Fraunces', serif;
+    font-size:220px;
+    font-weight:900;
+    color:rgba(0,212,255,0.04);
+    line-height:1;
+    pointer-events:none;
+  }
+
+  .money-range {
+    font-family:'Fraunces', serif;
+    font-size:clamp(48px, 7vw, 80px);
+    font-weight:900;
+    line-height:1;
+    color:var(--accent);
+    text-shadow:0 0 60px rgba(0,212,255,0.3);
+    margin-bottom:12px;
+  }
+
+  .money-label {
+    font-size:12px;
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+    color:var(--accent2);
+    margin-bottom:24px;
+  }
+
+  .money-models {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+    margin-top:32px;
+  }
+
+  .money-model {
+    background:rgba(0,212,255,0.05);
+    border:1px solid var(--border);
+    padding:20px;
+  }
+
+  .money-model-title {
+    font-size:12px;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:8px;
+  }
+
+  .money-model p { font-size:14px; color:var(--muted); line-height:1.6; }
+
+  /* ---- TARGET MARKET ---- */
+  .target-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+    margin-top:40px;
+  }
+
+  .target-card {
+    background:var(--bg3);
+    border:1px solid var(--border);
+    padding:24px;
+  }
+
+  .target-card-title {
+    font-family:'Fraunces', serif;
+    font-size:16px;
+    font-weight:700;
+    color:var(--text);
+    margin-bottom:4px;
+  }
+
+  .target-card-role {
+    font-size:11px;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--accent2);
+    margin-bottom:12px;
+  }
+
+  .target-card p { font-size:13px; color:var(--muted); line-height:1.65; }
+
+  /* ---- VERDICT ---- */
+  .verdict-wrap {
+    padding:80px 40px;
+    max-width:860px;
+    margin:0 auto;
+  }
+
+  .verdict-badge {
+    display:inline-block;
+    font-family:'Fraunces', serif;
+    font-size:clamp(48px, 7vw, 80px);
+    font-weight:900;
+    line-height:1;
+    padding:28px 48px;
+    border:2px solid;
+    margin-bottom:40px;
+    position:relative;
+  }
+
+  .verdict-badge.medium {
+    color:#F5C518;
+    border-color:#F5C518;
+    background:rgba(245,197,24,0.05);
+    box-shadow:0 0 60px rgba(245,197,24,0.1);
+  }
+
+  .blockers-list {
+    list-style:none;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin:24px 0;
+  }
+
+  .blockers-list li {
+    font-size:15px;
+    color:var(--muted);
+    padding-left:20px;
+    position:relative;
+    line-height:1.6;
+  }
+
+  .blockers-list li::before { content:'×'; position:absolute; left:0; color:var(--warn); font-weight:700; }
+
+  .next-actions {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+    margin-top:32px;
+  }
+
+  .next-card {
+    background:var(--bg3);
+    border:1px solid var(--border);
+    border-top:2px solid var(--accent);
+    padding:24px;
+  }
+
+  .next-num {
+    font-family:'Fraunces', serif;
+    font-size:36px;
+    font-weight:900;
+    color:var(--border2);
+    line-height:1;
+    margin-bottom:10px;
+  }
+
+  .next-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:8px; }
+  .next-desc { font-size:13px; color:var(--muted); line-height:1.6; }
+
+  /* ---- FOOTER ---- */
+  footer {
+    border-top:1px solid var(--border);
+    padding:48px 40px;
+    max-width:860px;
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:20px;
+  }
+
+  .footer-brand {
+    font-family:'Fraunces', serif;
+    font-size:20px;
+    font-weight:700;
+    color:var(--accent);
+  }
+
+  .footer-meta { font-size:12px; color:var(--dim); letter-spacing:0.1em; }
+
+  /* ---- STAT ROW ---- */
+  .stat-row {
+    display:flex;
+    gap:24px;
+    margin:40px 0;
+    flex-wrap:wrap;
+  }
+
+  .stat-box {
+    flex:1;
+    min-width:160px;
+    padding:20px 24px;
+    background:var(--bg3);
+    border:1px solid var(--border);
+    border-top:2px solid var(--accent);
+  }
+
+  .stat-number {
+    font-family:'Fraunces', serif;
+    font-size:40px;
+    font-weight:900;
+    color:var(--accent);
+    line-height:1;
+    margin-bottom:6px;
+    text-shadow:0 0 30px rgba(0,212,255,0.25);
+  }
+
+  .stat-label {
+    font-size:11px;
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+
+  /* ---- TABLE ---- */
+  table { width:100%; border-collapse:collapse; margin-top:32px; }
+  th {
+    font-size:10px;
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+    color:var(--accent2);
+    padding:12px 16px;
+    text-align:left;
+    background:var(--bg3);
+    border-bottom:1px solid var(--border2);
+  }
+  td {
+    font-size:14px;
+    color:var(--muted);
+    padding:14px 16px;
+    border-bottom:1px solid var(--border);
+    vertical-align:top;
+    line-height:1.6;
+  }
+  tr:hover td { background:rgba(0,212,255,0.02); }
+  td strong { color:var(--text); }
+
+  /* PRINT */
+  @media print {
+    body { background:#000; color:#ddd; }
+    .top-bar { background:#00D4FF; }
+    body::before { display:none; }
+  }
+
+  @media (max-width:640px) {
+    .wrap, .masthead, .section, .verdict-wrap, footer { padding-left:24px; padding-right:24px; }
+    .feature-grid, .arch-grid, .money-models, .target-grid, .next-actions { grid-template-columns:1fr; }
+    .money-range { font-size:48px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar"></div>
+
+<!-- ====== MASTHEAD ====== -->
+<header class="masthead">
+  <div class="fade masthead-label">Audit Report · App Gap Analysis · 2026</div>
+  <h1 class="fade">The<br>Prostate<br>Truth</h1>
+  <p class="fade masthead-tagline">Sam & Lamar: Voices for Men's Health<br>— Full Platform Audit & Implementation Blueprint</p>
+  <div class="fade masthead-meta">
+    <div class="meta-pill">File: <span>prostate_advocate_plan.html</span></div>
+    <div class="meta-pill">Audited: <span>April 03, 2026</span></div>
+    <div class="meta-pill">Stack: <span>React · FastAPI · PostgreSQL</span></div>
+    <div class="meta-pill">Verdict: <span>MEDIUM READINESS</span></div>
+  </div>
+</header>
+
+<!-- ====== SECTION 01 — FILE OVERVIEW ====== -->
+<section class="section">
+  <div class="section-label">Overview · Section 01</div>
+  <h2>What This File Is</h2>
+  <p class="section-intro">A masterfully produced static HTML advocacy marketing plan — essentially a pitch deck, brand manual, and content strategy rolled into one stunning single-page document. It does not function as an app. But it contains everything needed to <em>spec</em> a real one.</p>
+
+  <div class="callout">
+    <p>"The Prostate Truth" is a dual-avatar men's health advocacy brand built around two fictional community spokespeople — Sam (58, prostate cancer survivor) and Lamar (44, community health worker) — targeting Black men and all men facing prostate cancer risk. It is equal parts media brand, health education platform, and community mobilization campaign.</p>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-box">
+      <div class="stat-number">1,334</div>
+      <div class="stat-label">Lines of HTML</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number">0</div>
+      <div class="stat-label">Backend Logic</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number">8</div>
+      <div class="stat-label">Content Sections</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number">4</div>
+      <div class="stat-label">Implied App Phases</div>
+    </div>
+  </div>
+
+  <p style="font-size:15px; color:var(--muted); margin-top:24px; line-height:1.8;">
+    <strong style="color:var(--text)">Core Product:</strong> A men's prostate health advocacy and education platform — combining media content (podcast, video, newsletter), community mobilization (barbershops, churches, HBCU outreach), clinical resource access (screening reminders, doctor finders), and a mobile companion app. Implied user roles include <strong style="color:var(--text)">general public / health seekers</strong>, <strong style="color:var(--text)">community health ambassadors</strong>, and <strong style="color:var(--text)">platform administrators/content managers</strong>. The implied journey: Awareness → Education → Screening Action → Community Engagement → Ongoing Prevention.
+  </p>
+</section>
+
+<!-- ====== SECTION 02 — FEATURE INVENTORY ====== -->
+<section class="section">
+  <div class="section-label">Feature Inventory · Section 02</div>
+  <h2>What It Contains</h2>
+  <p class="section-intro">Every UI section, data surface, and implied feature extracted from the HTML — mapped to what it would require as a real application.</p>
+
+  <div class="feature-grid">
+    <div class="feature-cell">
+      <div class="feature-cell-label">Hero Section</div>
+      <div class="feature-cell-title">Impact Stats Display</div>
+      <p>3 hero statistics: 1 in 8 lifetime diagnosis rate, 2× risk for Black men, 99% early survival rate. Static. Needs a CMS-driven stat widget or hardcoded from a verified data source with an update workflow.</p>
+    </div>
+    <div class="feature-cell">
+      <div class="feature-cell-label">Crisis Data Section</div>
+      <div class="feature-cell-title">Epidemiological Dashboard</div>
+      <p>6 large crisis statistics with narrative context. Fully static. Ideal candidate for a data management panel where admins can update stats and sources as new CDC/ACS data is released annually.</p>
+    </div>
+    <div class="feature-cell">
+      <div class="feature-cell-label">Avatar Profiles</div>
+      <div class="feature-cell-title">Sam & Lamar Character Cards</div>
+      <p>Two richly detailed character profiles with backstories, traits, and platform roles. Static. Should become CMS-managed entity records — enabling future character expansion and localization.</p>
+    </div>
+    <div class="feature-cell">
+      <div class="feature-cell-label">Expert Advisors</div>
+      <div class="feature-cell-title">Authority / Credibility Panel</div>
+      <p>Cards for Dr. Gundry and Dr. Wallach with credentials and contribution summary. Needs a "Physicians & Experts" database table, enabling dynamic roster expansion as the network grows.</p>
+    </div>
+    <div class="feature-cell">
+      <div class="feature-cell-label">Content Pillars</div>
+      <div class="feature-cell-title">6-Pillar Taxonomy Grid</div>
+      <p>Six topic categories: Early Detection, Nutritional Defense, Supplementation, Lifestyle, Genetics, Post-Diagnosis. This IS the content taxonomy. Needs to map to actual content objects in the database.</p>
+    </div>
+    <div class="feature-cell">
+      <div class="feature-cell-label">Prevention Protocol</div>
+      <div class="feature-cell-title">4-Card Protocol Grid</div>
+      <p>Dietary, mineral/supplement, screening schedule, and lifestyle cards with action checklists. Strong candidate for an interactive checklist feature with user-specific completion tracking.</p>
+    </div>
+    <div class="feature-cell">
+      <div class="feature-cell-label">Implementation Timeline</div>
+      <div class="feature-cell-title">4-Phase Roadmap (12 months)</div>
+      <p>Phases: Brand Foundation → Community Seeding → Media Expansion → Authority Building. This is a project management spec. Needs a task/milestone tracker or at minimum a live progress dashboard.</p>
+    </div>
+    <div class="feature-cell">
+      <div class="feature-cell-label">Media Channels</div>
+      <div class="feature-cell-title">8-Channel Distribution Grid</div>
+      <p>Podcast, Social, Newsletter, Community Events, YouTube, Website/Blog, Radio, Mobile App. Each channel is a content pipeline that needs real backend infrastructure — feeds, subscribers, scheduling.</p>
+    </div>
+    <div class="feature-cell">
+      <div class="feature-cell-label">Manifesto Section</div>
+      <div class="feature-cell-title">Brand Promise Statement</div>
+      <p>Core mission copy with three pillars: Speak the Truth, Represent Every Man, Back it with Science. Static brand copy. Should be CMS-managed.</p>
+    </div>
+    <div class="feature-cell">
+      <div class="feature-cell-label">CTA Section</div>
+      <div class="feature-cell-title">Two Dead Buttons</div>
+      <p>"Launch the Campaign" and "Download the Full Plan" — both href="#", both inert. These need to connect to real functionality: waitlist signup, PDF download generation, or campaign launch workflow.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ====== SECTION 03 — TECHNOLOGY AUDIT ====== -->
+<section class="section">
+  <div class="section-label">Technology Audit · Section 03</div>
+  <h2>Violations & Flags</h2>
+  <p class="section-intro">Everything that breaks the React + FastAPI + PostgreSQL mandate — or signals critical functional debt.</p>
+
+  <div class="violation-block">
+    <div class="warn-badge">⚠ Clean Base</div>
+    <div class="violation-title">Zero Prohibited Platform Dependencies</div>
+    <div class="violation-desc">Unlike other audited files in this series, The Prostate Truth HTML is completely clean of Firebase, Databutton, Riff, or any vendor-locked platform code. All CSS is inline, all fonts loaded from Google Fonts, zero JS frameworks. Fully portable.</div>
+  </div>
+
+  <div class="violation-block">
+    <div class="warn-badge">⚠ Technical Debt</div>
+    <div class="violation-title">Dead CTA Buttons — No Functional Actions</div>
+    <div class="violation-desc">Both CTAs in the final section point to href="#". "Launch the Campaign" and "Download the Full Plan" produce zero outcomes. In a production app these need either a campaign waitlist form (FastAPI POST → PostgreSQL subscribers table) or a PDF generation endpoint (WeasyPrint/ReportLab via FastAPI).</div>
+    <div class="violation-fix"><strong>Replacement:</strong> FastAPI POST /api/subscribers for email capture + React modal form; FastAPI GET /api/plan/download for server-rendered PDF export.</div>
+  </div>
+
+  <div class="violation-block">
+    <div class="warn-badge">⚠ Static Content</div>
+    <div class="violation-title">All Data is Hardcoded HTML — No CMS or Database</div>
+    <div class="violation-desc">Every stat, avatar story, expert bio, pillar description, and timeline phase is hardcoded in HTML. Any update requires editing the source file directly. As the platform scales content across 8 channels and 4 campaign phases, this becomes unmanageable in hours, not years.</div>
+    <div class="violation-fix"><strong>Replacement:</strong> PostgreSQL content tables + FastAPI CRUD endpoints + React admin dashboard. All content becomes database records editable without redeployment.</div>
+  </div>
+
+  <div class="violation-block">
+    <div class="warn-badge">⚠ No Personalization</div>
+    <div class="violation-title">No User State, Auth, or Screening Tracker</div>
+    <div class="violation-desc">The file implies — and the plan explicitly calls for — a mobile app with PSA tracking reminders, appointment scheduling, and personalized content feeds. None of that infrastructure exists. There's not even a login button.</div>
+    <div class="violation-fix"><strong>Replacement:</strong> JWT-based auth (FastAPI + OAuth2 + bcrypt), PostgreSQL users table, screening_records table, appointments table, and a React dashboard with personal health timeline.</div>
+  </div>
+
+  <div class="violation-block">
+    <div class="warn-badge">⚠ No Community Features</div>
+    <div class="violation-title">Community Forum Mentioned, Not Built</div>
+    <div class="violation-desc">The website/blog channel description explicitly mentions a "community forum." No forum exists. This is a significant engagement feature gap — community is central to the Sam & Lamar brand.</div>
+    <div class="violation-fix"><strong>Replacement:</strong> PostgreSQL forum_posts + forum_threads + forum_members tables; FastAPI discussion endpoints; React threaded comment components.</div>
+  </div>
+</section>
+
+<!-- ====== SECTION 04 — GAP ANALYSIS ====== -->
+<section class="section">
+  <div class="section-label">Gap Analysis · Section 04</div>
+  <h2>What It Needs to Become Real</h2>
+  <p class="section-intro">The full gap list — authentication, database schema, API layer, and features required to transform this gorgeous static plan into a living, functional advocacy platform.</p>
+
+  <ul class="gap-list">
+    <li>
+      <span class="gap-num">01</span>
+      <div><strong>Authentication & User Identity</strong> — No login, registration, or user identity exists. Needed for PSA tracking, content personalization, community forum, ambassador enrollment, and event registration. Requires JWT + OAuth2 + bcrypt in FastAPI and a <code>users</code> table with role columns (visitor, member, ambassador, admin).</div>
+    </li>
+    <li>
+      <span class="gap-num">02</span>
+      <div><strong>Content Management System</strong> — All articles, pillar content, expert bios, and stats are frozen in HTML. Needs a full CRUD content API and React admin panel so non-technical staff can publish blog posts, update statistics, add expert advisors, and manage campaign phases without touching code.</div>
+    </li>
+    <li>
+      <span class="gap-num">03</span>
+      <div><strong>PSA Screening Tracker</strong> — The plan explicitly calls for a mobile app with PSA tracking reminders. Needs a <code>screening_records</code> table (user_id, psa_value, test_date, provider, notes), a FastAPI series of endpoints, and a React timeline chart showing PSA velocity over time.</div>
+    </li>
+    <li>
+      <span class="gap-num">04</span>
+      <div><strong>Email Capture & Newsletter System</strong> — The plan targets email list building as a primary growth lever. CTA buttons are dead. Needs a subscribers table, a FastAPI POST /subscribe endpoint, email validation, and integration with an email sending service (SendGrid/Mailgun via SMTP relay).</div>
+    </li>
+    <li>
+      <span class="gap-num">05</span>
+      <div><strong>Community Forum</strong> — Explicitly referenced in the website/blog section. A fully featured discussion system with thread creation, replies, moderation, and member profiles. PostgreSQL: <code>forum_categories</code>, <code>forum_threads</code>, <code>forum_posts</code>, <code>forum_members</code>.</div>
+    </li>
+    <li>
+      <span class="gap-num">06</span>
+      <div><strong>Ambassador / Partner Enrollment</strong> — Phase 2 calls for a "Barbershop Partnership Program" and "Church Outreach Kit." No form or workflow exists. Needs an application form → admin review → approval pipeline with status tracking and automated outreach kit delivery.</div>
+    </li>
+    <li>
+      <span class="gap-num">07</span>
+      <div><strong>Doctor Finder / Locator</strong> — The website description mentions a "local doctor finder." Needs either a curated provider database (PostgreSQL: <code>providers</code> table with specialty, location, geocoords) with a React map interface, or integration with NPI lookup APIs.</div>
+    </li>
+    <li>
+      <span class="gap-num">08</span>
+      <div><strong>Event Registration System</strong> — Phase 4 launches an Annual Health Summit (virtual + in-person). Needs a <code>events</code> table, registration workflow, capacity management, confirmation emails, and a virtual session integration (Zoom API or similar).</div>
+    </li>
+    <li>
+      <span class="gap-num">09</span>
+      <div><strong>Podcast & Video CMS</strong> — The podcast is the anchor content format. Needs an <code>episodes</code> table, audio file storage (S3 or Cloudflare R2), embedded player, show notes, and an RSS feed generator for podcast directories (Apple, Spotify).</div>
+    </li>
+    <li>
+      <span class="gap-num">10</span>
+      <div><strong>Admin Dashboard & Analytics</strong> — No admin tooling exists. Needs subscriber counts, content views, PSA tracker usage, forum activity, ambassador applications, and campaign milestone tracking in a React admin panel backed by FastAPI aggregate endpoints.</div>
+    </li>
+  </ul>
+</section>
+
+<!-- ====== SECTION 05 — TARGET ARCHITECTURE ====== -->
+<section class="section">
+  <div class="section-label">Architecture · Section 05</div>
+  <h2>Target Stack Architecture</h2>
+  <p class="section-intro">The proposed production-grade architecture — React frontend, FastAPI backend, PostgreSQL persistence — structured for a health advocacy platform at national scale.</p>
+
+  <div class="arch-grid">
+    <div class="arch-card">
+      <div class="arch-card-title">React Frontend</div>
+      <ul>
+        <li>pages/ — Home, About, Blog, Podcast, Screening, Forum, Admin</li>
+        <li>components/ — AvatarCard, EpisodePlayer, PSAChart, ForumThread, EventCard, DoctorFinder</li>
+        <li>hooks/ — useAuth, useScreeningHistory, useContent</li>
+        <li>services/ — api.js (Axios), auth.js</li>
+        <li>context/ — AuthContext, UserContext</li>
+        <li>State: React Query for server state, Zustand for UI state</li>
+        <li>Routing: React Router v6</li>
+      </ul>
+    </div>
+    <div class="arch-card">
+      <div class="arch-card-title">FastAPI Backend</div>
+      <ul>
+        <li>routers/ — auth, users, content, screening, forum, events, ambassadors, admin</li>
+        <li>schemas/ — Pydantic request/response models per domain</li>
+        <li>services/ — business logic layer per domain</li>
+        <li>repositories/ — DB query layer (SQLAlchemy 2.0 async)</li>
+        <li>models/ — SQLAlchemy ORM models</li>
+        <li>middleware/ — CORS, rate limiting, JWT auth</li>
+        <li>tasks/ — Background: email sends, reminder scheduling (Celery)</li>
+      </ul>
+    </div>
+    <div class="arch-card">
+      <div class="arch-card-title">PostgreSQL Schema</div>
+      <ul>
+        <li>users (id, email, role, created_at)</li>
+        <li>screening_records (user_id, psa_value, test_date)</li>
+        <li>content_posts (pillar_id, title, body, author, published_at)</li>
+        <li>episodes (title, audio_url, show_notes, published_at)</li>
+        <li>forum_threads + forum_posts (user_id, content, created_at)</li>
+        <li>events (title, date, type, capacity, registrations)</li>
+        <li>ambassadors (user_id, org, status, outreach_kit_sent)</li>
+        <li>providers (name, specialty, lat, lng, accepting_patients)</li>
+        <li>subscribers (email, source, subscribed_at)</li>
+      </ul>
+    </div>
+  </div>
+
+  <table style="margin-top:32px;">
+    <thead>
+      <tr>
+        <th>Environment Variable</th>
+        <th>Purpose</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>DATABASE_URL</strong></td><td>PostgreSQL async connection string</td></tr>
+      <tr><td><strong>SECRET_KEY</strong></td><td>JWT signing secret (256-bit random)</td></tr>
+      <tr><td><strong>SENDGRID_API_KEY</strong></td><td>Transactional email delivery</td></tr>
+      <tr><td><strong>S3_BUCKET / R2_BUCKET</strong></td><td>Podcast audio + media file storage</td></tr>
+      <tr><td><strong>GOOGLE_MAPS_API_KEY</strong></td><td>Doctor finder map integration</td></tr>
+      <tr><td><strong>REDIS_URL</strong></td><td>Celery broker for background tasks</td></tr>
+      <tr><td><strong>CORS_ORIGINS</strong></td><td>Allowed frontend origins</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ====== SECTION 06 — IMPLEMENTATION ROADMAP ====== -->
+<section class="section">
+  <div class="section-label">Implementation Roadmap · Section 06</div>
+  <h2>Build Sequence</h2>
+  <p class="section-intro">A practical, phased engineering sequence to transform this advocacy plan into a production-ready platform. Ship value early, build authority incrementally.</p>
+
+  <div class="roadmap">
+    <div class="roadmap-step">
+      <div class="roadmap-dot"></div>
+      <div class="step-num">Step 01 — Week 1–2</div>
+      <div class="step-title">Project Scaffolding & Database Schema</div>
+      <div class="step-desc">Create the monorepo structure (frontend/, backend/, docs/). Initialize FastAPI with SQLAlchemy async + Alembic. Define all PostgreSQL models. Configure environment variables. Set up CI/CD pipeline (GitHub Actions).</div>
+    </div>
+    <div class="roadmap-step">
+      <div class="roadmap-dot"></div>
+      <div class="step-num">Step 02 — Week 2–3</div>
+      <div class="step-title">Authentication Layer</div>
+      <div class="step-desc">JWT auth with FastAPI OAuth2PasswordBearer. User registration, login, email verification, password reset. React AuthContext with protected routes. Role-based access control (visitor / member / ambassador / admin).</div>
+    </div>
+    <div class="roadmap-step">
+      <div class="roadmap-dot"></div>
+      <div class="step-num">Step 03 — Week 3–5</div>
+      <div class="step-title">Convert HTML to React Component Library</div>
+      <div class="step-desc">Translate every HTML section into React components using the existing design system (color vars, typography, grid patterns). Build reusable: AvatarCard, StatBox, ContentPillarCard, PillarGrid, TimelineItem, ChannelGrid. Replace all hardcoded content with props.</div>
+    </div>
+    <div class="roadmap-step">
+      <div class="roadmap-dot"></div>
+      <div class="step-num">Step 04 — Week 5–7</div>
+      <div class="step-title">Content API & CMS Admin Panel</div>
+      <div class="step-desc">FastAPI CRUD routes for blog posts, pillar content, expert records, campaign phases, and stats. React admin dashboard with rich text editor (TipTap). Connect frontend to API via React Query. Replace all hardcoded HTML content with API-driven data.</div>
+    </div>
+    <div class="roadmap-step">
+      <div class="roadmap-dot"></div>
+      <div class="step-num">Step 05 — Week 7–9</div>
+      <div class="step-title">PSA Tracker & Screening Features</div>
+      <div class="step-desc">Build the PSA screening log (the platform's highest-value clinical feature). React form for PSA entry, Recharts timeline visualization showing PSA velocity over time, reminder scheduling via Celery Beat, and export to PDF. Authenticated route, user-specific data only.</div>
+    </div>
+    <div class="roadmap-step">
+      <div class="roadmap-dot"></div>
+      <div class="step-num">Step 06 — Week 9–11</div>
+      <div class="step-title">Email Capture, Newsletter & Ambassador Enrollment</div>
+      <div class="step-desc">Live CTA buttons: email subscribe form → FastAPI → PostgreSQL subscribers table → SendGrid confirmation email. Ambassador application form → admin review queue → approval workflow → automated outreach kit delivery (PDF email attachment).</div>
+    </div>
+    <div class="roadmap-step">
+      <div class="roadmap-dot"></div>
+      <div class="step-num">Step 07 — Week 11–13</div>
+      <div class="step-title">Podcast Player & Media Pipeline</div>
+      <div class="step-desc">S3/R2 audio upload in admin. FastAPI episode endpoints. React custom audio player (waveform visualization optional). Auto-generated RSS feed for podcast directory submission. YouTube embed integration for video content.</div>
+    </div>
+    <div class="roadmap-step">
+      <div class="roadmap-dot"></div>
+      <div class="step-num">Step 08 — Week 13–15</div>
+      <div class="step-title">Community Forum & Doctor Finder</div>
+      <div class="step-desc">PostgreSQL-backed discussion forum with thread/post/reply model. Moderation tooling in admin. Doctor finder with NPI API integration or curated provider database, React map view (Google Maps or Leaflet), and filter by specialty and accepting status.</div>
+    </div>
+    <div class="roadmap-step">
+      <div class="roadmap-dot"></div>
+      <div class="step-num">Step 09 — Week 15–16</div>
+      <div class="step-title">QA, Security Hardening & Repo Readiness</div>
+      <div class="step-desc">Input validation on all endpoints (Pydantic). Rate limiting (slowapi). HIPAA-awareness review for any health data storage. Security headers. README with setup instructions. Docker Compose for local dev. Deployment scripts for Render/Railway/Fly.io. End-to-end test coverage for critical paths.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== SECTION 07 — MONETIZATION ====== -->
+<section class="section">
+  <div class="section-label">Monetization · Section 07</div>
+  <h2>Revenue Potential</h2>
+  <p class="section-intro">Once fully functional and GitHub-ready, this platform occupies a uniquely powerful niche: culturally competent men's health technology with a mission-driven brand that commands trust. That combination commands premium positioning.</p>
+
+  <div class="money-card">
+    <div class="money-label">Estimated Monetization Range · Annual</div>
+    <div class="money-range">$85k–$400k</div>
+    <p style="font-size:15px; color:var(--muted); max-width:560px; line-height:1.8;">Justified by the combination of health-adjacent SaaS pricing power, grant eligibility as a health equity initiative, and a multi-channel monetization architecture that doesn't rely on a single revenue stream.</p>
+    <div class="money-models">
+      <div class="money-model">
+        <div class="money-model-title">Model A — Subscription SaaS</div>
+        <p>Free tier for awareness content. Premium tier ($9.99–$19.99/month) for PSA tracker, personalized screening reminders, community forum, and private group coaching. At 500 paid subscribers: $60k–$120k ARR. At 2,000: $240k–$480k ARR.</p>
+      </div>
+      <div class="money-model">
+        <div class="money-model-title">Model B — Institutional & Grant Revenue</div>
+        <p>Health equity grants from NIH, Robert Wood Johnson Foundation, and CDC Prevention programs routinely fund $50k–$250k for Black men's health initiatives. Hospital system white-label licensing at $15k–$50k/year per system. Corporate wellness program licensing for Fortune 500 HR departments.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== SECTION 08 — TARGET MARKET ====== -->
+<section class="section">
+  <div class="section-label">Target Market · Section 08</div>
+  <h2>Ideal Customers</h2>
+  <p class="section-intro">The platform serves multiple distinct customer archetypes — each representing a different monetization surface and growth channel.</p>
+
+  <div class="target-grid">
+    <div class="target-card">
+      <div class="target-card-title">Black Men Ages 40–65</div>
+      <div class="target-card-role">Primary End User</div>
+      <p>The core audience — statistically the highest-risk and most underserved demographic for prostate cancer. They'd use the PSA tracker, screening reminders, and community forum. Would subscribe at $9.99/mo for personalized health tools they trust because Sam looks like them.</p>
+    </div>
+    <div class="target-card">
+      <div class="target-card-title">Community Health Organizations</div>
+      <div class="target-card-role">Ambassador Partners</div>
+      <p>Barbershops, Black churches, HBCUs, community health centers, and urban clinics. They'd pay for ambassador kits, outreach toolkits, and co-branded screening event infrastructure. $500–$5k/year per organization.</p>
+    </div>
+    <div class="target-card">
+      <div class="target-card-title">Hospital Systems & Urology Practices</div>
+      <div class="target-card-role">Institutional Licensees</div>
+      <p>Urban hospital systems with majority-minority patient populations would white-label the platform for patient education and community outreach. $15k–$75k/year enterprise licenses. The doctor finder becomes their patient acquisition tool.</p>
+    </div>
+    <div class="target-card">
+      <div class="target-card-title">Health Equity Grant Programs</div>
+      <div class="target-card-role">Funder Partners</div>
+      <p>NIH, CDC, RWJF, and state health departments actively fund exactly this type of culturally competent digital health initiative. A functioning platform with active users is fundable at $50k–$250k per grant cycle. The mission narrative and data the platform generates are the grant application.</p>
+    </div>
+    <div class="target-card">
+      <div class="target-card-title">Corporate HR & Wellness Programs</div>
+      <div class="target-card-role">B2B Buyers</div>
+      <p>Fortune 500 companies with DEI commitments and employer-sponsored health programs would license the platform for their male employees — especially in industries with high proportions of Black male workers. $5k–$25k per corporate account annually.</p>
+    </div>
+    <div class="target-card">
+      <div class="target-card-title">Supplement & Wellness Brands</div>
+      <div class="target-card-role">Sponsor Partners</div>
+      <p>Brands aligned with Gundry and Wallach's frameworks (Gundry MD, 4Life, USANA, etc.) would pay for sponsored content placement, podcast advertising, and affiliate partnerships. $2k–$15k per campaign. Explicitly non-conflict-of-interest positioning required.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ====== SECTION 09 — VERDICT ====== -->
+<div class="verdict-wrap">
+  <div class="section-label">Go/No-Go Assessment · Section 09</div>
+
+  <div class="verdict-badge medium">MEDIUM<br>READINESS</div>
+
+  <p style="font-size:16px; color:var(--muted); max-width:620px; line-height:1.85; margin-bottom:32px;">
+    This is the strongest advocacy marketing asset audited in this series — editorially sophisticated, culturally intelligent, and structurally complete as a brand plan. It is also the most ambitious in terms of functional scope. The gap between "stunning static HTML" and "functioning national health platform" is large but entirely well-defined. Nothing here is ambiguous — every required feature is implied by the plan itself.
+  </p>
+
+  <p style="font-size:14px; color:var(--muted); margin-bottom:8px;"><strong style="color:var(--text)">Primary Blockers:</strong></p>
+  <ul class="blockers-list">
+    <li>Zero backend — no data persistence, no user accounts, no content management</li>
+    <li>PSA tracker (the platform's highest-value feature) is spec only — no UI, no data model</li>
+    <li>Both CTA buttons are dead — no email capture = no list building from day one</li>
+    <li>Community forum mentioned but entirely unbuilt</li>
+    <li>Doctor finder geo-search requires provider data sourcing strategy decision (curated vs. NPI API)</li>
+    <li>Podcast pipeline needs audio storage and RSS infrastructure before launch</li>
+  </ul>
+
+  <p style="font-size:14px; color:var(--muted); margin:24px 0 8px;"><strong style="color:var(--text)">Effort Estimate:</strong> <span style="color:var(--accent)">Large — 200–280 engineering hours</span> for MVP (auth + content API + PSA tracker + email capture). Full platform (forum + doctor finder + podcast + ambassador workflow): 400–500 hours.</p>
+
+  <div class="next-actions">
+    <div class="next-card">
+      <div class="next-num">01</div>
+      <div class="next-title">Activate the CTAs Immediately</div>
+      <div class="next-desc">Before writing a single line of React, deploy a FastAPI endpoint for email capture and connect the "Launch the Campaign" button to a working subscribe form. Start list building today — the plan says so.</div>
+    </div>
+    <div class="next-card">
+      <div class="next-num">02</div>
+      <div class="next-title">Build the PSA Tracker First</div>
+      <div class="next-desc">It's the feature that turns Sam & Lamar from a media brand into a health tool. PSA tracker + screening reminders = reason to pay. Auth + screening_records table + React chart = the MVP that justifies all other investment.</div>
+    </div>
+    <div class="next-card">
+      <div class="next-num">03</div>
+      <div class="next-title">Apply for One Grant Now</div>
+      <div class="next-desc">A working prototype — even just the HTML plan + an email capture form + a landing page — is enough to submit to Robert Wood Johnson Foundation or CDC's health equity programs. Secure $50k–$100k in non-dilutive funding before you've finished the forum.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== FOOTER ====== -->
+<footer>
+  <div class="footer-brand">The Prostate Truth</div>
+  <div class="footer-meta">Audit Report · April 03, 2026 · React + FastAPI + PostgreSQL</div>
+  <div class="footer-meta" style="color:var(--dim)">Generated by App Audit Roadmap v2</div>
+</footer>
+
+</body>
+</html>

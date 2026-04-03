@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AUDIT — Haritaki Brand Plan — 2026-04-03</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg:        #080808;
+    --bg1:       #0d0d0d;
+    --bg2:       #111111;
+    --bg3:       #161616;
+    --bg4:       #1c1c1c;
+    --emerald:   #00C48C;
+    --em-dim:    rgba(0,196,140,0.3);
+    --em-ghost:  rgba(0,196,140,0.07);
+    --em-glow:   rgba(0,196,140,0.16);
+    --text:      #E8E8E8;
+    --text2:     #9A9A9A;
+    --text3:     #484848;
+    --rule:      rgba(0,196,140,0.18);
+    --warn:      #C0392B;
+    --warn-bg:   rgba(192,57,43,0.09);
+    --ok:        #00C48C;
+    --ok-bg:     rgba(0,196,140,0.08);
+    --caution:   #E67E22;
+    --r:         5px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Sora', sans-serif;
+    font-size: 16px;
+    line-height: 1.88;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: 0.55;
+  }
+
+  .top-bar {
+    height: 4px;
+    background: linear-gradient(90deg, #00C48C 0%, #00e5a8 50%, #00C48C 100%);
+  }
+
+  .page-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 2rem 6rem;
+    position: relative; z-index: 1;
+  }
+
+  /* ── MASTHEAD ── */
+  .masthead {
+    padding: 84px 0 64px;
+    border-bottom: 1px solid var(--rule);
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.1s forwards;
+  }
+  .masthead-eyebrow {
+    font-size: 10.5px;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    color: var(--emerald);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    opacity: 0.75;
+  }
+  .masthead h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3.8rem, 9vw, 7rem);
+    font-weight: 400;
+    line-height: 0.9;
+    letter-spacing: -1.5px;
+    background: linear-gradient(135deg, #b0f5df 0%, var(--emerald) 45%, #009e72 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+  }
+  .masthead h1 em {
+    font-style: italic;
+    display: block;
+  }
+  .masthead-tagline {
+    font-size: 1.05rem;
+    color: var(--text2);
+    font-weight: 300;
+    letter-spacing: 0.3px;
+    margin-bottom: 2rem;
+  }
+  .masthead-meta {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text3);
+  }
+
+  /* ── SECTIONS ── */
+  section.audit-section {
+    padding: 64px 0;
+    border-bottom: 1px solid var(--rule);
+    opacity: 0;
+  }
+  section.audit-section:nth-child(2)  { animation: fadeUp 0.7s ease 0.20s forwards; }
+  section.audit-section:nth-child(3)  { animation: fadeUp 0.7s ease 0.35s forwards; }
+  section.audit-section:nth-child(4)  { animation: fadeUp 0.7s ease 0.50s forwards; }
+  section.audit-section:nth-child(5)  { animation: fadeUp 0.7s ease 0.65s forwards; }
+  section.audit-section:nth-child(6)  { animation: fadeUp 0.7s ease 0.78s forwards; }
+  section.audit-section:nth-child(7)  { animation: fadeUp 0.7s ease 0.90s forwards; }
+  section.audit-section:nth-child(8)  { animation: fadeUp 0.7s ease 1.00s forwards; }
+  section.audit-section:nth-child(9)  { animation: fadeUp 0.7s ease 1.10s forwards; }
+  section.audit-section:nth-child(10) { animation: fadeUp 0.7s ease 1.20s forwards; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .sec-label {
+    font-size: 10px;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    color: var(--emerald);
+    font-weight: 600;
+    margin-bottom: 0.55rem;
+    opacity: 0.7;
+  }
+  .sec-heading {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    font-weight: 400;
+    line-height: 1.08;
+    color: var(--text);
+    margin-bottom: 1.4rem;
+  }
+  .sec-heading em { font-style: italic; color: var(--emerald); }
+  .sec-intro {
+    font-size: 1rem;
+    color: var(--text2);
+    font-weight: 300;
+    margin-bottom: 2rem;
+    max-width: 680px;
+    line-height: 1.75;
+  }
+
+  hr.rule { border: none; border-top: 1px solid var(--rule); margin: 2rem 0; }
+
+  /* ── PROSE ── */
+  p { color: var(--text2); margin-bottom: 1rem; font-size: 15px; }
+  strong { color: var(--text); font-weight: 600; }
+  em { color: var(--emerald); font-style: italic; }
+
+  /* ── CALLOUT ── */
+  .callout {
+    border-left: 3px solid var(--emerald);
+    background: var(--em-ghost);
+    padding: 1.2rem 1.5rem;
+    border-radius: 0 var(--r) var(--r) 0;
+    margin: 1.5rem 0;
+    box-shadow: 0 0 24px rgba(0,196,140,0.04);
+  }
+  .callout p { margin: 0; font-size: 14.5px; color: var(--text); }
+  .callout strong { color: var(--emerald); }
+
+  /* ── FEATURE GRID ── */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 1.5rem 0;
+  }
+  .feature-item {
+    background: var(--bg2);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: var(--r);
+    padding: 14px 16px;
+  }
+  .feature-item .fi-label {
+    font-size: 10.5px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--emerald);
+    font-weight: 600;
+    margin-bottom: 4px;
+    opacity: 0.85;
+  }
+  .feature-item p { margin: 0; font-size: 13.5px; color: var(--text2); line-height: 1.55; }
+
+  /* ── VIOLATION BLOCKS ── */
+  .violation-block {
+    background: var(--warn-bg);
+    border: 1px solid rgba(192,57,43,0.28);
+    border-left: 3px solid var(--warn);
+    border-radius: 0 var(--r) var(--r) 0;
+    padding: 1rem 1.25rem;
+    margin: 12px 0;
+  }
+  .violation-block .vb-title {
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: #e57373;
+    margin-bottom: 6px;
+  }
+  .violation-block p { font-size: 13.5px; margin: 0 0 4px; color: var(--text2); }
+  .violation-block .vb-fix { font-size: 12.5px; color: #7ecf96; margin-top: 8px; }
+
+  .ok-block {
+    background: var(--ok-bg);
+    border: 1px solid rgba(0,196,140,0.2);
+    border-left: 3px solid var(--emerald);
+    border-radius: 0 var(--r) var(--r) 0;
+    padding: 1rem 1.25rem;
+    margin: 12px 0;
+  }
+  .ok-block p { margin: 0; font-size: 14px; color: #a0edd4; }
+
+  /* ── GAP LIST ── */
+  .gap-list { list-style: none; margin: 1rem 0; }
+  .gap-list li {
+    padding: 10px 0 10px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 14.5px;
+    color: var(--text2);
+    position: relative;
+  }
+  .gap-list li::before { content: '◆'; position: absolute; left: 0; color: var(--emerald); font-size: 8px; top: 14px; }
+  .gap-list li strong { color: var(--text); }
+
+  /* ── ARCHITECTURE BLOCKS ── */
+  .arch-block {
+    background: var(--bg2);
+    border: 1px solid rgba(255,255,255,0.055);
+    border-radius: var(--r);
+    padding: 1.5rem;
+    margin: 1rem 0;
+  }
+  .arch-block .arch-title {
+    font-size: 10.5px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--emerald);
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  .arch-layer {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 12px;
+    background: var(--bg3);
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: 4px;
+    margin-bottom: 6px;
+    font-size: 13px;
+  }
+  .arch-layer .al-tag {
+    font-size: 9.5px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-weight: 700;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .al-fe  { background: rgba(0,196,140,0.13); color: var(--emerald); }
+  .al-be  { background: rgba(79,163,232,0.12); color: #4fa3e8; }
+  .al-db  { background: rgba(201,168,76,0.12); color: #c9a84c; }
+  .al-ai  { background: rgba(155,89,182,0.14); color: #c3a6f0; }
+  .al-inf { background: rgba(230,126,34,0.12); color: #e8a040; }
+  .arch-layer span { color: var(--text2); line-height: 1.55; }
+
+  /* ── TIMELINE ── */
+  .timeline { position: relative; margin: 1.5rem 0 1.5rem 1rem; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0; width: 1px;
+    background: linear-gradient(to bottom, var(--emerald), transparent);
+  }
+  .tl-item { padding: 0 0 2rem 2.2rem; position: relative; }
+  .tl-item::before {
+    content: '';
+    position: absolute; left: -4.5px; top: 7px;
+    width: 10px; height: 10px;
+    background: var(--emerald); border-radius: 50%;
+    box-shadow: 0 0 12px var(--em-glow);
+  }
+  .tl-num { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--emerald); font-weight: 700; margin-bottom: 3px; }
+  .tl-title { font-family: 'DM Serif Display', serif; font-size: 1.3rem; font-weight: 400; color: var(--text); margin-bottom: 5px; line-height: 1.2; }
+  .tl-desc { font-size: 13.5px; color: var(--text2); line-height: 1.65; margin: 0; }
+
+  /* ── MONETIZATION ── */
+  .mono-card {
+    background: linear-gradient(135deg, rgba(0,196,140,0.07) 0%, rgba(0,196,140,0.03) 100%);
+    border: 1px solid rgba(0,196,140,0.32);
+    border-radius: var(--r);
+    padding: 2.5rem;
+    margin: 1.5rem 0;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .mono-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 50% 40% at 50% 100%, rgba(0,196,140,0.06), transparent);
+  }
+  .mono-range {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.8rem, 6vw, 4.8rem);
+    font-weight: 400;
+    color: var(--emerald);
+    text-shadow: 0 0 40px var(--em-glow);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    position: relative;
+  }
+  .mono-label { font-size: 10.5px; letter-spacing: 3px; text-transform: uppercase; color: var(--text3); margin-bottom: 1.5rem; position: relative; }
+  .mono-models { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 1.5rem; position: relative; }
+  .mono-model { background: var(--bg2); border: 1px solid rgba(255,255,255,0.055); border-radius: 4px; padding: 14px; text-align: left; }
+  .mono-model .mm-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--emerald); font-weight: 600; margin-bottom: 4px; }
+  .mono-model p { font-size: 13px; color: var(--text2); margin: 0; line-height: 1.5; }
+
+  /* ── TARGET ── */
+  .target-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 1.5rem 0; }
+  .target-card { background: var(--bg2); border: 1px solid rgba(255,255,255,0.05); border-radius: var(--r); padding: 16px; }
+  .target-card .tc-who { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .target-card .tc-why { font-size: 13px; color: var(--text2); line-height: 1.55; }
+
+  /* ── VERDICT ── */
+  .verdict-card {
+    background: rgba(230,126,34,0.07);
+    border: 1px solid rgba(230,126,34,0.3);
+    border-radius: var(--r);
+    padding: 2.5rem;
+    text-align: center;
+    margin: 1.5rem 0;
+  }
+  .verdict-badge {
+    display: inline-block;
+    padding: 10px 28px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    background: rgba(230,126,34,0.12);
+    color: var(--caution);
+    border: 1px solid rgba(230,126,34,0.35);
+    box-shadow: 0 0 20px rgba(230,126,34,0.1);
+    margin-bottom: 1.5rem;
+  }
+  .verdict-rating {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 400;
+    color: var(--caution);
+    text-shadow: 0 0 30px rgba(230,126,34,0.25);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .verdict-sub { font-size: 14px; color: var(--text2); margin-bottom: 1.5rem; }
+  .verdict-actions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 1.5rem; text-align: left; }
+  .va-item { background: var(--bg2); border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; padding: 12px; }
+  .va-item .va-num { font-size: 10px; letter-spacing: 2px; color: var(--emerald); font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+  .va-item p { font-size: 13px; color: var(--text2); margin: 0; line-height: 1.5; }
+
+  /* ── FOOTER ── */
+  footer { padding: 4rem 0 2rem; text-align: center; border-top: 1px solid var(--rule); position: relative; z-index: 1; }
+  footer .ft-name { font-family: 'DM Serif Display', serif; font-size: 1.6rem; color: var(--emerald); opacity: 0.55; letter-spacing: 3px; margin-bottom: 0.5rem; }
+  footer p { font-size: 12px; color: var(--text3); letter-spacing: 1px; }
+
+  @media (max-width: 640px) {
+    .feature-grid, .target-grid, .mono-models, .verdict-actions { grid-template-columns: 1fr; }
+    .page-wrap { padding: 0 1.25rem 4rem; }
+  }
+
+  @media print {
+    body { background: #080808 !important; }
+    body::before { display: none; }
+    section.audit-section, .masthead { opacity: 1 !important; animation: none !important; transform: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="top-bar"></div>
+<div class="page-wrap">
+
+  <!-- ══ MASTHEAD ══ -->
+  <header class="masthead">
+    <div class="masthead-eyebrow">Product Audit Report · App Series Vol. IV</div>
+    <h1>Haritaki<em>Brand Plan</em></h1>
+    <p class="masthead-tagline">Ayurvedic Wellness Brand Strategy, Avatar Design Brief & Go-To-Market Plan</p>
+    <p class="masthead-meta">Audited April 3, 2026 &nbsp;·&nbsp; haritaki_brand_plan.html &nbsp;·&nbsp; 1,365 lines</p>
+  </header>
+
+  <!-- ══ 01 — OVERVIEW ══ -->
+  <section class="audit-section">
+    <div class="sec-label">Overview · Section 01</div>
+    <h2 class="sec-heading">File Overview</h2>
+    <p class="sec-intro">What this file is, what product it describes, and who it is built for.</p>
+
+    <p>This is a <strong>comprehensive brand strategy document presented as a single-page website</strong> — an internal-use brand bible for a Haritaki supplement and wellness brand, authored for a founder named Sam. At 1,365 lines it is a polished, multi-section marketing brief covering the product's Ayurvedic origins, a five-pillar benefit narrative, a fully designed AI/illustrated brand avatar ("Abhaya"), a phased go-to-market plan, channel strategy, 90-day KPIs, team role definitions, a Triphala herb education module, and a product fit guide spanning Haritaki, Bibhitaki, and Amla.</p>
+
+    <div class="callout">
+      <p><strong>Core Product:</strong> An Ayurvedic supplement brand centered on the Haritaki fruit (<em>Terminalia chebula</em>), positioned at the premium intersection of ancient wellness tradition and modern biohacker culture. The file details not just the product, but the brand's <em>soul</em> — a gender-neutral illustrated avatar named Abhaya who serves as the brand's editorial voice across all channels.</p>
+    </div>
+
+    <p><strong>Implied User Roles:</strong> One founder (Sam) as brand origin and authentic proof point. A small launch team including an illustrator, content strategist, and community manager. No end-consumer-facing app exists yet — this file describes the strategy to build one.</p>
+
+    <p><strong>Implied User Journey:</strong> The strategy document describes a consumer journey from discovery (TikTok/Instagram organic content, podcast sponsorships) → Sam's personal recommendation video as cornerstone content → landing page email capture → 7-day Abhaya welcome sequence → e-commerce purchase → community retention ("Abhaya's Circle") → affiliate advocacy loop. None of these digital infrastructure components currently exist.</p>
+  </section>
+
+  <!-- ══ 02 — FEATURE INVENTORY ══ -->
+  <section class="audit-section">
+    <div class="sec-label">Feature Inventory · Section 02</div>
+    <h2 class="sec-heading">UI & Content Inventory</h2>
+    <p class="sec-intro">Every surface and section present in the file, catalogued as functional specifications for the build team.</p>
+
+    <div class="feature-grid">
+      <div class="feature-item">
+        <div class="fi-label">Hero Section</div>
+        <p>Full-viewport hero with animated fade-in typography. Cormorant Garamond display headline, subtitle, ornamental badge ("Confidential Brand Document · 2025"), animated scroll indicator. Navigation bar with links to 5 sections. No CTA button — decorative only.</p>
+      </div>
+      <div class="feature-item">
+        <div class="fi-label">The Herb — About Section</div>
+        <p>Editorial prose on Terminalia chebula: botanical origin, Ayurvedic classification (Abhaya / tridoshic), bioactive compounds (chebulinic acid, gallic acid, Vitamin C/E), historical reverence in Buddhist and Hindu traditions. 10 benefit pills (Digestive Health, Mental Clarity, Detox, etc.).</p>
+      </div>
+      <div class="feature-item">
+        <div class="fi-label">Five Pillars of Power</div>
+        <p>5-card benefit grid: Gut & Digestion, Mind & Clarity, Detox & Longevity, Skin/Hair/Nails, Spiritual & Emotional. Each card includes a branded rationale narrative. Designed as the core content architecture for marketing copy generation.</p>
+      </div>
+      <div class="feature-item">
+        <div class="fi-label">Brand Avatar — Abhaya</div>
+        <p>Full avatar design brief: name, archetype (Sage meets Healer), gender-neutral presentation, age range, tone of voice, visual palette. Three personality trait cards (Rooted Wisdom, Fearless Clarity, Inclusive Warmth). Visual design brief: illustration style, signature elements (Haritaki fruit, third-eye motif), 6 required pose expressions, typography pairing guide.</p>
+      </div>
+      <div class="feature-item">
+        <div class="fi-label">Marketing Plan</div>
+        <p>Full go-to-market strategy: brand positioning statement, core message framework (3 cards: Hero Message, Problem Frame, Social Proof), audience segmentation table (5 segments with entry hooks and tier priority), 6-channel grid (Instagram, TikTok, Podcast, Email, YouTube, Influencers), messaging framework.</p>
+      </div>
+      <div class="feature-item">
+        <div class="fi-label">Implementation Roadmap</div>
+        <p>60-day 5-phase timeline with detailed deliverables per phase. 90-day KPI table (7 metrics with targets). Team roles needed (4 roles: Illustrator, Content Strategist, Sam, Community Manager).</p>
+      </div>
+      <div class="feature-item">
+        <div class="fi-label">Herb Family — Triphala</div>
+        <p>Educational module on all 3 Triphala herbs: Bibhitaki, Amla, and Haritaki. Each herb card includes botanical name, benefit tags, description, and attribute list. "How They Relate" contextual strip. Product Fit Guide table (6 customer goals mapped to primary/supporting herbs and SKU tier).</p>
+      </div>
+      <div class="feature-item">
+        <div class="fi-label">CTA Box + Footer</div>
+        <p>"Ready to Crown the King?" CTA section with a button that deep-links back to the avatar section — no email capture, no external link, no form. Branded footer with confidentiality notice. JS IntersectionObserver scroll-triggered fade animations on all cards, timeline items, and pill elements.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 03 — TECHNOLOGY AUDIT ══ -->
+  <section class="audit-section">
+    <div class="sec-label">Technology Audit · Section 03</div>
+    <h2 class="sec-heading">Technology & Dependency Audit</h2>
+    <p class="sec-intro">Violations against the React + FastAPI + PostgreSQL stack requirement — and every place the strategy calls for infrastructure that does not exist.</p>
+
+    <div class="ok-block">
+      <p>✅ <strong>Clean platform sweep:</strong> Zero Firebase, zero Databutton, zero Riff, zero Supabase, zero proprietary widgets. The only external dependency is Google Fonts. No JavaScript frameworks — vanilla JS IntersectionObserver for scroll animations only. Structurally the cleanest file in this audit series.</p>
+    </div>
+
+    <div class="violation-block">
+      <div class="vb-title">⚠️ High — Email Capture: Specified in Strategy, Completely Absent from File</div>
+      <p><strong>What it is:</strong> Phase 2 of the implementation plan explicitly calls for a landing page with "email capture" as a primary deliverable. The CTA box at the bottom of this file has a button that links to <code>#avatar</code> — a section anchor. There is no form, no input field, no submit action, and no email service connected anywhere in the file.</p>
+      <p><strong>Why it violates requirements:</strong> The 90-day KPI target of 2,500 email subscribers is the first and most foundational metric. The capture mechanism does not exist.</p>
+      <div class="vb-fix">✦ Replacement: FastAPI endpoint <code>POST /api/subscribers</code>. PostgreSQL <code>subscribers</code> table. React email capture form with validation. Integration with SendGrid/Resend for the 7-day Abhaya welcome sequence automation.</div>
+    </div>
+
+    <div class="violation-block">
+      <div class="vb-title">⚠️ High — E-Commerce: Referenced but Entirely Unbuilt</div>
+      <p><strong>What it is:</strong> Phase 4 states "Enable e-commerce with Abhaya as primary brand face." The Product Fit Guide defines 6 SKU opportunities with tier assignments. No product pages, no cart, no checkout, no payment gateway, and no order management exist in the file or any implied backend.</p>
+      <p><strong>Why it violates requirements:</strong> The entire monetization strategy depends on product sales. Without a purchase mechanism, this is a brand concept — not a business.</p>
+      <div class="vb-fix">✦ Replacement: Stripe product catalog + checkout. FastAPI order management. PostgreSQL <code>products</code>, <code>orders</code>, <code>order_items</code> tables. React storefront with Abhaya-branded product pages. Alternatively: headless Shopify with a React frontend and FastAPI handling subscriptions/community features.</div>
+    </div>
+
+    <div class="violation-block">
+      <div class="vb-title">⚠️ High — Community Platform: Named but Not Specified</div>
+      <p><strong>What it is:</strong> Phase 5 calls for launching "Abhaya's Circle" as a private community on Circle, Discord, or Facebook Group — three mutually exclusive, externally hosted platforms. No decision has been made, no integration is specified, and no custom community infrastructure is designed.</p>
+      <p><strong>Why it violates requirements:</strong> Vendor lock-in risk (Facebook/Discord policy changes). A brand built on owning its audience should own its community infrastructure. Third-party platforms also prevent deep integration with the subscriber database and purchase history.</p>
+      <div class="vb-fix">✦ Replacement: Custom community module in React/FastAPI. PostgreSQL <code>community_posts</code>, <code>community_members</code>, <code>challenges</code> tables. Optionally: self-hosted Discourse instance with SSO tied to the FastAPI auth layer.</div>
+    </div>
+
+    <div class="violation-block">
+      <div class="vb-title">⚠️ Medium — Abhaya Avatar: Design Brief Only, No Assets</div>
+      <p><strong>What it is:</strong> The avatar section is a detailed, excellent illustration brief — but the avatar itself does not exist. The "glyph" rendered in the file is a 🌿 emoji inside a gold-bordered circle. There is no actual illustrated Abhaya anywhere in the file or referenced as an asset path.</p>
+      <p><strong>Why it violates requirements:</strong> The entire content and marketing strategy is built around Abhaya appearing consistently across Instagram, TikTok, email, YouTube, and packaging. Without the 6 illustrated expressions, no channel can launch.</p>
+      <div class="vb-fix">✦ Action: Commission the illustrator (Role 01 per the document) immediately. Brief deliverables: 6 SVG/PNG expressions at 3 sizes (social, web, print). Store assets in a FastAPI-served static asset CDN with versioning. React component <code>&lt;AbhayaFigure pose="teaching" /&gt;</code> that renders the correct asset per context.</div>
+    </div>
+
+    <div class="violation-block">
+      <div class="vb-title">⚠️ Medium — Email Automation: Described in Detail, Zero Infrastructure</div>
+      <p><strong>What it is:</strong> The plan specifies a 7-email "King of Medicines" welcome sequence written in Abhaya's voice and monthly wellness letters. No email service provider is named, no automation workflow is specified, no template exists, and the sequences have not been written.</p>
+      <p><strong>Why it violates requirements:</strong> Email is the highest-LTV channel in the plan. Phase 2 is supposed to deliver this sequence before public launch. It is not built.</p>
+      <div class="vb-fix">✦ Replacement: FastAPI-triggered transactional email via SendGrid or Resend. 7-email sequence authored in Abhaya's voice (content deliverable). PostgreSQL <code>email_sequences</code> + <code>subscriber_sequence_state</code> tables to track send progress per subscriber.</div>
+    </div>
+
+    <div class="violation-block">
+      <div class="vb-title">⚠️ Low — 30-Day Challenge Tracker: Mentioned, Completely Undesigned</div>
+      <p><strong>What it is:</strong> Phase 5 mentions a "30-day Haritaki commitment tracker with Abhaya guiding." No UI has been designed for this feature anywhere in the file.</p>
+      <p><strong>Why it violates requirements:</strong> This is the primary community retention mechanism and a direct engagement loop. Without it, "Abhaya's Circle" is a passive content feed, not an interactive health product.</p>
+      <div class="vb-fix">✦ Replacement: React challenge tracker component. FastAPI <code>POST /api/challenges/check-in</code>. PostgreSQL <code>challenge_participants</code>, <code>check_ins</code> tables. Abhaya animated encouragement states per milestone (Day 1, Day 7, Day 14, Day 30).</div>
+    </div>
+  </section>
+
+  <!-- ══ 04 — GAP ANALYSIS ══ -->
+  <section class="audit-section">
+    <div class="sec-label">Gap Analysis · Section 04</div>
+    <h2 class="sec-heading">Missing Functional Requirements</h2>
+    <p class="sec-intro">The complete gap list between this strategy document and a production-ready brand platform.</p>
+
+    <ul class="gap-list">
+      <li><strong>Landing Page with Email Capture</strong> — The single most urgent deliverable per the plan's own Phase 2 timeline. React page, email form, GDPR/CAN-SPAM compliance, confirmation flow, and SendGrid automation trigger on subscribe.</li>
+      <li><strong>Authentication & Customer Accounts</strong> — Required for purchase history, challenge participation, community access, and affiliate tracking. JWT-based auth via FastAPI. Email/password + optional Google OAuth.</li>
+      <li><strong>E-Commerce Storefront</strong> — Product pages for at minimum: Haritaki (capsule/powder), Triphala blend, Amla standalone (per the Product Fit Guide SKU tiers). Cart, Stripe checkout, order confirmation email, order history page.</li>
+      <li><strong>Subscription / Auto-Replenishment</strong> — Supplement brands have highest LTV on subscription. Stripe Billing recurring products. "Subscribe & Save" option on every product. Cancel/pause/skip flow in customer portal.</li>
+      <li><strong>Abhaya Avatar Asset Library</strong> — Commission and integrate 6 illustrated expressions as brand assets. React component system to use Abhaya contextually across all pages. Consistent presence on product pages, email headers, community posts.</li>
+      <li><strong>7-Email Welcome Sequence</strong> — Content written in Abhaya's voice, designed in brand template, loaded into email automation. Triggered on subscription. Sequence content: Day 1 (Sam's story), Days 2–6 (one benefit pillar per day), Day 7 (first purchase CTA).</li>
+      <li><strong>Community Platform ("Abhaya's Circle")</strong> — Gated community requiring account. Discussion threads, weekly Abhaya content drops, monthly ritual challenge. React community UI backed by FastAPI + PostgreSQL.</li>
+      <li><strong>30-Day Challenge Tracker</strong> — Daily check-in flow, milestone badges (Abhaya-illustrated), streak counter, community leaderboard. Core retention mechanic described in Phase 5.</li>
+      <li><strong>Blog / Content CMS</strong> — Long-form educational content is central to the SEO and authority strategy. 4 blog posts are specified in Phase 2 as pre-launch deliverables. Needs a CMS (headless, e.g. Sanity, or custom FastAPI CRUD) and a React blog frontend.</li>
+      <li><strong>Affiliate / Ambassador Program</strong> — Referenced in Phase 5. Unique tracking links per advocate, commission tracking, payout reporting. FastAPI affiliate module, PostgreSQL <code>affiliates</code> + <code>referral_clicks</code> + <code>referral_conversions</code> tables.</li>
+      <li><strong>Admin Dashboard</strong> — For Sam and team: subscriber list, order management, community moderation, challenge progress view, affiliate payouts, email performance, and KPI dashboard tracking all 7 metrics from the 90-day table.</li>
+      <li><strong>SEO & Meta Infrastructure</strong> — The file has no Open Graph tags, no Twitter card meta, no canonical URL, no structured data (Product schema, Organization schema). Critical for organic search and social sharing.</li>
+      <li><strong>Input Validation & Legal Compliance</strong> — No privacy policy, no terms of service, no cookie consent, no DSHEA-compliant supplement disclaimers ("These statements have not been evaluated by the FDA…"). Required before e-commerce can launch legally in the US.</li>
+    </ul>
+  </section>
+
+  <!-- ══ 05 — ARCHITECTURE ══ -->
+  <section class="audit-section">
+    <div class="sec-label">Architecture · Section 05</div>
+    <h2 class="sec-heading">Target Architecture</h2>
+    <p class="sec-intro">The proposed full-stack structure for the GitHub-ready Haritaki brand platform.</p>
+
+    <div class="arch-block">
+      <div class="arch-title">Frontend — React App</div>
+      <div class="arch-layer"><span class="al-tag al-fe">Pages</span> <span>LandingPage, ShopPage, ProductDetailPage, CartPage, CheckoutPage, AccountPage, ChallengePage, CommunityPage, BlogPage, BlogPostPage, AdminDashboard, LoginPage, RegisterPage</span></div>
+      <div class="arch-layer"><span class="al-tag al-fe">Components</span> <span>AbhayaFigure (pose prop), BenefitPillarCard, HerbCard, EmailCaptureForm, ProductCard, CartDrawer, CheckInCalendar, CommunityPost, ChallengeLeaderboard, TestimonialCarousel, BlogCard</span></div>
+      <div class="arch-layer"><span class="al-tag al-fe">State</span> <span>React Query (server state) + Zustand (cart, auth) — cart persistence in localStorage, auth via JWT in httpOnly cookie</span></div>
+      <div class="arch-layer"><span class="al-tag al-fe">Brand System</span> <span>AbhayaThemeProvider — brand colors, Cormorant Garamond / Rajdhani font tokens, avatar asset map by pose, motion config for scroll animations</span></div>
+    </div>
+
+    <div class="arch-block">
+      <div class="arch-title">Backend — FastAPI</div>
+      <div class="arch-layer"><span class="al-tag al-be">Routers</span> <span>/auth, /subscribers, /products, /orders, /subscriptions, /community (posts, comments), /challenges (join, check-in), /blog, /affiliates, /admin, /webhooks/stripe</span></div>
+      <div class="arch-layer"><span class="al-tag al-be">Schemas</span> <span>Pydantic v2: SubscriberCreate, ProductBase, OrderCreate, ChallengeCheckIn, CommunityPostCreate, AffiliateCreate, BlogPostCreate</span></div>
+      <div class="arch-layer"><span class="al-tag al-be">Services</span> <span>EmailService (SendGrid), StripeService (one-time + subscription), SequenceService (welcome drip), AffiliateService, ImageService (CDN upload for avatar assets)</span></div>
+    </div>
+
+    <div class="arch-block">
+      <div class="arch-title">Database — PostgreSQL</div>
+      <div class="arch-layer"><span class="al-tag al-db">Core Tables</span> <span>users, subscribers, subscriber_sequence_state, products, orders, order_items, subscriptions (Stripe), addresses</span></div>
+      <div class="arch-layer"><span class="al-tag al-db">Content Tables</span> <span>blog_posts, community_posts, community_comments, challenge_participants, check_ins, testimonials</span></div>
+      <div class="arch-layer"><span class="al-tag al-db">Program Tables</span> <span>affiliates, referral_clicks, referral_conversions, email_templates, email_sends</span></div>
+    </div>
+
+    <div class="arch-block">
+      <div class="arch-title">External Services</div>
+      <div class="arch-layer"><span class="al-tag al-ai">Content</span> <span>Sanity (headless CMS for blog) or custom FastAPI CRUD — team decision based on content volume</span></div>
+      <div class="arch-layer"><span class="al-tag al-inf">Payments</span> <span>Stripe (one-time products + Stripe Billing for subscriptions + affiliate payout via Stripe Connect)</span></div>
+      <div class="arch-layer"><span class="al-tag al-inf">Email</span> <span>SendGrid (transactional + drip automation) — ANTHROPIC_API_KEY optional for AI-assisted email personalization</span></div>
+      <div class="arch-layer"><span class="al-tag al-inf">Assets</span> <span>Cloudflare R2 or AWS S3 for Abhaya avatar asset library (SVG + PNG per pose at 3 resolutions)</span></div>
+    </div>
+  </section>
+
+  <!-- ══ 06 — IMPLEMENTATION ROADMAP ══ -->
+  <section class="audit-section">
+    <div class="sec-label">Implementation Plan · Section 06</div>
+    <h2 class="sec-heading">Implementation Roadmap</h2>
+    <p class="sec-intro">A sequenced build plan from brand strategy document to a fully functional, revenue-generating brand platform.</p>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-num">Phase 01</div>
+        <div class="tl-title">Repo Scaffold & Brand System</div>
+        <p class="tl-desc">Initialize monorepo: <code>/frontend</code> (Vite + React + TypeScript) and <code>/backend</code> (FastAPI). Implement the Abhaya brand system as a React ThemeProvider — fonts, CSS tokens, color palette. Build the landing page as a pixel-faithful React conversion of this HTML file. Simultaneously: commission Abhaya illustrator (this is the longest-lead item in the entire plan). Est: 10–14 hrs engineering + 3–6 week illustration timeline.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-num">Phase 02</div>
+        <div class="tl-title">Email Capture & Subscriber Pipeline</div>
+        <p class="tl-desc">FastAPI subscriber endpoint + PostgreSQL schema. React email capture form on the landing page. SendGrid integration. Write and load the 7-email Abhaya welcome sequence (content + design). Automated drip trigger on subscribe. GDPR/CAN-SPAM compliance fields. This phase unlocks the first 90-day KPI: 2,500 subscribers. Est: 14–18 hrs.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-num">Phase 03</div>
+        <div class="tl-title">Authentication & Customer Accounts</div>
+        <p class="tl-desc">FastAPI JWT auth (register, login, refresh, me, password reset). React auth context + protected routes. Login/register pages in Abhaya brand system. Customer account portal (order history, subscription management, community access). Est: 12–16 hrs.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-num">Phase 04</div>
+        <div class="tl-title">E-Commerce Storefront & Stripe</div>
+        <p class="tl-desc">Product catalog API + React product pages (Haritaki capsules, Triphala blend, Amla — per the Product Fit Guide). Cart + Stripe Checkout. Stripe Billing for subscription SKUs. Order confirmation email via SendGrid. Order management in admin. DSHEA supplement disclaimer on all product pages. Est: 20–28 hrs.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-num">Phase 05</div>
+        <div class="tl-title">Community, Challenge Tracker & Retention</div>
+        <p class="tl-desc">React community forum (Abhaya's Circle) with FastAPI backend. 30-day challenge tracker: daily check-in, streak display, Abhaya milestone illustrations (once assets are delivered by illustrator). Community leaderboard. Affiliate referral link generation. Est: 20–26 hrs.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-num">Phase 06</div>
+        <div class="tl-title">Blog, SEO & Admin Dashboard</div>
+        <p class="tl-desc">Blog CMS (headless Sanity or custom FastAPI CRUD). 4 pre-written launch posts per Phase 2 spec. Full Open Graph + Twitter Card + Product structured data. Admin dashboard: subscriber metrics, order pipeline, community moderation, challenge progress, affiliate payouts, email performance, and all 7 KPI metrics from the 90-day table. Est: 18–24 hrs.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-num">Phase 07</div>
+        <div class="tl-title">QA, Legal Compliance & Launch</div>
+        <p class="tl-desc">End-to-end checkout flow testing. Email deliverability QA. Privacy policy, terms of service, cookie consent banner, DSHEA disclaimers on all supplement pages. README, Docker Compose smoke test, seed data for demo. Staging environment deploy. Est: 10–14 hrs.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p><strong>Total Estimated Engineering Effort:</strong> <em>104–140 hours for full platform MVP</em> (landing page → email capture → auth → e-commerce → community → blog → admin). <strong>The single longest-lead item is not engineering — it is the Abhaya illustration commission.</strong> Start the illustrator brief on Day 1, or every phase that depends on avatar assets will be blocked.</p>
+    </div>
+  </section>
+
+  <!-- ══ 07 — MONETIZATION ══ -->
+  <section class="audit-section">
+    <div class="sec-label">Monetization · Section 07</div>
+    <h2 class="sec-heading">Monetization Potential</h2>
+    <p class="sec-intro">Revenue ceiling once fully functional, with three plausible revenue streams justified by the product category.</p>
+
+    <div class="mono-card">
+      <div class="mono-range">$120k – $600k</div>
+      <div class="mono-label">Estimated Annual Revenue Range · Once Fully Operational</div>
+      <p style="font-size:14px;color:var(--text2);max-width:580px;margin:0 auto;position:relative;">Justified by the supplement DTC category (avg AOV $45–$75), high repeat purchase rate for consumables (the plan targets 35%+ repeat), the brand's built-in community retention mechanism, and the South Asian diaspora TAM — an underserved, high-income demographic with strong cultural affinity for Ayurvedic products. The global Ayurvedic supplement market was valued at $9B+ in 2024.</p>
+      <div class="mono-models">
+        <div class="mono-model">
+          <div class="mm-label">Model A — DTC Subscription</div>
+          <p>Haritaki capsules at $38/mo. At 400 active subscribers, that's $182k ARR. The 30-day challenge tracker is the most powerful retention mechanism — participants who complete it have 3–5× higher LTV than one-time buyers.</p>
+        </div>
+        <div class="mono-model">
+          <div class="mm-label">Model B — Product Line Expansion</div>
+          <p>6 SKU opportunities are already mapped in the Product Fit Guide. Adding Triphala blend ($42), Amla standalone ($32), and seasonal blends per Phase 5 raises the basket ceiling. Multi-SKU DTC brands see 2–3× the LTV of single-SKU brands.</p>
+        </div>
+        <div class="mono-model">
+          <div class="mm-label">Model C — Brand Licensing & B2B</div>
+          <p>The Abhaya avatar and brand system is licensable to wellness studios, Ayurvedic practitioners, and yoga brands who want co-branded products. This is an asymmetric revenue channel that costs zero marginal production.</p>
+        </div>
+      </div>
+    </div>
+
+    <p>The most underexplored revenue channel in the document is <strong>educational content</strong>. The herb education module (Five Pillars, Triphala family, Product Fit Guide) represents the bones of a paid digital course — "Abhaya's Ayurvedic Foundation" at $97–$197 per student — that could generate significant revenue before the first supplement ships.</p>
+  </section>
+
+  <!-- ══ 08 — TARGET MARKET ══ -->
+  <section class="audit-section">
+    <div class="sec-label">Target Market · Section 08</div>
+    <h2 class="sec-heading">Target Industries & Buyer Archetypes</h2>
+    <p class="sec-intro">Buyer profiles beyond those already defined in the document — including channels the strategy has not yet identified.</p>
+
+    <div class="target-grid">
+      <div class="target-card">
+        <div class="tc-who">Biohackers & Quantified-Self Community (25–42)</div>
+        <div class="tc-why">Already identified as Tier 1. Key insight the document misses: this demographic over-indexes on Substack newsletters and Discord servers — two channels not in the current 6-channel plan. Abhaya newsletter at $10/mo with deep supplement science would find an immediate audience here.</div>
+      </div>
+      <div class="target-card">
+        <div class="tc-who">South Asian Diaspora (All Ages, US/UK/Canada/AUS)</div>
+        <div class="tc-why">Correctly identified as Tier 2 but likely underweighted. This group has direct cultural memory of Haritaki — their grandmothers used it. "Your grandmother was right" is a more powerful conversion narrative than any biohacker framing. WhatsApp group seeding (Sam's network) is the channel the strategy misses.</div>
+      </div>
+      <div class="target-card">
+        <div class="tc-who">Yoga Studios & Ayurvedic Wellness Practitioners</div>
+        <div class="tc-why">B2B channel not addressed in the plan. Studios would private-label or co-brand Haritaki products for their retail shelves. Direct outreach to studio owners at $200+ wholesale MOQ per order turns a DTC brand into a wholesale line with zero additional marketing cost.</div>
+      </div>
+      <div class="target-card">
+        <div class="tc-who">Gut Health & IBS Community (Reddit, Facebook Groups)</div>
+        <div class="tc-why">r/ibs has 200k+ members actively seeking natural remedies. The "gentle intelligent laxative" framing is the highest-converting message for this group. One honest thread from Sam in a gut health community — not an ad, a story — could be the brand's biggest single acquisition event.</div>
+      </div>
+      <div class="target-card">
+        <div class="tc-who">Functional Medicine Practitioners & Naturopaths</div>
+        <div class="tc-why">Practitioners who recommend supplements to patients are a flywheel — one recommendation creates 6–10 customers. A practitioner portal with bulk ordering, educational materials, and co-branded Abhaya content turns this into a professional channel.</div>
+      </div>
+      <div class="target-card">
+        <div class="tc-who">Skincare Enthusiasts & "Skin From Within" Community</div>
+        <div class="tc-why">The "Skin, Hair & Nails" pillar is underutilized in the marketing plan. BeforeAndAfterSkin on TikTok, "Ayurvedic skincare routine" search volume is exploding. A dedicated skin-first product framing (blood purification → visible glow) could be its own acquisition campaign entirely separate from the gut health narrative.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 09 — VERDICT ══ -->
+  <section class="audit-section">
+    <div class="sec-label">Go / No-Go Verdict · Section 09</div>
+    <h2 class="sec-heading">Readiness Assessment</h2>
+    <p class="sec-intro">Final engineering verdict, primary blockers, and the three moves to make immediately.</p>
+
+    <div class="verdict-card">
+      <div class="verdict-badge">⚡ Proceed with Urgency</div>
+      <div class="verdict-rating">MEDIUM READINESS</div>
+      <p class="verdict-sub">The brand strategy is exceptional — one of the most coherent, culturally specific, and monetization-ready brand plans in this series. The Abhaya avatar concept is genuinely differentiated in a crowded supplement market. <strong>However, the plan describes an entire digital platform that does not yet exist: no email capture, no e-commerce, no community, no automation, and no avatar assets.</strong> Every deliverable in the 60-day plan is still ahead of the team.</p>
+
+      <hr class="rule" style="border-color:rgba(230,126,34,0.2);margin:1rem 0;">
+
+      <p style="font-size:14px;color:var(--text2);margin-bottom:1.5rem;"><strong style="color:var(--text)">Primary Blockers:</strong> (1) Abhaya illustration commission — the entire brand depends on assets that don't exist yet, and illustration is a 3–6 week lead time; (2) e-commerce + payment infrastructure — the business cannot generate revenue without it; (3) email capture — the #1 KPI target (2,500 subscribers) cannot be hit with a CTA button that links to <code>#avatar</code>.</p>
+      <p style="font-size:14px;color:var(--text2);"><strong style="color:var(--text)">Effort Estimate:</strong> Medium-Large — 104–140 engineering hours. Unlike a pure tech product, the critical path here is <em>content and design</em>, not code. The illustrator and the Abhaya welcome email sequence must be commissioned in parallel with engineering, or the tech will sit ready with nothing to show inside it.</p>
+
+      <div class="verdict-actions">
+        <div class="va-item">
+          <div class="va-num">Action 01</div>
+          <p>Commission the Abhaya illustrator today. This is the longest-lead item in the plan and blocks every content channel. Brief: 6 poses (Teaching, Welcoming, Meditating, Sharing remedy, In nature, Modern daily life), SVG + PNG at 3 resolutions. Provide the color palette and font guidance from this document as the brief.</p>
+        </div>
+        <div class="va-item">
+          <div class="va-num">Action 02</div>
+          <p>Replace the CTA button's <code>href="#avatar"</code> with a working email capture form — even a bare-bones Mailchimp embed — immediately. Every day this page exists without capturing emails is a day of lost subscribers. The first engineering sprint should replace this with the real FastAPI-backed form.</p>
+        </div>
+        <div class="va-item">
+          <div class="va-num">Action 03</div>
+          <p>Write Sam's 2-minute origin story video script and film it this week — phone quality, authentic, unscripted is the explicit direction in Phase 1. This video is the cornerstone of every paid and organic campaign. It can be seeded before any tech is built and starts generating email captures and community warmth immediately.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <div class="ft-name">Haritaki</div>
+    <p>App Audit Series · April 3, 2026 · Generated by Anthropic Claude</p>
+    <p style="margin-top:0.5rem;">React + FastAPI + PostgreSQL · Pure stack, no platform lock-in.</p>
+  </footer>
+
+</div>
+</body>
+</html>

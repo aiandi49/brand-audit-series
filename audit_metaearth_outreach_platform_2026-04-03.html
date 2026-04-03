@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audit Report — MetaEarth Outreach Platform | 2026-04-03</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:          #080b10;
+    --bg-card:     #0d1117;
+    --bg-raised:   #111820;
+    --border:      #1a2333;
+    --border-m:    #1e2d3d;
+    --accent:      #00e5ff;
+    --accent-dim:  rgba(0,229,255,0.18);
+    --accent-glow: rgba(0,229,255,0.25);
+    --accent2:     #ff6b35;
+    --text:        #e2eaf4;
+    --text-2:      #6b8099;
+    --text-3:      #354255;
+    --warn:        #ff4757;
+    --warn-dim:    rgba(255,71,87,0.1);
+    --ok:          #7fff6b;
+    --ok-dim:      rgba(127,255,107,0.08);
+    --mid:         #ffd23f;
+    --mid-dim:     rgba(255,210,63,0.1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Sora', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 16px;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  /* Grain */
+  body::after {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    pointer-events: none; opacity: 0.3;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  }
+
+  /* Hero grid lines */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 30%, transparent 80%);
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent));
+    box-shadow: 0 0 30px var(--accent-glow);
+    position: relative; z-index: 10;
+  }
+
+  /* ── MASTHEAD ── */
+  .masthead {
+    position: relative; z-index: 1;
+    max-width: 860px; margin: 0 auto;
+    padding: 80px 48px 72px;
+    border-bottom: 1px solid var(--border-m);
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.1s forwards;
+  }
+
+  .masthead-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(0,229,255,0.06);
+    border: 1px solid rgba(0,229,255,0.2);
+    border-radius: 100px;
+    padding: 5px 16px;
+    font-size: 9px; font-weight: 600;
+    letter-spacing: 4px; text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 28px;
+  }
+
+  .badge-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  .masthead h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3rem, 7vw, 5.8rem);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -1px;
+    color: var(--text);
+    margin-bottom: 24px;
+  }
+
+  .masthead h1 .cyan {
+    font-style: italic;
+    color: var(--accent);
+    text-shadow: 0 0 40px rgba(0,229,255,0.3);
+  }
+
+  .masthead h1 .orange { font-style: italic; color: var(--accent2); }
+
+  .masthead-tagline {
+    font-size: 1rem; font-weight: 300;
+    color: var(--text-2); max-width: 580px;
+    line-height: 1.75; margin-bottom: 40px;
+  }
+
+  .masthead-meta {
+    display: flex; gap: 28px; flex-wrap: wrap; align-items: center;
+  }
+
+  .meta-pill {
+    font-size: 9px; font-weight: 600;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--text-3);
+  }
+  .meta-pill span { color: var(--accent); }
+
+  /* ── CONTENT ── */
+  .content {
+    max-width: 860px; margin: 0 auto;
+    padding: 0 48px 120px;
+    position: relative; z-index: 1;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    padding: 72px 0 0;
+    opacity: 0;
+    animation: fadeUp 0.7s ease both;
+  }
+
+  .section:nth-child(1)  { animation-delay: 0.2s; }
+  .section:nth-child(2)  { animation-delay: 0.35s; }
+  .section:nth-child(3)  { animation-delay: 0.5s; }
+  .section:nth-child(4)  { animation-delay: 0.65s; }
+  .section:nth-child(5)  { animation-delay: 0.8s; }
+  .section:nth-child(6)  { animation-delay: 0.95s; }
+  .section:nth-child(7)  { animation-delay: 1.1s; }
+  .section:nth-child(8)  { animation-delay: 1.25s; }
+  .section:nth-child(9)  { animation-delay: 1.4s; }
+  .section:nth-child(10) { animation-delay: 1.55s; }
+
+  .sec-label {
+    font-size: 9px; font-weight: 600;
+    letter-spacing: 5px; text-transform: uppercase;
+    color: var(--text-3); margin-bottom: 10px;
+  }
+
+  .section h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4.5vw, 3.2rem);
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+
+  .section h2 em { font-style: italic; color: var(--accent); }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, rgba(0,229,255,0.3), transparent);
+    margin-top: 72px; opacity: 0.5;
+  }
+
+  /* ── PROSE ── */
+  .prose {
+    color: var(--text-2); font-size: 0.95rem;
+    line-height: 1.85; font-weight: 300; margin-bottom: 28px;
+  }
+  .prose strong { color: var(--text); font-weight: 500; }
+  .prose em { color: var(--accent); font-style: italic; }
+
+  /* ── FEATURE GRID ── */
+  .feature-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px; margin-bottom: 24px;
+  }
+
+  .feat {
+    background: var(--bg-card);
+    border: 1px solid var(--border-m);
+    border-radius: 4px; padding: 18px 20px;
+  }
+
+  .feat-tag {
+    font-size: 8px; font-weight: 600;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 8px;
+    opacity: 0.7;
+  }
+
+  .feat p { font-size: 0.83rem; color: var(--text-2); line-height: 1.65; font-weight: 300; }
+
+  /* ── VIOLATION FLAGS ── */
+  .flag {
+    border-left: 3px solid var(--warn);
+    background: var(--warn-dim);
+    border-radius: 0 4px 4px 0;
+    padding: 16px 22px; margin-bottom: 12px;
+  }
+
+  .flag-top {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
+  }
+
+  .flag-badge {
+    font-size: 7px; font-weight: 700;
+    letter-spacing: 3px; text-transform: uppercase;
+    background: var(--warn); color: white;
+    padding: 3px 8px; border-radius: 2px;
+  }
+
+  .flag-title { font-size: 0.85rem; font-weight: 600; color: #ff8a96; }
+
+  .flag p { font-size: 0.85rem; color: var(--text-2); line-height: 1.7; font-weight: 300; }
+
+  .flag-fix {
+    margin-top: 10px; padding-top: 10px;
+    border-top: 1px solid rgba(255,71,87,0.15);
+    font-size: 0.8rem; color: var(--text-3); font-style: italic;
+  }
+
+  .flag-clean {
+    border-left: 3px solid var(--ok);
+    background: var(--ok-dim);
+    border-radius: 0 4px 4px 0;
+    padding: 12px 22px; margin-bottom: 12px;
+    font-size: 0.85rem; color: #a0e8a0; font-weight: 300;
+  }
+
+  /* ── PULLQUOTE ── */
+  .pullquote {
+    border-left: 3px solid var(--accent);
+    padding: 20px 28px; margin: 36px 0;
+    box-shadow: -6px 0 24px rgba(0,229,255,0.1);
+  }
+
+  .pullquote p {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem; font-style: italic;
+    color: var(--text); line-height: 1.45; font-weight: 400;
+  }
+
+  /* ── GAP LIST ── */
+  .gap-list { list-style: none; padding: 0; margin: 0 0 24px; }
+
+  .gap-list li {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.88rem; color: var(--text-2);
+    line-height: 1.7; font-weight: 300;
+  }
+  .gap-list li:last-child { border-bottom: none; }
+
+  .gn {
+    width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+    border: 1px solid rgba(0,229,255,0.3);
+    color: var(--accent); font-size: 9px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 1px;
+    box-shadow: 0 0 10px rgba(0,229,255,0.1);
+  }
+
+  .gap-list strong { color: var(--text); font-weight: 500; }
+
+  /* ── ARCH BLOCKS ── */
+  .arch-row {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px; margin-bottom: 24px;
+  }
+
+  .arch-block {
+    background: var(--bg-raised);
+    border: 1px solid var(--border-m);
+    border-top: 2px solid rgba(0,229,255,0.3);
+    border-radius: 4px; padding: 18px 16px;
+  }
+
+  .arch-title {
+    font-size: 8px; font-weight: 700;
+    letter-spacing: 4px; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 12px;
+  }
+
+  .arch-block ul { list-style: none; padding: 0; }
+  .arch-block li {
+    font-size: 0.75rem; color: var(--text-2);
+    padding: 4px 0; border-bottom: 1px solid var(--border);
+    font-weight: 300;
+  }
+  .arch-block li:last-child { border-bottom: none; }
+
+  /* ── ROADMAP ── */
+  .roadmap { position: relative; padding-left: 40px; margin-bottom: 24px; }
+
+  .roadmap::before {
+    content: '';
+    position: absolute; left: 11px; top: 8px; bottom: 8px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), var(--accent2), transparent);
+  }
+
+  .rs { position: relative; margin-bottom: 28px; }
+
+  .rs::before {
+    content: '';
+    position: absolute; left: -32px; top: 7px;
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 14px var(--accent-glow);
+  }
+
+  .rs-num {
+    font-size: 8px; font-weight: 700;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(0,229,255,0.4); margin-bottom: 4px;
+  }
+
+  .rs-title {
+    font-size: 0.92rem; font-weight: 600;
+    color: var(--text); margin-bottom: 6px;
+  }
+
+  .rs p { font-size: 0.83rem; color: var(--text-2); line-height: 1.7; font-weight: 300; }
+
+  /* ── MONEY CARD ── */
+  .money-card {
+    background: linear-gradient(135deg, #090c10, #0d1320);
+    border: 1px solid rgba(0,229,255,0.25);
+    border-radius: 4px; padding: 40px 36px;
+    margin-bottom: 20px; position: relative; overflow: hidden;
+    box-shadow: 0 0 40px rgba(0,229,255,0.04);
+  }
+
+  .money-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  }
+
+  .money-range {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    font-weight: 400; color: var(--accent);
+    text-shadow: 0 0 40px rgba(0,229,255,0.35);
+    margin-bottom: 6px; line-height: 1;
+  }
+
+  .money-label {
+    font-size: 8px; font-weight: 700;
+    letter-spacing: 4px; text-transform: uppercase;
+    color: rgba(0,229,255,0.4); margin-bottom: 18px;
+  }
+
+  .money-desc {
+    font-size: 0.88rem; color: var(--text-2);
+    line-height: 1.7; font-weight: 300; max-width: 600px;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-m);
+    border-radius: 4px; padding: 24px 28px; margin-bottom: 12px;
+  }
+
+  .card-title {
+    font-size: 0.83rem; font-weight: 600;
+    color: var(--text); margin-bottom: 8px;
+  }
+
+  .card-body {
+    font-size: 0.85rem; color: var(--text-2);
+    line-height: 1.75; font-weight: 300;
+  }
+
+  /* ── TARGET GRID ── */
+  .target-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px; margin-bottom: 24px;
+  }
+
+  .target-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border-m);
+    border-radius: 4px; padding: 18px 20px;
+  }
+
+  .target-name {
+    font-size: 0.85rem; font-weight: 600;
+    color: var(--text); margin-bottom: 6px;
+  }
+
+  .target-item p { font-size: 0.8rem; color: var(--text-2); line-height: 1.65; font-weight: 300; }
+
+  /* ── VERDICT ── */
+  .verdict-box {
+    display: inline-flex; align-items: center; gap: 16px;
+    background: rgba(127,255,107,0.07);
+    border: 1px solid rgba(127,255,107,0.3);
+    border-radius: 4px; padding: 20px 32px; margin-bottom: 24px;
+  }
+
+  .verdict-dot {
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--ok);
+    box-shadow: 0 0 20px rgba(127,255,107,0.5);
+    flex-shrink: 0;
+  }
+
+  .verdict-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem; font-weight: 400;
+    color: var(--ok); letter-spacing: 0.5px;
+  }
+
+  /* ── CRITICAL CALLOUT ── */
+  .crit-callout {
+    background: linear-gradient(135deg, rgba(255,107,53,0.06), rgba(0,229,255,0.04));
+    border: 1px solid rgba(255,107,53,0.2);
+    border-left: 3px solid var(--accent2);
+    border-radius: 0 4px 4px 0;
+    padding: 20px 24px; margin: 24px 0;
+  }
+
+  .crit-callout-label {
+    font-size: 8px; font-weight: 700;
+    letter-spacing: 4px; text-transform: uppercase;
+    color: var(--accent2); margin-bottom: 8px;
+  }
+
+  .crit-callout p { font-size: 0.88rem; color: var(--text-2); line-height: 1.7; font-weight: 300; }
+  .crit-callout strong { color: var(--text); font-weight: 500; }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative; z-index: 1;
+    max-width: 860px; margin: 0 auto;
+    padding: 40px 48px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+
+  footer p {
+    font-size: 9px; font-weight: 600;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--text-3);
+  }
+
+  footer .closing {
+    margin-top: 8px;
+    font-family: 'DM Serif Display', serif;
+    font-style: italic; font-size: 0.95rem;
+    color: var(--text-3); font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .content { padding: 0 24px 80px; }
+    .masthead { padding: 56px 24px 48px; }
+    .feature-grid { grid-template-columns: 1fr; }
+    .arch-row { grid-template-columns: 1fr; }
+    .target-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    body { background: var(--bg); }
+    .section { opacity: 1; animation: none; }
+    .masthead { opacity: 1; animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar"></div>
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="masthead-badge">
+    <span class="badge-dot"></span>
+    App Audit Report · April 03, 2026
+  </div>
+  <h1>
+    <span class="cyan">MetaEarth</span><br>
+    <span class="orange">Outreach</span><br>
+    Platform
+  </h1>
+  <p class="masthead-tagline">A fully functional, JavaScript-powered B2B sales intelligence and outreach tool for the Tucson SMB market — audited for transformation into a production-grade React + FastAPI + PostgreSQL SaaS platform.</p>
+  <div class="masthead-meta">
+    <p class="meta-pill">File: <span>metaearth_outreach_platform.html</span></p>
+    <p class="meta-pill">Size: <span>~70KB</span></p>
+    <p class="meta-pill">Industries: <span>23 Tracked</span></p>
+    <p class="meta-pill">Date: <span>2026-04-03</span></p>
+  </div>
+</header>
+
+<main class="content">
+
+  <!-- ══ SECTION 1: FILE OVERVIEW ══ -->
+  <article class="section">
+    <p class="sec-label">Overview · Section 01</p>
+    <h2>What This File <em>Actually Is</em></h2>
+
+    <p class="prose">
+      <strong>metaearth_outreach_platform.html</strong> is the most operationally complete and business-ready file audited in this series. It is a fully functional, single-file sales intelligence dashboard built by <strong>MetaEarth Initiative</strong> — a Tucson, AZ digital marketing and AI automation agency founded in 2024, operated by Lamar Myers. The platform is not a prototype or a mockup. It is a working internal sales tool: a searchable, filterable directory of 23 Tucson industry categories — from dental offices to funeral homes to law firms — each pre-loaded with fabricated-but-realistic digital audit data, a per-industry modal with 8-parameter gap assessments, a revenue leak calculator, and a cold email template system.
+    </p>
+
+    <p class="prose">
+      The product thesis is sharp and defensible: most Tucson small businesses are bleeding $6,000–$31,000/month in missed leads due to absent AI chatbots, no online booking, poor mobile performance, and zero after-hours phone coverage. MetaEarth Initiative's sales workflow uses this intelligence to send hyper-personalized cold emails leading with exact dollar leak amounts — positioning their AI phone assistant (starting at $297/month) as the fix.
+    </p>
+
+    <div class="pullquote">
+      <p>"This is the rarest find in a single-file audit: the core sales engine is already built and functional. The gap is not imagination — it's infrastructure. Add a real backend, and this becomes a legitimate B2B SaaS platform."</p>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feat">
+        <p class="feat-tag">Core Product</p>
+        <p>B2B sales intelligence + AI automation agency platform. Audits local SMB digital presence, quantifies revenue leakage, and generates personalized outreach — all in service of closing recurring monthly AI phone and chatbot contracts.</p>
+      </div>
+      <div class="feat">
+        <p class="feat-tag">Implied User Roles</p>
+        <p>Sales Rep / Founder (Lamar Myers) — uses the tool to identify targets and generate outreach. Future: Account Manager (track deal pipeline), Client (view their own audit report), Admin (manage industries and data).</p>
+      </div>
+      <div class="feat">
+        <p class="feat-tag">Implied User Journey</p>
+        <p>Browse industries → click card → review per-industry audit in modal → "Generate Outreach Email" → send personalized cold email to business → demo → close $297/month recurring contract.</p>
+      </div>
+      <div class="feat">
+        <p class="feat-tag">Business Model</p>
+        <p>Agency selling recurring AI phone assistant + chatbot + SMS contracts at $297–$997/month per SMB client. This platform is the lead generation and sales qualification engine for that offer.</p>
+      </div>
+    </div>
+  </article>
+
+  <div class="divider"></div>
+
+  <!-- ══ SECTION 2: FEATURE INVENTORY ══ -->
+  <article class="section">
+    <p class="sec-label">Feature Inventory · Section 02</p>
+    <h2>What the File <em>Contains</em></h2>
+
+    <p class="prose">The file is a single-page application with a full-page hero, stats bar, filterable industry grid, process timeline, revenue intelligence table, outreach email template, and a JavaScript-powered modal system. The following 14 features were identified and are fully functional in the current static implementation:</p>
+
+    <div class="feature-grid">
+      <div class="feat">
+        <p class="feat-tag">Hero Section</p>
+        <p>Full-viewport hero with animated grid lines, blurred color orbs, pulsing badge, large Bebas Neue display headline, subheadline, and dual CTA buttons. Scroll-linked anchor navigation. Staggered CSS animation on all elements.</p>
+      </div>
+      <div class="feat">
+        <p class="feat-tag">Live Stats Bar</p>
+        <p>4 headline metrics: 23 Industries Tracked, $14K+ Avg Monthly Leak, 87% Missing Chat Widget, 3X Average ROI. The industry count dynamically updates as search/filter is applied.</p>
+      </div>
+      <div class="feat">
+        <p class="feat-tag">Industry Directory (23 cards)</p>
+        <p>Grid of fully JS-rendered industry cards. Each shows: emoji icon, digital score (color-coded 0–100), card title, subcategory, gap pills (red/yellow/green), monthly leak, and top gap. Hover states with glow and lift animation.</p>
+      </div>
+      <div class="feat">
+        <p class="feat-tag">Live Search + Filter Tabs</p>
+        <p>Real-time text search across industry name and subcategory. 5 filter tabs: All, Health, Home Services, Trades, Retail, Professional. Both work simultaneously. Count updates in real time.</p>
+      </div>
+      <div class="feat">
+        <p class="feat-tag">Audit Modal (per industry)</p>
+        <p>Click-triggered overlay modal with: 8-row audit checklist (website, mobile speed, live chat, AI chatbot, booking, SSL, Google reviews, after-hours phone) with color-coded status badges (GOOD / PARTIAL / MISSING). Animated modal-in transition. ESC to close.</p>
+      </div>
+      <div class="feat">
+        <p class="feat-tag">ROI Display in Modal</p>
+        <p>Per-industry "Monthly Revenue Leak" in large display type + "Recovery Opportunity" with the full MetaEarth stack. Two CTA buttons: "Generate Outreach Email" and "Full Audit Report" — both currently trigger alert() stubs.</p>
+      </div>
+      <div class="feat">
+        <p class="feat-tag">5-Step Audit Framework Section</p>
+        <p>Visual explainer of the audit methodology: GMB Deep-Dive → Website Scan → AI Gap Analysis → Competitor Benchmarking → Revenue Impact Report. Step cards with hover border-glow. Sticky audit checklist sidebar showing 12 parameters with HIGH/MED/CRITICAL impact ratings.</p>
+      </div>
+      <div class="feat">
+        <p class="feat-tag">Before / After Visual Section</p>
+        <p>Side-by-side browser mockup showing a "before" state (outdated Wix site, no SSL, mobile score 24, $14,938 monthly leak) vs "after" (SSL, mobile 94/100, AI chat widget chips, +$44K monthly upside). CSS-only mock-browser components.</p>
+      </div>
+      <div class="feat">
+        <p class="feat-tag">6-Step Process Timeline</p>
+        <p>Vertical timeline with gradient connector line, emoji dot icons, and step tags. Covers the full sales workflow: Discovery → Audit → Quantify → Visualize → Outreach → Close & Deploy.</p>
+      </div>
+      <div class="feat">
+        <p class="feat-tag">Revenue Table</p>
+        <p>All 23 industries sorted by monthly leak descending. Columns: industry, monthly leak (red), opportunity (green), top gap, and a priority score (0–100) with animated bar fill and color-coded priority badge. JS-rendered from the same INDUSTRIES data array.</p>
+      </div>
+      <div class="feat">
+        <p class="feat-tag">Email Template Preview</p>
+        <p>Styled mock email client showing a templated cold outreach email format from Lamar Myers. Subject line, personalized body with [Business Name] / [$ amount] placeholders, a "HERE'S WHAT I FOUND" audit block, CTA button, and full email signature.</p>
+      </div>
+      <div class="feat">
+        <p class="feat-tag">JavaScript Data Engine</p>
+        <p>A 200+ line INDUSTRIES array drives the entire app: cards, modal, revenue table, and filter system. renderCards(), openModal(), filterByTag(), filterCards(), renderTable() — all wired and functional. Zero external JS dependencies.</p>
+      </div>
+      <div class="feat">
+        <p class="feat-tag">Cloudflare Email Protection</p>
+        <p>All email addresses are obfuscated via Cloudflare's email-decode.min.js script. Implies the file was served through Cloudflare at some point — it's not purely local-only.</p>
+      </div>
+      <div class="feat">
+        <p class="feat-tag">Typography System</p>
+        <p>Bebas Neue (display), Syne (UI sans-serif), JetBrains Mono (labels/code). Google Fonts CDN. 5-color accent system: cyan (#00e5ff), orange (#ff6b35), green (#7fff6b), gold (#ffd23f), red (#ff4757). CSS custom properties throughout.</p>
+      </div>
+    </div>
+  </article>
+
+  <div class="divider"></div>
+
+  <!-- ══ SECTION 3: TECHNOLOGY AUDIT ══ -->
+  <article class="section">
+    <p class="sec-label">Technology Audit · Section 03</p>
+    <h2>Violations &amp; <em>Dependency Flags</em></h2>
+
+    <p class="prose">No Firebase. No Databutton. No Riff. No vendor-locked backend of any kind. The file is architecturally clean. The violations below are structural gaps that prevent this from being a real, multi-user, data-driven SaaS — not platform contamination.</p>
+
+    <div class="flag-clean">✓ No Firebase. No Databutton. No Riff. No proprietary platform code. One minor external dependency: Cloudflare email obfuscation script (cosmetic, remove in production). Clean baseline.</div>
+
+    <div class="flag">
+      <div class="flag-top"><span class="flag-badge">Violation 01</span><span class="flag-title">All Industry Data is Hardcoded in a Static JS Array</span></div>
+      <p>The entire intelligence engine — 23 industries, 8 audit parameters each, revenue leaks, opportunity estimates, priority scores, gap descriptions — lives in a single INDUSTRIES const in a &lt;script&gt; tag. There is no database, no API, no way to add a 24th industry or update a revenue estimate without editing raw HTML. The "real-time audit" is entirely pre-fabricated.</p>
+      <p class="flag-fix">→ Replace with: PostgreSQL <code>industries</code> table + <code>audit_parameters</code> table + FastAPI CRUD endpoints. Admin UI to add/edit industries and update benchmarks. Real-time data pulled from Google Business Profile API and PageSpeed Insights API.</p>
+    </div>
+
+    <div class="flag">
+      <div class="flag-top"><span class="flag-badge">Violation 02</span><span class="flag-title">"Generate Outreach Email" Button Fires alert() — Entirely Unbuilt</span></div>
+      <p>The most critical conversion action in the entire platform — generating a personalized cold email for a specific business — is stubbed with <code>alert('Generating personalized outreach for ${ind.name}...')</code>. Similarly, "Full Audit Report" fires <code>alert('Opening full audit report...')</code>. These are the two buttons a sales rep would click 50 times a day. Neither does anything.</p>
+      <p class="flag-fix">→ Replace with: A FastAPI <code>/outreach/generate</code> endpoint that accepts industry ID + business name and uses the Anthropic API to draft a personalized email using the industry's audit data. One-click copy to clipboard. One-click push to Gmail or SendGrid.</p>
+    </div>
+
+    <div class="flag">
+      <div class="flag-top"><span class="flag-badge">Violation 03</span><span class="flag-title">No Real Business Data — Audit Scores Are Fabricated</span></div>
+      <p>Every "audit" in this platform is a fictional composite. The dental office score of 28/100, the plumbing mobile speed of 24/100, the funeral home with an expired SSL — none of these are real Tucson businesses. The platform claims to use "live Google data and website analysis" in its hero copy, but delivers entirely hardcoded estimates. A sales rep cannot use this to actually audit any specific business without doing all the research manually.</p>
+      <p class="flag-fix">→ Replace with: Google Places API (real GMB data), PageSpeed Insights API (real mobile scores), and a custom web crawler/checker for SSL, chat widget, and booking system detection. Real business records stored in PostgreSQL per-audit.</p>
+    </div>
+
+    <div class="flag">
+      <div class="flag-top"><span class="flag-badge">Violation 04</span><span class="flag-title">No User Accounts — Single-User Tool</span></div>
+      <p>The platform has no concept of authentication, user sessions, or multi-user access. It functions as a personal reference document. There is no way to track which businesses have been contacted, which outreach emails have been sent, which deals are in the pipeline, or what a second team member is working on.</p>
+      <p class="flag-fix">→ Replace with: FastAPI JWT auth. User table with role (Sales Rep, Admin). Per-rep prospect tracking, outreach log, and deal stage management. Team dashboard for the agency owner to see total pipeline value.</p>
+    </div>
+
+    <div class="flag">
+      <div class="flag-top"><span class="flag-badge">Violation 05</span><span class="flag-title">No CRM / Prospect Pipeline</span></div>
+      <p>The platform identifies 23 industry categories but has no mechanism to track individual businesses within those categories. There is no prospect list, no contact record, no outreach history, no follow-up scheduling, no deal stage, no closed/won tracking. The sales workflow described in the 6-step process timeline (Discover → Audit → Outreach → Close) has no data persistence layer to support it.</p>
+      <p class="flag-fix">→ Replace with: <code>businesses</code> table (name, category, GMB URL, contact email, phone), <code>audits</code> table (per-business scan results), <code>outreach_log</code> table (sent emails, dates, status), <code>deals</code> table (stage, monthly value, close date). Or: integrate with HubSpot/Pipedrive via API.</p>
+    </div>
+
+    <div class="flag">
+      <div class="flag-top"><span class="flag-badge">Violation 06</span><span class="flag-title">Cloudflare Email Obfuscation — Remove in Production</span></div>
+      <p>All email addresses are rendered as Cloudflare-obfuscated spans decoded by <code>/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js</code>. This CDN path is Cloudflare-specific and will break if the file is served from any other host. Contact info (lamar@metaearth.us, (520) 258-2714) is not accessible without this external script.</p>
+      <p class="flag-fix">→ Replace with: Plain text email addresses in the React app, protected by a contact form that sends to a FastAPI <code>/contact</code> endpoint with rate limiting. No CDN dependency for basic contact information.</p>
+    </div>
+
+    <div class="flag">
+      <div class="flag-top"><span class="flag-badge">Violation 07</span><span class="flag-title">Google Fonts CDN — Privacy + Reliability Risk</span></div>
+      <p>Bebas Neue, Syne, and JetBrains Mono are loaded from Google Fonts CDN. In a production SaaS context, this exposes user IP addresses to Google on every page load — a GDPR/CCPA compliance concern. Additionally, CDN failures break the typography entirely.</p>
+      <p class="flag-fix">→ Replace with: Self-hosted font files in <code>/public/fonts/</code>. Use <code>@font-face</code> in global CSS. Font files totaling ~120KB — negligible performance cost for full independence.</p>
+    </div>
+  </article>
+
+  <div class="divider"></div>
+
+  <!-- ══ SECTION 4: GAP ANALYSIS ══ -->
+  <article class="section">
+    <p class="sec-label">Gap Analysis · Section 04</p>
+    <h2>What It <em>Needs</em></h2>
+
+    <p class="prose">The following functional requirements are entirely absent and must be built from scratch. The frontend shell is excellent — the entire investment goes into backend intelligence, real data pipelines, and CRM workflow:</p>
+
+    <ul class="gap-list">
+      <li>
+        <span class="gn">01</span>
+        <div><strong>Real Business Data Ingestion Pipeline.</strong> Google Places API integration to pull actual Tucson GMB listings by category. PageSpeed Insights API for real mobile scores. Custom HTTP checker for SSL, chat widget detection, online booking system detection, and after-hours phone coverage. Store results in PostgreSQL <code>businesses</code> and <code>audits</code> tables. Schedule re-audits every 30 days.</div>
+      </li>
+      <li>
+        <span class="gn">02</span>
+        <div><strong>Authentication &amp; Role-Based Access.</strong> JWT auth (FastAPI). User roles: Admin (Lamar), Sales Rep, Client (business owner viewing their own audit). Bcrypt password hashing. Session refresh tokens. Protected routes in React.</div>
+      </li>
+      <li>
+        <span class="gn">03</span>
+        <div><strong>AI-Powered Outreach Email Generator.</strong> FastAPI <code>/outreach/generate</code> endpoint: receives business name, industry, audit scores, top gaps → calls Anthropic Claude API → returns a fully personalized cold email body with exact dollar amounts and specific gap callouts. One-click copy. One-click push to Gmail via Google OAuth. The current alert() stub is the platform's most critical missing feature.</div>
+      </li>
+      <li>
+        <span class="gn">04</span>
+        <div><strong>CRM Prospect Pipeline.</strong> Tables: <code>businesses</code>, <code>audits</code>, <code>outreach_log</code>, <code>deals</code>. Deal stages: Identified → Audited → Outreach Sent → Demo Booked → Proposal Sent → Closed Won / Lost. Pipeline view in React with drag-and-drop stage progression. Monthly revenue under management tracker.</div>
+      </li>
+      <li>
+        <span class="gn">05</span>
+        <div><strong>Per-Business Audit Report (Shareable Link).</strong> The "Full Audit Report" button should generate a publicly accessible, read-only audit page at <code>/report/:business-id</code>. The page shows the real before/after data for that specific business — their actual Google score, actual mobile performance, actual gaps found. This is the asset that gets linked in the cold email and closes the demo.</div>
+      </li>
+      <li>
+        <span class="gn">06</span>
+        <div><strong>Outreach Campaign Tracking.</strong> Log every email sent with timestamp, recipient, subject, body, and delivery status (via SendGrid/Mailgun webhook). Track open rates, click rates (on the audit report link), and response status. Per-rep stats: emails sent this week, open rate, reply rate, demos booked.</div>
+      </li>
+      <li>
+        <span class="gn">07</span>
+        <div><strong>Industry Intelligence Admin Panel.</strong> UI for Lamar to update industry benchmark data (average ticket values, call volumes, miss rates), add new industries, edit gap descriptions, adjust the revenue leak formula parameters. Currently requires direct HTML editing — unacceptable for an operational sales tool.</div>
+      </li>
+      <li>
+        <span class="gn">08</span>
+        <div><strong>Client Portal (Post-Sale).</strong> Once a business is onboarded as a client, they should be able to log in and see their own dashboard: AI phone call volume, missed calls intercepted, bookings created, leads captured, and ROI vs. monthly fee. This is the retention layer that justifies the recurring contract.</div>
+      </li>
+      <li>
+        <span class="gn">09</span>
+        <div><strong>Subscription / Billing.</strong> Stripe integration for recurring $297–$997/month client billing. Invoice generation. Failed payment retry logic. Cancellation flow with churn survey. Revenue dashboard showing MRR, churn rate, and net new MRR per month.</div>
+      </li>
+      <li>
+        <span class="gn">10</span>
+        <div><strong>Security Hardening.</strong> Rate limiting on all API endpoints (slowapi). CORS restriction to known origins. Input sanitization on all form fields. SQL injection prevention via SQLAlchemy ORM. HTTPS enforcement. Audit log for all admin actions.</div>
+      </li>
+    </ul>
+
+    <div class="crit-callout">
+      <p class="crit-callout-label">Critical Insight — The Real AI Product</p>
+      <p>The platform's hero copy mentions an "AI phone assistant" starting at $297/month — but this product is never described in the file. The backend stack must also integrate with whatever telephony AI service MetaEarth is reselling or building (likely Twilio + GPT or a white-label voice AI platform). <strong>The outreach platform is the top-of-funnel. The AI phone assistant is the product being sold. Both need to be built or integrated.</strong></p>
+    </div>
+  </article>
+
+  <div class="divider"></div>
+
+  <!-- ══ SECTION 5: TARGET ARCHITECTURE ══ -->
+  <article class="section">
+    <p class="sec-label">Target Architecture · Section 05</p>
+    <h2>Proposed <em>Stack Structure</em></h2>
+
+    <p class="prose">The target codebase is a clean monorepo with separated <code>/frontend</code> (React + Vite + TypeScript) and <code>/backend</code> (FastAPI + Poetry) directories. The intelligence layer adds a third module: a background worker for scheduled business audits.</p>
+
+    <div class="arch-row">
+      <div class="arch-block">
+        <p class="arch-title">React Frontend</p>
+        <ul>
+          <li>pages/ (Dashboard, Industries, Prospects, Pipeline, Reports, Admin, Client Portal)</li>
+          <li>components/ (IndustryCard, AuditModal, EmailPreview, PipelineBoard)</li>
+          <li>features/ (auth, industries, outreach, crm, billing)</li>
+          <li>services/ (api client, google-places, stripe)</li>
+          <li>hooks/ (useAudit, useOutreach, usePipeline)</li>
+          <li>store/ (auth, filters, selected industry)</li>
+          <li>React Router v6 + React Query + Zustand</li>
+          <li>Tailwind CSS (or styled-components)</li>
+        </ul>
+      </div>
+      <div class="arch-block">
+        <p class="arch-title">FastAPI Backend</p>
+        <ul>
+          <li>routers/ (auth, industries, businesses, audits, outreach, deals, billing, admin, client)</li>
+          <li>schemas/ (Pydantic models per domain)</li>
+          <li>services/ (audit_engine, email_generator, stripe_service, anthropic_service)</li>
+          <li>repositories/ (SQLAlchemy data access layer)</li>
+          <li>models/ (ORM models)</li>
+          <li>workers/ (Celery + Redis for async audit jobs)</li>
+          <li>core/ (config, security, deps, logging)</li>
+          <li>Alembic migrations + pytest</li>
+        </ul>
+      </div>
+      <div class="arch-block">
+        <p class="arch-title">PostgreSQL Schema</p>
+        <ul>
+          <li>users (id, role, email, hash, rep_name)</li>
+          <li>industries (id, name, tag, benchmark_leak, ticket_avg)</li>
+          <li>businesses (id, industry_id, name, gmb_url, email, phone)</li>
+          <li>audits (id, business_id, scores JSON, gaps JSON, created_at)</li>
+          <li>outreach_log (id, business_id, user_id, email_body, status, sent_at)</li>
+          <li>deals (id, business_id, stage, monthly_value, close_date)</li>
+          <li>clients (id, business_id, stripe_sub_id, plan, mrr)</li>
+          <li>client_metrics (client_id, calls_intercepted, bookings, leads, date)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Environment Variables &amp; External Integrations</p>
+      <p class="card-body">
+        <strong>Backend:</strong> DATABASE_URL, SECRET_KEY, GOOGLE_PLACES_API_KEY, PAGESPEED_API_KEY, ANTHROPIC_API_KEY, STRIPE_SECRET_KEY, SENDGRID_API_KEY, CELERY_BROKER_URL, CORS_ORIGINS<br>
+        <strong>Frontend:</strong> VITE_API_BASE_URL, VITE_STRIPE_PUBLISHABLE_KEY, VITE_GOOGLE_OAUTH_CLIENT_ID<br>
+        <strong>Infrastructure:</strong> Railway or Fly.io (FastAPI + PostgreSQL), Redis (Celery broker), Vercel (React frontend), SendGrid (email delivery), Stripe (billing)
+      </p>
+    </div>
+  </article>
+
+  <div class="divider"></div>
+
+  <!-- ══ SECTION 6: IMPLEMENTATION PLAN ══ -->
+  <article class="section">
+    <p class="sec-label">Implementation Roadmap · Section 06</p>
+    <h2>Build <em>Sequence</em></h2>
+
+    <div class="roadmap">
+      <div class="rs">
+        <p class="rs-num">Step 01</p>
+        <p class="rs-title">Repo Setup, Schema Design &amp; Data Migration</p>
+        <p>Initialize monorepo. Define PostgreSQL schema. Migrate all 23 hardcoded INDUSTRIES entries into the <code>industries</code> table with Alembic. Seed benchmark data. Configure Alembic migration pipeline. This immediately gives the app a real database backing the existing UI data.</p>
+      </div>
+      <div class="rs">
+        <p class="rs-num">Step 02</p>
+        <p class="rs-title">FastAPI Auth + Core Content API</p>
+        <p>Implement <code>/auth</code>, <code>/industries</code>, <code>/businesses</code>, <code>/audits</code> routers. JWT auth with RBAC (Admin, Sales Rep, Client). Pydantic schemas for all request/response shapes. Connect React frontend to real API — replace the hardcoded INDUSTRIES array with React Query fetches.</p>
+      </div>
+      <div class="rs">
+        <p class="rs-num">Step 03</p>
+        <p class="rs-title">Google Places API + Real Audit Engine</p>
+        <p>Integrate Google Places API to fetch real Tucson GMB listings by industry category. Integrate PageSpeed Insights API for mobile scores. Build HTTP checker for SSL, chat widget, booking system. Create <code>/audits/run/:business_id</code> endpoint that populates a real audit record. Store results in <code>audits</code> table.</p>
+      </div>
+      <div class="rs">
+        <p class="rs-num">Step 04</p>
+        <p class="rs-title">AI Outreach Email Generator (Highest Priority Feature)</p>
+        <p>Build <code>/outreach/generate</code> FastAPI endpoint. Accept: business name, industry, real audit scores, top 3 gaps, estimated leak. Call Anthropic Claude API with structured prompt. Return personalized email body with specific dollar amounts and gap callouts. Connect to modal "Generate Outreach Email" button — replace alert() with real output.</p>
+      </div>
+      <div class="rs">
+        <p class="rs-num">Step 05</p>
+        <p class="rs-title">React Frontend Rebuild — Port Design System</p>
+        <p>Convert the HTML design system into React components: IndustryCard, AuditModal, RevenueTable, BeforeAfter, ProcessTimeline, EmailPreview. Preserve the full visual design fidelity (Bebas Neue, Syne, JetBrains Mono, 5-color accent system). Replace all hardcoded data with React Query fetches. Add loading skeletons and error boundaries.</p>
+      </div>
+      <div class="rs">
+        <p class="rs-num">Step 06</p>
+        <p class="rs-title">CRM Pipeline + Outreach Tracking</p>
+        <p>Build prospect pipeline board (Kanban-style, drag-and-drop deal stages). Outreach log table per business. Email open/click tracking via SendGrid webhook. Rep performance dashboard: emails sent, open rate, reply rate, demos booked, MRR closed. Admin view of total pipeline across all reps.</p>
+      </div>
+      <div class="rs">
+        <p class="rs-num">Step 07</p>
+        <p class="rs-title">Shareable Audit Report Page</p>
+        <p>Build public <code>/report/:report_token</code> page — a read-only, beautifully designed audit report for a specific business showing their real scores, before/after visualization, gap list, and a CTA to book a demo with MetaEarth. This is the asset sent in every cold email. Design must match the MetaEarth brand at full quality.</p>
+      </div>
+      <div class="rs">
+        <p class="rs-num">Step 08</p>
+        <p class="rs-title">Client Portal + Stripe Billing</p>
+        <p>Post-sale client login showing: AI call volume, missed calls intercepted, bookings created, leads captured, ROI vs. monthly fee. Stripe integration for recurring billing ($297–$997/month plans). Invoice history. Failed payment retry. MRR dashboard for the admin/founder view.</p>
+      </div>
+      <div class="rs">
+        <p class="rs-num">Step 09</p>
+        <p class="rs-title">Background Audit Scheduler (Celery + Redis)</p>
+        <p>Async worker that re-audits all tracked businesses every 30 days. Alert the sales rep if a previously-audited business's score drops (new opportunity) or if a client improves significantly (success story). Scheduled job to scan new GMB listings in Tucson for newly opened businesses.</p>
+      </div>
+      <div class="rs">
+        <p class="rs-num">Step 10</p>
+        <p class="rs-title">QA, Security &amp; Deployment</p>
+        <p>pytest coverage ≥ 75% on all API routes. Playwright E2E for outreach generation and client portal flows. OWASP Top 10 review. Rate limiting on all endpoints. Deploy: Railway (FastAPI + Redis + PostgreSQL) + Vercel (React). Configure Sentry for error tracking. Write README with full setup docs.</p>
+      </div>
+    </div>
+  </article>
+
+  <div class="divider"></div>
+
+  <!-- ══ SECTION 7: MONETIZATION ══ -->
+  <article class="section">
+    <p class="sec-label">Monetization Potential · Section 07</p>
+    <h2>Revenue <em>Ceiling</em></h2>
+
+    <div class="money-card">
+      <p class="money-label">Estimated Annual Revenue Range</p>
+      <p class="money-range">$180k – $2.4M</p>
+      <p class="money-desc">
+        At the low end: MetaEarth closes 50 Tucson SMB clients on $297/month AI phone assistant contracts = $178k ARR. At the high end: the outreach platform itself becomes a licensed B2B SaaS product — sold to other digital agencies nationally at $299–$499/month per agency, with 400+ agency subscribers and additional revenue from client AI contracts. The platform is the distribution engine; the AI product is the recurring revenue.
+      </p>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Revenue Stream A — Agency AI Contracts (Core Model)</p>
+      <p class="card-body">$297–$997/month per SMB client for AI phone assistant, SMS chatbot, online booking integration, and review automation. 50 clients = $178k ARR. 150 clients = $534k ARR. 300 clients = $1.07M ARR. Tucson alone has 10,000+ SMBs across the 23 audited industries — total addressable market is enormous relative to current team size.</p>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Revenue Stream B — Outreach Platform License (White-Label SaaS)</p>
+      <p class="card-body">Once built with real Google data integration and AI email generation, this platform becomes a valuable tool for other local marketing agencies in other cities. License the platform at $299–$499/month per agency. 200 agencies × $399/month = $958k ARR from licensing alone — pure software margin. This is the highest-ceiling path.</p>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Revenue Stream C — Done-For-You Outreach Campaigns</p>
+      <p class="card-body">Sell the outreach intelligence as a service: $1,500–$3,000/month for MetaEarth to run the full audit-to-outreach workflow for a different agency or franchise group in another market. Requires only 1 additional team member per 20 client-agencies. Immediate revenue before the platform is fully productized.</p>
+    </div>
+  </article>
+
+  <div class="divider"></div>
+
+  <!-- ══ SECTION 8: TARGET MARKET ══ -->
+  <article class="section">
+    <p class="sec-label">Target Market · Section 08</p>
+    <h2>Ideal <em>Customers</em></h2>
+
+    <div class="target-grid">
+      <div class="target-item">
+        <p class="target-name">Tucson SMB Owners (Direct Client)</p>
+        <p>The immediate target: dental offices, HVAC companies, law firms, funeral homes, auto mechanics — any of the 23 audited industries. These are businesses doing $300k–$3M/year in revenue who are losing 15–20% of inbound calls. <em>Why they'd buy:</em> The dollar-specific cold email cuts through noise — "you're losing $18,400/month" is a harder pitch to ignore than "we offer digital marketing services."</p>
+      </div>
+      <div class="target-item">
+        <p class="target-name">Local Digital Marketing Agencies (Platform License)</p>
+        <p>Small-to-mid agencies in secondary US markets (Albuquerque, El Paso, Tucson, Fresno, Chattanooga) that do web design and SEO but want to add AI automation upsells. They lack the intelligence tooling to identify prospects at scale. <em>Why they'd buy:</em> This platform cuts prospect research time from 2 hours to 10 minutes per business — immediate ROI on the license fee.</p>
+      </div>
+      <div class="target-item">
+        <p class="target-name">AI Telephony Resellers</p>
+        <p>Agencies already white-labeling Synthflow, Vapi, or Bland.ai AI phone products who need a lead gen system to find and approach SMBs. The audit platform is a natural complement to any voice AI reseller business. <em>Why they'd buy:</em> The "revenue leak" framing is the perfect sales hook for AI phone products — it quantifies the cost of not having 24/7 coverage.</p>
+      </div>
+      <div class="target-item">
+        <p class="target-name">Franchise Groups &amp; Multi-Location Operators</p>
+        <p>A dental group with 8 Tucson locations that wants a monthly audit across all locations + automated outreach to underperforming sites. Or a regional HVAC franchise that wants to audit their franchisee network. <em>Why they'd buy:</em> Enterprise contract opportunity — $5k–$15k/month for a managed audit + outreach program across 20–50 locations.</p>
+      </div>
+      <div class="target-item">
+        <p class="target-name">Business Coaches &amp; Consultants</p>
+        <p>Coaches and consultants who work with SMB owners and want to offer a "digital health check" as part of their onboarding. The audit report becomes a deliverable in their consulting package. <em>Why they'd buy:</em> Adds a data-driven credibility layer to their practice — "here's exactly what's costing your business money" is a powerful client-acquisition tool.</p>
+      </div>
+      <div class="target-item">
+        <p class="target-name">SBA / SBDC Programs</p>
+        <p>Small Business Development Centers and SBA programs that advise local businesses could use a white-labeled version of the audit tool to provide free or subsidized digital health assessments. <em>Why they'd buy:</em> Grant-fundable use case — "we assessed 500 Tucson businesses and found X% were losing revenue due to digital gaps" is a compelling program outcome metric.</p>
+      </div>
+    </div>
+  </article>
+
+  <div class="divider"></div>
+
+  <!-- ══ SECTION 9: VERDICT ══ -->
+  <article class="section">
+    <p class="sec-label">Go / No-Go Verdict · Section 09</p>
+    <h2>Readiness <em>Assessment</em></h2>
+
+    <div class="verdict-box">
+      <div class="verdict-dot"></div>
+      <p class="verdict-text">HIGH READINESS</p>
+    </div>
+
+    <p class="prose">
+      This is the most operationally mature file in this audit series. The frontend design system is production-quality. The JavaScript data architecture — INDUSTRIES array, renderCards(), openModal(), filterByTag(), renderTable() — maps directly to what a React + FastAPI app would do, just with a real database instead of a const. The sales workflow is fully articulated and road-tested. <em>The founder knows exactly what the product does and who it's for.</em> What's missing is infrastructure, not vision.
+    </p>
+
+    <p class="prose">
+      The single most valuable immediate action: replace the two <code>alert()</code> stubs in the modal with a real AI email generator. That one feature — a personalized cold email with actual business data and dollar figures, generated in 3 seconds — is the platform's entire value proposition in action. Build that first. Everything else is growth.
+    </p>
+
+    <div class="card">
+      <p class="card-title">Primary Blockers</p>
+      <p class="card-body">
+        1. All audit data is hardcoded — no real business intelligence, no Google data integration<br>
+        2. "Generate Outreach Email" fires alert() — the core product feature doesn't exist<br>
+        3. No persistence — zero CRM, zero outreach tracking, zero deal pipeline<br>
+        4. No auth — single-user tool, cannot scale to a team or sell as SaaS<br>
+        5. No shareable audit report link — the email CTA leads nowhere
+      </p>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Effort Estimate</p>
+      <p class="card-body">
+        <strong>MVP (auth + real Google data + AI email generator + basic CRM):</strong> 120–160 hours — the shortest path to production of any file in this audit series. The frontend is already done.<br>
+        <strong>Full platform (client portal + billing + scheduled audits + white-label):</strong> 300–420 hours<br>
+        <strong>Team recommendation:</strong> 1 full-stack engineer for MVP in 4–6 weeks. Add a backend specialist for the Google API integration and Celery scheduler sprint.
+      </p>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Top 3 Next Actions</p>
+      <p class="card-body">
+        <strong>1.</strong> Replace the two alert() stubs with a real Anthropic API call — POST the industry data to a FastAPI endpoint and return a formatted cold email. This single change transforms the platform from a reference document into a working sales tool. Two days of engineering. Immediate operational value.<br><br>
+        <strong>2.</strong> Integrate Google Places API for one industry (start with HVAC — highest Tucson search volume, most urgent seasonal need) and store real business records in PostgreSQL. Prove the real-data pipeline works before scaling to all 23 industries.<br><br>
+        <strong>3.</strong> Build the shareable audit report page (<code>/report/:token</code>) before building any CRM features — this is the asset in the cold email that drives demo bookings. Without it, the email CTA goes nowhere and the entire outreach pipeline stalls.
+      </p>
+    </div>
+  </article>
+
+</main>
+
+<footer>
+  <p>MetaEarth Initiative · Outreach Platform · Audit Report · 2026-04-03</p>
+  <p class="closing">Target stack: React + FastAPI + PostgreSQL. Two alert() stubs stand between this and a real sales engine.</p>
+</footer>
+
+</body>
+</html>

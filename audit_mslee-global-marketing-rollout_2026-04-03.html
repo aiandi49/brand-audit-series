@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audit Report — MsLee Global Consulting Marketing Rollout</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:         #080808;
+    --bg2:        #0d0d0d;
+    --bg3:        #111111;
+    --bg4:        #161616;
+    --accent:     #00D4FF;
+    --accent-dim: rgba(0,212,255,0.12);
+    --accent-glow:rgba(0,212,255,0.06);
+    --accent-muted:rgba(0,212,255,0.3);
+    --text:       #E4E4E4;
+    --text-muted: #888;
+    --text-dim:   #444;
+    --white:      #fff;
+    --warn:       #FF5C5C;
+    --warn-dim:   rgba(255,92,92,0.12);
+    --ok:         #00E5A0;
+    --ok-dim:     rgba(0,229,160,0.1);
+    --mid:        #FFAD00;
+    --mid-dim:    rgba(255,173,0,0.12);
+    --border:     rgba(0,212,255,0.1);
+    --rule:       rgba(0,212,255,0.18);
+    --purple:     #B06EFF;
+    --purple-dim: rgba(176,110,255,0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.85;
+    overflow-x: hidden;
+  }
+
+  /* ── GRAIN ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    height: 5px;
+    background: linear-gradient(90deg, #003F5C, var(--accent), #00FFD1, var(--accent), #003F5C);
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+  }
+
+  /* ── MASTHEAD ── */
+  header {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 120px 44px 80px;
+    animation: fadeUp 1s ease forwards;
+  }
+
+  .masthead-eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    display: block;
+    text-shadow: 0 0 20px rgba(0,212,255,0.4);
+  }
+
+  h1.product-name {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 700;
+    line-height: 1.0;
+    letter-spacing: -0.025em;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+  }
+
+  h1.product-name .grad {
+    background: linear-gradient(135deg, var(--accent) 0%, #00FFD1 50%, var(--purple) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .tagline {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    font-weight: 300;
+    max-width: 620px;
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+  }
+
+  .meta-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    border-top: 1px solid var(--rule);
+    padding-top: 1.5rem;
+  }
+
+  .meta-strip span { color: var(--accent); }
+
+  /* ── ARTICLE ── */
+  article { max-width: 880px; margin: 0 auto; padding: 0 44px 120px; }
+
+  /* ── SECTION ── */
+  section {
+    padding: 72px 0;
+    border-bottom: 1px solid var(--border);
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards;
+  }
+
+  section:nth-child(1)  { animation-delay: 0.1s; }
+  section:nth-child(2)  { animation-delay: 0.2s; }
+  section:nth-child(3)  { animation-delay: 0.3s; }
+  section:nth-child(4)  { animation-delay: 0.4s; }
+  section:nth-child(5)  { animation-delay: 0.5s; }
+  section:nth-child(6)  { animation-delay: 0.6s; }
+  section:nth-child(7)  { animation-delay: 0.7s; }
+  section:nth-child(8)  { animation-delay: 0.8s; }
+  section:nth-child(9)  { animation-delay: 0.9s; }
+
+  .section-eyebrow {
+    font-size: 0.63rem;
+    letter-spacing: 0.38em;
+    text-transform: uppercase;
+    color: var(--accent-muted);
+    margin-bottom: 1.2rem;
+    display: block;
+    font-weight: 500;
+  }
+
+  h2 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(1.9rem, 4.5vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    margin-bottom: 1.75rem;
+    background: linear-gradient(135deg, #fff 20%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  h3 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.45rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin: 2.25rem 0 0.75rem;
+    text-shadow: 0 0 25px rgba(0,212,255,0.15);
+  }
+
+  p {
+    color: var(--text);
+    font-weight: 300;
+    font-size: 15.5px;
+    line-height: 1.9;
+    margin-bottom: 1.2rem;
+  }
+
+  strong { color: var(--white); font-weight: 600; }
+  em { color: var(--accent); font-style: normal; }
+
+  /* ── LISTS ── */
+  ul.dl {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 1.5rem;
+  }
+
+  ul.dl li {
+    padding: 0.55rem 0 0.55rem 1.6rem;
+    position: relative;
+    font-size: 15px;
+    color: var(--text);
+    font-weight: 300;
+    line-height: 1.7;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+  }
+
+  ul.dl li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 1.15rem;
+  }
+
+  /* ── CALLOUT ── */
+  .callout {
+    border-left: 3px solid var(--accent);
+    background: var(--accent-glow);
+    padding: 1.5rem 2rem;
+    margin: 2rem 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .callout p { margin: 0; font-size: 15px; }
+  .callout strong { color: var(--accent); }
+
+  /* ── WARN ── */
+  .warn-block {
+    background: var(--warn-dim);
+    border: 1px solid rgba(255,92,92,0.22);
+    border-left: 3px solid var(--warn);
+    padding: 1.3rem 1.6rem;
+    border-radius: 0 8px 8px 0;
+    margin: 1rem 0;
+  }
+  .warn-block p { margin: 0; font-size: 14.5px; color: #D4A0A0; }
+  .warn-block strong { color: var(--warn); }
+  .warn-block .fix { color: var(--ok); margin-top: 0.5rem; font-size: 14px; }
+  .warn-block .fix::before { content: '✓ Fix: '; font-weight: 600; }
+
+  /* ── OK ── */
+  .ok-block {
+    background: var(--ok-dim);
+    border: 1px solid rgba(0,229,160,0.2);
+    border-left: 3px solid var(--ok);
+    padding: 1.3rem 1.6rem;
+    border-radius: 0 8px 8px 0;
+    margin: 1rem 0;
+  }
+  .ok-block p { margin: 0; font-size: 14.5px; color: #A0D4B8; }
+  .ok-block strong { color: var(--ok); }
+
+  /* ── NOTE ── */
+  .note-block {
+    background: var(--purple-dim);
+    border: 1px solid rgba(176,110,255,0.2);
+    border-left: 3px solid var(--purple);
+    padding: 1.3rem 1.6rem;
+    border-radius: 0 8px 8px 0;
+    margin: 1rem 0;
+  }
+  .note-block p { margin: 0; font-size: 14.5px; color: #C4A8E8; }
+  .note-block strong { color: var(--purple); }
+
+  /* ── VIOLATION CARD ── */
+  .violation-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.6rem;
+    margin: 1.25rem 0;
+  }
+  .violation-card .vc-cat {
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--warn);
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  .violation-card h4 {
+    font-size: 1rem;
+    color: var(--white);
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+  }
+  .violation-card p { margin: 0.3rem 0; font-size: 14px; color: #999; }
+  .violation-card .fix { color: var(--ok); font-size: 14px; margin-top: 0.5rem; }
+  .violation-card .fix::before { content: '✓ Replacement: '; font-weight: 600; }
+
+  /* ── STAT ROW ── */
+  .stat-row {
+    display: flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    margin: 2rem 0;
+  }
+
+  .stat-box {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    flex: 1;
+    min-width: 150px;
+    text-align: center;
+  }
+
+  .stat-box .sv {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    display: block;
+    text-shadow: 0 0 20px rgba(0,212,255,0.2);
+  }
+
+  .stat-box .sl {
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-top: 0.4rem;
+    display: block;
+  }
+
+  /* ── ARCH GRID ── */
+  .arch-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  @media (max-width: 640px) { .arch-grid { grid-template-columns: 1fr; } }
+
+  .arch-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+  }
+
+  .arch-card .ai {
+    font-size: 1.4rem;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  .arch-card h4 {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .arch-card ul { list-style: none; padding: 0; }
+  .arch-card ul li {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    padding: 0.22rem 0;
+    line-height: 1.55;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  /* ── TIMELINE ── */
+  .timeline { position: relative; padding-left: 2.5rem; margin: 1.5rem 0; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+  }
+
+  .tl-item { position: relative; padding: 0 0 2.25rem 1.5rem; }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -1.5rem;
+    top: 0.4rem;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 14px rgba(0,212,255,0.55);
+  }
+
+  .tl-num {
+    font-size: 0.63rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent-muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .tl-item h4 { font-size: 1rem; color: var(--white); margin-bottom: 0.5rem; font-weight: 600; }
+  .tl-item p { font-size: 14px; color: var(--text-muted); margin: 0; line-height: 1.65; }
+
+  /* ── MONEY CARD ── */
+  .money-card {
+    background: linear-gradient(135deg, var(--bg3) 0%, #001A1F 100%);
+    border: 1px solid rgba(0,212,255,0.28);
+    border-radius: 14px;
+    padding: 2.5rem;
+    margin: 2rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .money-card::before {
+    content: '$';
+    position: absolute;
+    right: 2rem; top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11rem;
+    color: rgba(0,212,255,0.04);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .money-range {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    font-weight: 700;
+    color: var(--accent);
+    text-shadow: 0 0 40px rgba(0,212,255,0.3);
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .money-card p { color: #999; font-size: 15px; margin: 0.5rem 0; }
+
+  /* ── TARGET GRID ── */
+  .target-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  @media (max-width: 580px) { .target-grid { grid-template-columns: 1fr; } }
+
+  .target-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+  }
+  .target-card h4 { font-size: 0.9rem; color: var(--white); font-weight: 600; margin-bottom: 0.4rem; }
+  .target-card p { font-size: 13px; color: var(--text-muted); margin: 0; line-height: 1.6; }
+
+  /* ── SERVICE PILLS ── */
+  .pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin: 1rem 0;
+  }
+
+  .pill {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.9rem;
+    border-radius: 20px;
+    background: var(--accent-dim);
+    border: 1px solid rgba(0,212,255,0.2);
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .pill.purple { background: var(--purple-dim); border-color: rgba(176,110,255,0.2); color: var(--purple); }
+  .pill.mid    { background: var(--mid-dim);    border-color: rgba(255,173,0,0.2);    color: var(--mid); }
+  .pill.ok     { background: var(--ok-dim);     border-color: rgba(0,229,160,0.2);    color: var(--ok); }
+  .pill.warn   { background: var(--warn-dim);   border-color: rgba(255,92,92,0.2);    color: var(--warn); }
+
+  /* ── COMPLEXITY BADGE ── */
+  .complexity-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin: 1.5rem 0;
+  }
+
+  .cx-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    min-width: 140px;
+    text-align: center;
+  }
+
+  .cx-badge .cx-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-top: 0.4rem;
+  }
+
+  .cx-badge .cx-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--accent);
+    text-shadow: 0 0 12px rgba(0,212,255,0.3);
+  }
+
+  /* ── VERDICT ── */
+  .verdict-block {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin: 2rem 0;
+  }
+
+  .verdict-badge {
+    display: inline-block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.2rem;
+    font-weight: 700;
+    padding: 0.9rem 3rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  .verdict-badge.medium {
+    background: rgba(255,173,0,0.12);
+    border: 2px solid var(--mid);
+    color: var(--mid);
+    text-shadow: 0 0 25px rgba(255,173,0,0.3);
+  }
+
+  .verdict-block p { font-size: 15px; color: var(--text-muted); max-width: 520px; margin: 0.5rem auto; }
+  .verdict-block strong { color: var(--white); }
+
+  /* ── DB SCHEMA MINI TABLE ── */
+  .schema-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 13.5px;
+  }
+
+  .schema-table th {
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+  }
+
+  .schema-table td {
+    padding: 0.65rem 1rem;
+    color: var(--text-muted);
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    vertical-align: top;
+  }
+
+  .schema-table td:first-child { color: var(--accent); font-weight: 500; font-size: 13px; }
+  .schema-table tr:last-child td { border-bottom: none; }
+
+  /* ── FOOTER ── */
+  footer {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 3rem 44px 6rem;
+    text-align: center;
+    border-top: 1px solid var(--border);
+  }
+
+  footer p {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+
+  footer span { color: var(--accent); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    body { background: #080808; color: #e4e4e4; }
+    .topbar { position: static; }
+    * { animation: none !important; }
+  }
+
+  /* ── DIVIDER ── */
+  .rule { height: 1px; background: var(--border); margin: 1.5rem 0; }
+</style>
+</head>
+<body>
+
+<div class="topbar"></div>
+
+<!-- MASTHEAD -->
+<header>
+  <span class="masthead-eyebrow">App Audit Report &nbsp;·&nbsp; April 03, 2026 &nbsp;·&nbsp; React + FastAPI + PostgreSQL</span>
+  <h1 class="product-name"><span class="grad">MsLee Global</span><br>Consulting</h1>
+  <p class="tagline">A comprehensive technical audit of a polished 6-month marketing strategy document — analysed for its conversion into a production-ready, multi-feature SaaS platform deployable on GitHub and built on the React + FastAPI + PostgreSQL stack.</p>
+  <div class="meta-strip">
+    <div>File: <span>mslee-global-marketing-rollout.html</span></div>
+    <div>Brand: <span>MsLee Global Consulting</span></div>
+    <div>Stack Target: <span>React · FastAPI · PostgreSQL</span></div>
+    <div>Lines: <span>1,492</span></div>
+    <div>Readiness: <span>Medium</span></div>
+  </div>
+</header>
+
+<article>
+
+<!-- ══ SECTION 1: FILE OVERVIEW ══ -->
+<section>
+  <span class="section-eyebrow">Section 01 &nbsp;·&nbsp; File Overview</span>
+  <h2>What This File Is</h2>
+
+  <p>This is a <strong>feature-rich static HTML strategy document</strong> — a visually stunning, 1,492-line interactive marketing roadmap for <em>MsLee Global Consulting</em>, a multi-continental consultancy founded by Ms. Lee, operating from South Africa to Thailand. The document is structured as a full-screen scrolling microsite covering the company's 6-month growth plan from April to September 2025.</p>
+
+  <p>It is emphatically <strong>not a functional application</strong>. Every data point, metric, budget figure, and timeline item is hardcoded. But the sophistication of its structure, the depth of its business logic, and the breadth of its service catalogue make this an unusually strong foundation for a real SaaS product.</p>
+
+  <div class="stat-row">
+    <div class="stat-box"><span class="sv">7</span><span class="sl">Service Pillars</span></div>
+    <div class="stat-box"><span class="sv">6</span><span class="sl">Timeline Phases</span></div>
+    <div class="stat-box"><span class="sv">8</span><span class="sl">KPI Metrics</span></div>
+    <div class="stat-box"><span class="sv">6</span><span class="sl">Marketing Channels</span></div>
+    <div class="stat-box"><span class="sv">5</span><span class="sl">Buyer Personas</span></div>
+  </div>
+
+  <h3>Core Product Identity</h3>
+  <p>MsLee Global Consulting is a <strong>multi-service consultancy</strong> operating across seven distinct revenue pillars: Accounting & Investment Readiness, Business Strategy Consulting, Travel Consulting, Education & Training, Creative Services, Nonprofit Impact, and AI & Blockchain Education. The marketing plan itself implies a sophisticated digital platform — including a <strong>Voice AI assistant</strong>, a <strong>Quote Tool</strong>, online courses, WhatsApp communities, and a multi-region content strategy.</p>
+
+  <div class="callout">
+    <p><strong>Design observation:</strong> This HTML file is among the most polished static strategy documents in this audit series. It uses three Google Fonts, animated glowing orbs, a live scroll-progress bar, IntersectionObserver-driven counter animations, a full fixed navigation system, and a coherent multi-colour design system (magenta / cyan / gold). The engineering effort invested in the <em>document</em> far exceeds what a typical HTML strategy deck receives.</p>
+  </div>
+
+  <h3>Implied User Roles</h3>
+  <ul class="dl">
+    <li><strong>Admin / Ms. Lee</strong> — manages service listings, course content, client inquiries, blog posts</li>
+    <li><strong>Prospective Client</strong> — browses services, uses the Quote Tool, books a discovery call</li>
+    <li><strong>Course Learner</strong> — purchases and accesses online courses, joins WhatsApp community</li>
+    <li><strong>Nonprofit Partner</strong> — submits inquiry, tracks impact reports</li>
+    <li><strong>Community Member</strong> — participates in events, WhatsApp groups, challenges</li>
+    <li><strong>Content/Marketing Manager</strong> — manages the 6-channel content calendar</li>
+  </ul>
+
+  <h3>Implied User Journey</h3>
+  <ul class="dl">
+    <li>Visitor discovers MsLee Global via social media or search → lands on the website</li>
+    <li>Voice AI assistant greets the visitor, qualifies intent, routes to appropriate service page</li>
+    <li>Visitor uses the Quote Tool → generates a custom service estimate → submits inquiry</li>
+    <li>Email onboarding sequence activates (5-email nurture flow)</li>
+    <li>Visitor converts to course buyer ($199.99 flagship) or consulting client (retainer)</li>
+    <li>Client joins WhatsApp community and attends live events</li>
+    <li>At Month 6: client invited to "Global Growth Summit" and offered annual retainer</li>
+  </ul>
+</section>
+
+<!-- ══ SECTION 2: FEATURE INVENTORY ══ -->
+<section>
+  <span class="section-eyebrow">Section 02 &nbsp;·&nbsp; Feature Inventory</span>
+  <h2>What the File Contains</h2>
+
+  <h3>Pages & Sections (8 distinct sections)</h3>
+  <ul class="dl">
+    <li><strong>Hero</strong> — Full-viewport with animated orbs, gradient headline, 4-stat summary row, blinking live indicator</li>
+    <li><strong>Vision & Mission</strong> — Two-column layout, founder quote block</li>
+    <li><strong>All Seven Service Lines</strong> — Service card grid with icons, tags, descriptions, and sub-skill pills</li>
+    <li><strong>Target Personas</strong> — 5 buyer persona cards (The Change-Maker, The Ambitious SME, The Social Impact Champion, The Global Nomad, The Hungry Learner)</li>
+    <li><strong>Marketing Channels</strong> — 6-channel grid (Instagram/TikTok, LinkedIn, WhatsApp, Email Newsletter, Voice/AI Agent, Website/SEO)</li>
+    <li><strong>6-Month Rollout Timeline</strong> — Phase-by-phase execution plan with actions, KPI chips per month</li>
+    <li><strong>KPI Metrics Dashboard</strong> — 8 animated metric cards with counter JS</li>
+    <li><strong>Budget Table</strong> — $5,700 total 6-month spend allocation with progress bars</li>
+    <li><strong>Closing / "Why This Works"</strong> — Three-pillar card layout + founder quote</li>
+  </ul>
+
+  <h3>Implied Functional Features (Not Yet Built)</h3>
+  <div class="pill-row">
+    <span class="pill">Voice AI Assistant</span>
+    <span class="pill">Quote Tool</span>
+    <span class="pill">Course Platform</span>
+    <span class="pill purple">WhatsApp Community</span>
+    <span class="pill purple">Email Nurture Sequences</span>
+    <span class="pill mid">Discovery Call Booking</span>
+    <span class="pill mid">Nonprofit Impact Reports</span>
+    <span class="pill ok">Affiliate Program</span>
+    <span class="pill ok">Referral System</span>
+    <span class="pill warn">Annual Retainer Billing</span>
+  </div>
+
+  <h3>JavaScript Features in the File</h3>
+  <ul class="dl">
+    <li><strong>Scroll progress bar</strong> — fixed top bar fills as user scrolls (vanilla JS, <code>window.scroll</code>)</li>
+    <li><strong>IntersectionObserver (timeline)</strong> — triggers slide-in animations for each month block</li>
+    <li><strong>Counter animation</strong> — animates metric card values when they scroll into view (e.g. "$80K", "5,000")</li>
+    <li><strong>Smooth scroll navigation</strong> — all nav anchor links smoothly scroll to sections</li>
+  </ul>
+
+  <h3>External Dependencies (CSS/Fonts)</h3>
+  <ul class="dl">
+    <li>Google Fonts: <em>Playfair Display</em> (serif headings), <em>DM Sans</em> (body), <em>Space Mono</em> (data/monospace) — all via CDN</li>
+    <li>No external JS frameworks or libraries whatsoever</li>
+    <li>No CDN-loaded UI kits, icon libraries, or analytics scripts</li>
+  </ul>
+</section>
+
+<!-- ══ SECTION 3: TECH AUDIT ══ -->
+<section>
+  <span class="section-eyebrow">Section 03 &nbsp;·&nbsp; Technology & Dependency Audit</span>
+  <h2>Violations & Constraints Check</h2>
+
+  <p>This file is notably disciplined from a technical dependency perspective. The audit below covers every element against the hard requirements.</p>
+
+  <div class="ok-block">
+    <p><strong>✓ CLEAN BASELINE:</strong> No Firebase. No Databutton. No Riff. No proprietary vendor services. No embedded third-party widgets. The file is a self-contained static document with zero backend coupling.</p>
+  </div>
+
+  <div class="violation-card">
+    <span class="vc-cat">⚠ Item 01 — Dependency</span>
+    <h4>Google Fonts via CDN (3 typefaces)</h4>
+    <p><strong>What it is:</strong> Playfair Display, DM Sans, and Space Mono loaded via <code>fonts.googleapis.com</code>.</p>
+    <p><strong>Why noted:</strong> Not a violation — but introduces a network dependency that can cause FOUT (Flash of Unstyled Text) and fails in offline environments.</p>
+    <p class="fix">Self-host all three fonts in <code>/frontend/public/fonts/</code>. Use <code>@font-face</code> in global CSS. Vite bundles this automatically.</p>
+  </div>
+
+  <div class="violation-card">
+    <span class="vc-cat">⚠ Item 02 — Hardcoded Content</span>
+    <h4>All 7 Service Descriptions, 5 Personas, 6 Phases Are Inline HTML</h4>
+    <p><strong>What it is:</strong> Every service card, persona, timeline phase, channel tactic, KPI value, and budget row is hardcoded directly in the HTML with no data layer.</p>
+    <p><strong>Why noted:</strong> Makes content updates require editing raw HTML. Not scalable for a live consulting business that adds services, updates pricing, or iterates on strategy.</p>
+    <p class="fix">All content becomes database records. FastAPI serves it via REST endpoints. React renders dynamically. Admin dashboard lets Ms. Lee update content without a developer.</p>
+  </div>
+
+  <div class="violation-card">
+    <span class="vc-cat">⚠ Item 03 — Static Budget Table</span>
+    <h4>$5,700 Budget Hardcoded With No Calculation Logic</h4>
+    <p><strong>What it is:</strong> The budget table is static HTML. Bar widths are hardcoded percentages (<code>style="width:60%"</code>). Totals are manually entered strings.</p>
+    <p><strong>Why noted:</strong> A real budget planning tool needs dynamic calculation — change a monthly allocation and the 6-month total + percentage bars update automatically.</p>
+    <p class="fix">Build a React budget calculator component driven by a <code>budget_allocations</code> table in PostgreSQL. FastAPI exposes CRUD. Admin sets allocations, totals compute in real time.</p>
+  </div>
+
+  <div class="violation-card">
+    <span class="vc-cat">⚠ Item 04 — Metric Counters Are UI Theater</span>
+    <h4>KPI Values Animate but Are Not Connected to Real Data</h4>
+    <p><strong>What it is:</strong> The counter animation JS reads the existing HTML text content and animates it. "$80K" is a hardcoded string — not a live figure from a CRM or analytics source.</p>
+    <p><strong>Why noted:</strong> In a live product, KPI cards should reflect actual performance: real email subscriber counts (from Mailchimp/Resend API), real course enrolments (from payment records), real follower counts (from social API). Currently the animation just "counts up to a lie."</p>
+    <p class="fix">FastAPI analytics endpoint aggregates real data from all integrated sources. React Query fetches and updates metric cards on a polling interval. Counter animation hooks into live values.</p>
+  </div>
+
+  <div class="violation-card">
+    <span class="vc-cat">⚠ Item 05 — Voice AI & Quote Tool Are Implied, Not Present</span>
+    <h4>Two Major Product Features Referenced but Not Implemented</h4>
+    <p><strong>What it is:</strong> The marketing plan heavily promotes a "Voice AI assistant" and a "Quote Tool" as primary lead magnets and differentiators. Neither exists in the HTML — they are referenced only in channel descriptions.</p>
+    <p><strong>Why noted:</strong> These are the two highest-value conversion features in the entire plan. Without them, the marketing strategy loses its core "AI-powered differentiation" thesis entirely.</p>
+    <p class="fix">Voice AI: Integrate <code>ElevenLabs</code> or <code>Vapi.ai</code> API via FastAPI. Quote Tool: React multi-step form → FastAPI pricing logic → PostgreSQL quote records → automated email follow-up.</p>
+  </div>
+
+  <div class="violation-card">
+    <span class="vc-cat">⚠ Item 06 — Vanilla JS Must Be Ported to React</span>
+    <h4>scroll listener, IntersectionObserver, counter animation</h4>
+    <p><strong>What it is:</strong> Three distinct vanilla JS blocks handling UI behaviour.</p>
+    <p><strong>Why noted:</strong> Not a violation — but cannot be left as inline scripts in a React app.</p>
+    <p class="fix">Scroll progress: CSS-only with <code>animation-timeline: scroll()</code> or a custom React hook. IntersectionObserver: <code>react-intersection-observer</code> library. Counter animation: <code>react-countup</code> or custom hook with <code>useEffect</code>.</p>
+  </div>
+
+  <div class="ok-block">
+    <p><strong>✓ Net assessment:</strong> This file has zero prohibited platforms and zero technical debt in the traditional sense. Every "violation" is a consequence of the gap between a strategy document and a functional application — not of bad technical choices. The baseline is clean.</p>
+  </div>
+</section>
+
+<!-- ══ SECTION 4: GAP ANALYSIS ══ -->
+<section>
+  <span class="section-eyebrow">Section 04 &nbsp;·&nbsp; Gap Analysis</span>
+  <h2>What Is Missing</h2>
+
+  <p>This document describes a consultancy that runs on a complex multi-channel, multi-product business model. Building the real platform means closing every gap below.</p>
+
+  <h3>Authentication & Authorization</h3>
+  <ul class="dl">
+    <li>No auth exists — not even a login page is implied in the UI</li>
+    <li>Required: JWT-based auth (FastAPI + <code>python-jose</code>), refresh tokens, httpOnly cookies</li>
+    <li>Role matrix: <strong>Super Admin (Ms. Lee)</strong> | <strong>Course Learner</strong> | <strong>Consulting Client</strong> | <strong>Nonprofit Partner</strong> | <strong>Community Member</strong></li>
+    <li>OAuth2 Google login for frictionless onboarding of emerging-market mobile users</li>
+  </ul>
+
+  <h3>Database Models Required</h3>
+  <table class="schema-table">
+    <thead>
+      <tr><th>Table</th><th>Key Fields</th><th>Purpose</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>users</td><td>id, email, hashed_pw, role, region, stripe_id, created_at</td><td>Auth & billing hub</td></tr>
+      <tr><td>services</td><td>id, pillar, title, description, price_from, is_active</td><td>Dynamic service catalogue</td></tr>
+      <tr><td>quotes</td><td>id, user_id, services_selected, estimated_value, status, created_at</td><td>Quote Tool submissions</td></tr>
+      <tr><td>courses</td><td>id, title, price, description, modules (JSON), is_published</td><td>Course platform content</td></tr>
+      <tr><td>enrollments</td><td>id, user_id, course_id, payment_id, enrolled_at, progress (%)</td><td>Course tracking</td></tr>
+      <tr><td>consulting_clients</td><td>id, user_id, retainer_start, retainer_end, status, monthly_rate</td><td>Consulting CRM</td></tr>
+      <tr><td>email_subscribers</td><td>id, email, source, region, confirmed, subscribed_at</td><td>Email list management</td></tr>
+      <tr><td>blog_posts</td><td>id, title, body, seo_slug, region_target, published_at</td><td>SEO content hub</td></tr>
+      <tr><td>events</td><td>id, title, type, date, zoom_url, max_attendees, is_paid</td><td>Webinar / summit management</td></tr>
+      <tr><td>kpi_snapshots</td><td>id, metric_key, value, captured_at, source</td><td>Live KPI dashboard</td></tr>
+      <tr><td>budget_allocations</td><td>id, channel, monthly_amount, period_start, period_end</td><td>Budget planner</td></tr>
+      <tr><td>npocommunity_members</td><td>id, user_id, community_name, whatsapp_number, joined_at</td><td>Community management</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Backend API Endpoints Needed</h3>
+  <ul class="dl">
+    <li><code>POST /auth/register</code> / <code>POST /auth/login</code> / <code>POST /auth/refresh</code></li>
+    <li><code>GET /services</code> — public service catalogue with optional pillar filter</li>
+    <li><code>POST /quotes</code> — submit a Quote Tool request (authenticated or anonymous with email)</li>
+    <li><code>GET /courses</code> / <code>GET /courses/{id}</code> — course listing and detail</li>
+    <li><code>POST /enroll/{course_id}</code> — Stripe checkout → enrollment on success</li>
+    <li><code>GET /enroll/me</code> — current user's course progress</li>
+    <li><code>GET /events</code> / <code>POST /events/{id}/register</code> — webinar management</li>
+    <li><code>POST /subscribe</code> — email opt-in with region tagging</li>
+    <li><code>GET /admin/kpis</code> — aggregated KPI snapshot for dashboard</li>
+    <li><code>POST /admin/services</code> / <code>PUT /admin/services/{id}</code> — CMS for service cards</li>
+    <li><code>GET /admin/quotes</code> — view all submitted quote requests</li>
+    <li><code>POST /billing/checkout</code> / <code>POST /billing/webhook</code> — Stripe lifecycle</li>
+    <li><code>POST /voice/session</code> — initialise Voice AI session (proxies to ElevenLabs/Vapi)</li>
+  </ul>
+
+  <h3>The Quote Tool (Priority #1 Feature)</h3>
+  <p>The Quote Tool is named as the <em>primary lead magnet</em> in Month 3 and Month 6 of the strategy. It must be built as a <strong>multi-step React form</strong>: visitor selects service pillars → answers qualifying questions → receives an estimated engagement range → submits contact info → triggers automated email sequence. FastAPI handles the pricing logic and stores the quote in PostgreSQL.</p>
+
+  <h3>The Voice AI Assistant (Priority #2 Feature)</h3>
+  <p>The plan positions a Voice AI as a 24/7 lead qualifier, FAQ handler, and booking tool. This requires: a React widget (mic-enabled modal) → FastAPI endpoint → third-party Voice AI API (Vapi.ai, ElevenLabs, or Bland.ai) → conversation history stored in PostgreSQL → post-call email follow-up triggered via Resend/Mailchimp.</p>
+
+  <h3>Course Platform</h3>
+  <ul class="dl">
+    <li>Flagship course: "Travelling Smart: AI, Blockchain & Real Estate" — $199.99 (early-bird $159.99)</li>
+    <li>Bonus course: "Let's Build Something Together"</li>
+    <li>Needs: video hosting (Mux or Cloudflare Stream), module progress tracking, certificate generation</li>
+    <li>Must integrate with Stripe for one-time purchase and with email for onboarding sequence</li>
+  </ul>
+
+  <h3>Multi-Region Considerations</h3>
+  <ul class="dl">
+    <li>The plan targets South Africa (ZA), Thailand (TH), and global/nomad audiences simultaneously</li>
+    <li>Currency handling: ZAR / THB / USD — Stripe supports multi-currency; choose a base currency and convert at display time</li>
+    <li>Language: English primary, but Voice AI targets multilingual (EN / Afrikaans / Thai) — requires proper locale routing</li>
+    <li>GDPR/POPIA compliance: South African POPIA act requires explicit data consent — add consent checkbox to all forms with stored audit log</li>
+  </ul>
+
+  <h3>Content Management</h3>
+  <ul class="dl">
+    <li>Blog: "Consulting from Bangkok" series — 3+ SEO articles per month — needs a full CMS or at minimum a rich text editor in the admin panel</li>
+    <li>Success stories / case studies — need a structured testimonial model in the DB</li>
+    <li>Newsletter: "Global Lens" bi-weekly — needs template management + send scheduling</li>
+  </ul>
+
+  <h3>Community Management</h3>
+  <ul class="dl">
+    <li>WhatsApp community of 500–1,000 members is referenced but not technically manageable from within the app</li>
+    <li>Recommended: WhatsApp Business API (Meta) for automated messages + community segmentation via FastAPI webhooks</li>
+    <li>Alternative: in-app community feed or Discord bridge if WhatsApp API costs are prohibitive at early stage</li>
+  </ul>
+
+  <h3>Security Requirements</h3>
+  <ul class="dl">
+    <li>Pydantic v2 validation on all request bodies — zero trust on inputs</li>
+    <li>Rate limiting on auth, quote submission, and voice session endpoints (slowapi)</li>
+    <li>CORS restricted to production frontend domain only</li>
+    <li>Stripe webhook signature verification (mandatory — skip this and you get spoofed payments)</li>
+    <li>South African POPIA compliance: consent logs stored in PostgreSQL with timestamp + IP</li>
+    <li>Environment secrets via <code>.env</code> + <code>python-dotenv</code> — never committed to git</li>
+  </ul>
+</section>
+
+<!-- ══ SECTION 5: ARCHITECTURE ══ -->
+<section>
+  <span class="section-eyebrow">Section 05 &nbsp;·&nbsp; Target Architecture</span>
+  <h2>Proposed Final Structure</h2>
+
+  <div class="arch-grid">
+    <div class="arch-card">
+      <span class="ai">⚛️</span>
+      <h4>React Frontend</h4>
+      <ul>
+        <li>pages/Home.jsx</li>
+        <li>pages/Services.jsx</li>
+        <li>pages/QuoteTool.jsx</li>
+        <li>pages/Courses.jsx</li>
+        <li>pages/CoursePlayer.jsx</li>
+        <li>pages/Events.jsx</li>
+        <li>pages/Dashboard.jsx</li>
+        <li>pages/Admin/</li>
+        <li>components/VoiceAI/</li>
+        <li>components/ServiceCard/</li>
+        <li>components/KPICard/</li>
+        <li>components/BudgetPlanner/</li>
+        <li>context/AuthContext.jsx</li>
+        <li>hooks/useQuote.js</li>
+        <li>hooks/useKPIs.js</li>
+        <li>services/api.js</li>
+        <li>i18n/ (EN / AF / TH)</li>
+      </ul>
+    </div>
+    <div class="arch-card">
+      <span class="ai">⚡</span>
+      <h4>FastAPI Backend</h4>
+      <ul>
+        <li>routers/auth.py</li>
+        <li>routers/services.py</li>
+        <li>routers/quotes.py</li>
+        <li>routers/courses.py</li>
+        <li>routers/events.py</li>
+        <li>routers/billing.py</li>
+        <li>routers/voice.py</li>
+        <li>routers/admin.py</li>
+        <li>routers/kpis.py</li>
+        <li>schemas/*.py (Pydantic v2)</li>
+        <li>services/email.py</li>
+        <li>services/stripe.py</li>
+        <li>services/voice_ai.py</li>
+        <li>services/whatsapp.py</li>
+        <li>repositories/*.py</li>
+        <li>models/database.py</li>
+        <li>core/security.py</li>
+        <li>core/config.py</li>
+      </ul>
+    </div>
+    <div class="arch-card">
+      <span class="ai">🐘</span>
+      <h4>PostgreSQL + Infra</h4>
+      <ul>
+        <li>12 core tables</li>
+        <li>Alembic migrations</li>
+        <li>Indexes on FK fields</li>
+        <li>JSONB for course modules</li>
+        <li>Soft-delete pattern</li>
+        <li>Row-level security (RLS)</li>
+        <li>Mux / CF Stream (video)</li>
+        <li>S3 / Cloudinary (assets)</li>
+        <li>Stripe (billing)</li>
+        <li>Resend (email)</li>
+        <li>Vapi.ai (Voice AI)</li>
+        <li>WhatsApp Business API</li>
+        <li>GA4 (analytics input)</li>
+        <li>Railway / Fly.io deploy</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Environment Variables Required</h3>
+  <ul class="dl">
+    <li><code>DATABASE_URL</code> — PostgreSQL connection string</li>
+    <li><code>SECRET_KEY</code> — JWT signing secret</li>
+    <li><code>STRIPE_SECRET_KEY</code> + <code>STRIPE_WEBHOOK_SECRET</code></li>
+    <li><code>RESEND_API_KEY</code> — transactional email</li>
+    <li><code>VAPI_API_KEY</code> (or ElevenLabs) — Voice AI</li>
+    <li><code>WHATSAPP_TOKEN</code> + <code>WHATSAPP_PHONE_ID</code> — Meta Business API</li>
+    <li><code>MUX_TOKEN_ID</code> + <code>MUX_TOKEN_SECRET</code> — video hosting</li>
+    <li><code>CLOUDINARY_URL</code> — image/asset CDN</li>
+    <li><code>FRONTEND_URL</code> — CORS allowlist</li>
+    <li><code>VITE_API_URL</code> — React env pointing to FastAPI</li>
+    <li><code>GOOGLE_CLIENT_ID</code> + <code>GOOGLE_CLIENT_SECRET</code> — OAuth2</li>
+  </ul>
+
+  <div class="callout">
+    <p><strong>Deployment:</strong> Frontend → Vercel (Vite build, edge CDN). Backend → Fly.io or Railway (Dockerised FastAPI). DB → Railway Managed PostgreSQL or Neon. Video → Mux. Assets → Cloudinary. The entire stack is deployable in under 2 hours with CI/CD via GitHub Actions.</p>
+  </div>
+</section>
+
+<!-- ══ SECTION 6: IMPLEMENTATION PLAN ══ -->
+<section>
+  <span class="section-eyebrow">Section 06 &nbsp;·&nbsp; Implementation Roadmap</span>
+  <h2>Step-by-Step Build Plan</h2>
+
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-num">Step 01 — Week 1</div>
+      <h4>Monorepo Scaffolding & CI/CD</h4>
+      <p>Create <code>/frontend</code> (Vite + React 18 + React Query + React Router) and <code>/backend</code> (FastAPI + SQLAlchemy 2.0 + Alembic + Pydantic v2). Docker Compose for local dev. GitHub repo with main + dev branches. GitHub Actions CI: lint + test on every PR.</p>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-num">Step 02 — Week 1–2</div>
+      <h4>Port HTML to React Component Library</h4>
+      <p>Convert all 8 sections into React components. Replicate the design system (CSS variables, fonts, animations) using CSS Modules or Tailwind. Port all 3 JS behaviours to React hooks. Ensure pixel-perfect visual parity with the original HTML before adding any data layer.</p>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-num">Step 03 — Week 2</div>
+      <h4>Define Data Contracts & Seed the Database</h4>
+      <p>Write Pydantic v2 schemas for all entities. Create SQLAlchemy models. Run initial Alembic migration. Write a Python seed script that extracts all 7 service descriptions, 5 personas, 6 timeline phases, and 7 budget rows from the HTML into the database. After this step, the entire site renders from real data.</p>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-num">Step 04 — Week 2–3</div>
+      <h4>Auth System</h4>
+      <p>JWT auth with <code>python-jose</code>. Register, login, refresh, logout. Role-based access control middleware. Google OAuth2 via <code>authlib</code>. Frontend: AuthContext, protected routes, token storage in httpOnly cookies. Test: signup → login → access protected route → refresh → logout.</p>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-num">Step 05 — Week 3–4</div>
+      <h4>Build the Quote Tool (Priority #1)</h4>
+      <p>Multi-step React form: service pillar selection → qualifying questions → budget range input → contact info → submission. FastAPI pricing logic: maps selected services to estimate ranges stored in PostgreSQL. On submit: create quote record → send automated follow-up email via Resend → notify Ms. Lee via email/Slack. Admin view: see all submitted quotes with status management.</p>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-num">Step 06 — Week 4–5</div>
+      <h4>Course Platform</h4>
+      <p>Course listing page (from DB). Course detail with module breakdown. Stripe checkout for purchase. Enrollment record created on payment webhook. Course player: React video component using Mux Player. Progress tracking: <code>POST /enroll/{course_id}/progress</code> after each module. Certificate generation on 100% completion (PDF via <code>reportlab</code>).</p>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-num">Step 07 — Week 5–6</div>
+      <h4>Voice AI Integration</h4>
+      <p>React voice widget: microphone button → establishes a Vapi.ai session via FastAPI. FastAPI <code>POST /voice/session</code>: creates session, returns session token, stores interaction log. Voice agent scripts: FAQ routing, service inquiry qualification, discovery call booking via Calendly API. Post-session: FastAPI triggers email follow-up based on conversation outcome tags.</p>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-num">Step 08 — Week 6–7</div>
+      <h4>Admin Dashboard & CMS</h4>
+      <p>Role-gated <code>/admin</code> React pages. Service card CRUD (add/edit/reorder/toggle active). Blog post editor (rich text via TipTap). Quote inbox with status pipeline (new → reviewed → proposal sent → closed). Live KPI dashboard pulling from <code>GET /admin/kpis</code> — real subscriber count, enrollment count, quote volume, revenue. Budget planner with live recalculation.</p>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-num">Step 09 — Week 7–8</div>
+      <h4>Email Sequences & WhatsApp Integration</h4>
+      <p>5-email welcome sequence triggered on signup (Resend templates). Quote follow-up sequence (3 emails over 7 days if no response). Course onboarding email on enrollment. WhatsApp Business API: automated community welcome message on sign-up, weekly tip drops from admin dashboard. All sequences stored and editable in admin panel.</p>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-num">Step 10 — Week 8–9</div>
+      <h4>Events, Webinars & Referral System</h4>
+      <p>Events page: upcoming webinars from DB. Registration flow with email confirmation + Zoom link delivery. Zoom API integration for automated meeting creation on event publish. Referral system: unique referral codes per user → <code>referrals</code> table → reward logic (discount on next course, credit toward retainer). Admin: manage events, view registrations, export attendee list.</p>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-num">Step 11 — Week 9–10</div>
+      <h4>QA, Performance & Compliance</h4>
+      <p>Full end-to-end test suite: pytest (backend) + Playwright (frontend). Lighthouse score ≥ 90 on all pages. POPIA consent checkbox + audit log on all forms. Stripe test mode → production flip. Multi-region test: South Africa and Thailand routing. Mobile responsive audit (critical for WhatsApp-first markets). Load test core endpoints.</p>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-num">Step 12 — Week 10</div>
+      <h4>Repo Readiness & Launch</h4>
+      <p>README with full local setup, environment variable documentation, seeding instructions, and deployment guide. GitHub Actions CI/CD: auto-deploy to Vercel (frontend) and Fly.io (backend) on merge to main. Tag v1.0.0. Launch checklist: custom domain, SSL, Stripe live keys, email domain verification (SPF/DKIM/DMARC), analytics live.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ SECTION 7: MONETIZATION ══ -->
+<section>
+  <span class="section-eyebrow">Section 07 &nbsp;·&nbsp; Monetization Potential</span>
+  <h2>Revenue Opportunity</h2>
+
+  <div class="money-card">
+    <div class="money-range">$80K – $300K / yr</div>
+    <p><strong>Multi-stream SaaS + consulting + course revenue</strong> across South Africa, Thailand, and global markets</p>
+    <p>The marketing plan itself projects $80K in the first 6 months at 14× marketing ROI. Year 2 with established community and retainer base targets $150K–$300K ARR.</p>
+  </div>
+
+  <h3>Revenue Stream Breakdown</h3>
+  <ul class="dl">
+    <li><strong>Online Courses:</strong> 250 enrollments × $199.99 = <em>~$50K</em> in 6 months. Recurring with new cohorts, 2.0 releases, and affiliate-driven traffic.</li>
+    <li><strong>Consulting Retainers:</strong> 25 active clients × avg $500/month = <em>$12.5K/month</em> ($75K/6-mo). High-margin, recurring.</li>
+    <li><strong>Travel Consulting Packages:</strong> 10 packages at estimated $500–$2K each = <em>$5K–$20K</em> per campaign burst.</li>
+    <li><strong>Creative Services:</strong> 20 projects at $300–$1K = <em>$6K–$20K</em> in 6 months. Scales with the admin tool and portfolio page.</li>
+    <li><strong>White-Label Platform License:</strong> License the whole platform (course player + quote tool + voice AI) to other consultancies for $5K–$15K per license. MsLee Global becomes both a consultancy and a SaaS vendor.</li>
+    <li><strong>Community Membership:</strong> WhatsApp community → premium tier at $19/month → 200 members = <em>$3.8K/month</em> fully passive.</li>
+  </ul>
+
+  <div class="callout">
+    <p><strong>Key multiplier:</strong> Ms. Lee's authentic cross-cultural story (South Africa → Thailand) is not just branding — it is a <em>moat</em>. It is impossible to replicate and creates immediate trust in both African and Southeast Asian markets where consultants typically present as either purely Western or purely local. This "bridge identity" is worth significant pricing power above category average.</p>
+  </div>
+</section>
+
+<!-- ══ SECTION 8: TARGET MARKET ══ -->
+<section>
+  <span class="section-eyebrow">Section 08 &nbsp;·&nbsp; Target Market</span>
+  <h2>Ideal Customers & Why They Buy</h2>
+
+  <div class="target-grid">
+    <div class="target-card">
+      <h4>African SME Founders (ZA / Nigeria / Kenya)</h4>
+      <p>Ambitious small business owners who need financial clarity (SARS tax, bookkeeping) and strategic direction. They buy the consulting retainer because Ms. Lee speaks their business language and their regulatory environment. The Quote Tool converts them from browsers to buyers.</p>
+    </div>
+    <div class="target-card">
+      <h4>Expat Executives & Digital Nomads</h4>
+      <p>Mobile professionals living across borders who need visa strategy, compliance advice, and cultural navigation. The Travel Consulting + AI course bundle is a natural package. They discover MsLee Global via Instagram reels and TikTok from Bangkok.</p>
+    </div>
+    <div class="target-card">
+      <h4>Southeast Asian Nonprofit Leaders (Thailand / Philippines)</h4>
+      <p>NGO directors who need impact measurement frameworks, donor reporting, and grant-readiness. They respond to the nonprofit case studies and Impact Report. Ms. Lee's Junior Achievement VP role is the social proof that closes the deal.</p>
+    </div>
+    <div class="target-card">
+      <h4>Young Professionals in Emerging Markets</h4>
+      <p>The "Hungry Learner" persona — 22–35 year olds in SA, Nigeria, and Thailand who want AI + blockchain skills affordably. Course price point ($199.99) is accessible; WhatsApp community gives them the belonging they crave. High LTV through upsells.</p>
+    </div>
+    <div class="target-card">
+      <h4>Other Consulting Firms (White-Label Buyers)</h4>
+      <p>Once the platform is built, similar consultancies (especially in Africa and Southeast Asia) will pay for the Quote Tool + Course Platform + Voice AI stack as a white-label SaaS. Ms. Lee becomes a vendor to her peers, not just a competitor.</p>
+    </div>
+    <div class="target-card">
+      <h4>Corporate L&D Departments</h4>
+      <p>Learning & Development teams at mid-size corporates who want to license the AI + Blockchain + Real Estate course for employee upskilling. Bulk seat licensing at $49/seat creates a B2B revenue stream with low acquisition cost.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SECTION 9: GO/NO-GO ══ -->
+<section>
+  <span class="section-eyebrow">Section 09 &nbsp;·&nbsp; Go / No-Go Verdict</span>
+  <h2>Readiness Assessment</h2>
+
+  <div class="verdict-block">
+    <div class="verdict-badge medium">MEDIUM</div>
+    <p><strong>Readiness Rating: Medium</strong></p>
+    <p>The business model is fully articulated, the design is production-quality, and the revenue thesis is well-reasoned. The engineering gap is significant — but every gap is well-defined, standard, and buildable without exotic technology.</p>
+  </div>
+
+  <h3>Primary Blockers</h3>
+  <ul class="dl">
+    <li>No backend whatsoever — the entire API layer, auth system, and database are absent</li>
+    <li>Quote Tool and Voice AI — the two flagship product features — do not exist in any form</li>
+    <li>Course platform requires video hosting infrastructure (Mux) and payment integration (Stripe) both of which require account setup and API keys before a single line of product code can ship</li>
+    <li>Multi-region complexity: POPIA compliance (South Africa), multi-currency, and multilingual Voice AI add non-trivial scope to an already large build</li>
+    <li>WhatsApp Business API access requires Meta approval — apply immediately as this takes 1–4 weeks</li>
+  </ul>
+
+  <h3>Strengths to Leverage</h3>
+  <ul class="dl">
+    <li>The business strategy is the most detailed and considered of any file in this audit — the marketing plan itself is a highly sophisticated brief that eliminates ambiguity for engineers</li>
+    <li>Existing HTML design system is production-quality and translates cleanly into React components</li>
+    <li>Seven service lines means seven independent revenue streams — any one of them can be v1 while the others are built in parallel</li>
+    <li>Founder's authentic personal brand gives the marketing machine genuine fuel that ad spend cannot buy</li>
+  </ul>
+
+  <h3>Effort Estimate</h3>
+  <div class="callout">
+    <p><strong>Total estimated effort: 180–280 hours</strong> for a single senior full-stack developer, or a team of 2–3 across 6–10 sprints. This is a <strong>large</strong> build — the most complex file in this audit series — driven by the multi-service, multi-region, multi-channel product scope. Recommended approach: build a v1 "thin slice" (auth + services + quote tool + one course) and launch within 4 weeks, then build the remaining features behind a real paying user base.</p>
+  </div>
+
+  <h3>Top 3 Next Actions for Engineering</h3>
+  <ul class="dl">
+    <li><strong>Action 1 — Apply for WhatsApp Business API today.</strong> Meta approval takes 1–4 weeks. This is the longest external dependency and the highest-impact community channel. It needs to be in flight before the first line of code is written.</li>
+    <li><strong>Action 2 — Build the Quote Tool as the first shipped feature.</strong> It requires no auth, no video infrastructure, and no third-party approvals. A React multi-step form + FastAPI + PostgreSQL + Resend email can be live in under 2 weeks and immediately starts generating leads and validating pricing assumptions.</li>
+    <li><strong>Action 3 — Scaffold the monorepo and seed the database from the HTML today.</strong> The 7 services, 5 personas, 6 timeline phases, and budget rows in this HTML file are the product's first content. Extract them into a Python seed script, get them into PostgreSQL, and make the homepage render from real data within the first 3 days.</li>
+  </ul>
+</section>
+
+</article>
+
+<footer>
+  <p>Audit prepared April 03, 2026 &nbsp;·&nbsp; Target Stack: <span>React + FastAPI + PostgreSQL</span> &nbsp;·&nbsp; File: <span>mslee-global-marketing-rollout.html</span></p>
+  <p style="margin-top:0.5rem;">MsLee Global Consulting brand and content belong to Ms. Lee. This document is a technical planning audit.</p>
+</footer>
+
+</body>
+</html>

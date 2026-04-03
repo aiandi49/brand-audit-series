@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audit — Kameron Norwood Press Release · 2026-04-03</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,900;1,300;1,600&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #080808;
+    --bg2:      #0c0c0c;
+    --bg3:      #111111;
+    --bg4:      #161616;
+    --accent:   #00D4FF;
+    --accent-d: rgba(0,212,255,0.07);
+    --accent-m: rgba(0,212,255,0.20);
+    --accent-l: rgba(0,212,255,0.14);
+    --warn:     #FF4D4D;
+    --warn-d:   rgba(255,77,77,0.09);
+    --gold:     #C9A84C;
+    --gold-d:   rgba(201,168,76,0.09);
+    --text:     #E2E2E2;
+    --text2:    #9A9A9A;
+    --text3:    #474747;
+    --border:   rgba(255,255,255,0.05);
+    --border2:  rgba(255,255,255,0.10);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Sora', sans-serif;
+    font-size: 15.5px;
+    line-height: 1.82;
+    overflow-x: hidden;
+  }
+
+  /* grain */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9000;
+    opacity: 0.018;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .top-bar { height: 4px; background: linear-gradient(90deg, var(--accent), rgba(0,212,255,0.25) 80%, transparent); }
+
+  /* ── MASTHEAD ── */
+  .masthead {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 76px 60px 64px;
+    border-bottom: 1px solid var(--border2);
+    animation: rise 0.9s ease both;
+  }
+  .mast-eyebrow {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 22px;
+    opacity: 0.85;
+  }
+  .mast-name {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(3.2rem, 8vw, 6rem);
+    font-weight: 900;
+    line-height: 0.95;
+    color: var(--text);
+    margin-bottom: 14px;
+    letter-spacing: -0.02em;
+  }
+  .mast-name em {
+    font-style: italic;
+    font-weight: 300;
+    background: linear-gradient(120deg, var(--accent), #00a8d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+  }
+  .mast-sub {
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--text2);
+    max-width: 560px;
+    line-height: 1.75;
+    margin-bottom: 40px;
+  }
+  .mast-meta {
+    display: flex;
+    gap: 44px;
+    flex-wrap: wrap;
+  }
+  .mm-n {
+    font-family: 'Fraunces', serif;
+    font-size: 2.1rem;
+    font-weight: 600;
+    color: var(--accent);
+    line-height: 1;
+    text-shadow: 0 0 30px rgba(0,212,255,0.22);
+  }
+  .mm-l {
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-top: 5px;
+  }
+
+  /* ── SECTIONS ── */
+  .sec {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 62px 60px;
+    border-bottom: 1px solid var(--border);
+    animation: rise 0.8s ease both;
+  }
+  .sec:nth-child(2)  { animation-delay: 0.08s; }
+  .sec:nth-child(3)  { animation-delay: 0.14s; }
+  .sec:nth-child(4)  { animation-delay: 0.20s; }
+  .sec:nth-child(5)  { animation-delay: 0.26s; }
+  .sec:nth-child(6)  { animation-delay: 0.32s; }
+  .sec:nth-child(7)  { animation-delay: 0.38s; }
+  .sec:nth-child(8)  { animation-delay: 0.44s; }
+  .sec:nth-child(9)  { animation-delay: 0.50s; }
+  .sec:nth-child(10) { animation-delay: 0.56s; }
+
+  .sec-id {
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 14px;
+  }
+  .sec-id span { color: var(--accent); opacity: 0.65; }
+  .sec-h {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.7rem, 3.5vw, 2.7rem);
+    font-weight: 600;
+    line-height: 1.12;
+    color: var(--text);
+    margin-bottom: 18px;
+  }
+  .sec-h em { font-style: italic; font-weight: 300; color: var(--accent); }
+  .sec-intro {
+    font-size: 0.93rem;
+    color: var(--text2);
+    max-width: 660px;
+    margin-bottom: 36px;
+    line-height: 1.88;
+  }
+
+  /* ── CALLOUT ── */
+  .callout {
+    border-left: 3px solid var(--accent);
+    background: var(--accent-d);
+    padding: 20px 26px;
+    border-radius: 0 5px 5px 0;
+    margin: 26px 0;
+  }
+  .callout-label {
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 7px;
+    opacity: 0.8;
+  }
+  .callout p {
+    font-size: 0.88rem;
+    color: var(--text2);
+    line-height: 1.78;
+  }
+  .callout p strong { color: var(--text); font-weight: 600; }
+
+  /* ── FEATURE GRID ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 13px;
+    margin-bottom: 28px;
+  }
+  .card {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    border-radius: 5px;
+    padding: 18px 20px;
+  }
+  .card-tag {
+    font-size: 0.57rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+    opacity: 0.75;
+  }
+  .card-title {
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 5px;
+  }
+  .card-desc {
+    font-size: 0.78rem;
+    color: var(--text2);
+    line-height: 1.62;
+  }
+
+  /* ── VIOLATIONS ── */
+  .violations { display: grid; gap: 15px; margin-bottom: 28px; }
+  .viol {
+    background: var(--warn-d);
+    border: 1px solid rgba(255,77,77,0.18);
+    border-left: 4px solid var(--warn);
+    border-radius: 5px;
+    padding: 18px 22px;
+  }
+  .viol-badge {
+    display: inline-block;
+    background: var(--warn);
+    color: #fff;
+    font-size: 0.56rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 3px;
+    margin-bottom: 9px;
+  }
+  .viol-title { font-size: 0.88rem; font-weight: 600; color: var(--text); margin-bottom: 5px; }
+  .viol-desc  { font-size: 0.8rem; color: var(--text2); line-height: 1.65; margin-bottom: 9px; }
+  .viol-fix   { font-size: 0.76rem; color: var(--accent); font-weight: 600; }
+  .viol-fix::before { content: '→ Fix: '; opacity: 0.65; }
+
+  /* ── GAP LIST ── */
+  .gaps { display: grid; gap: 11px; margin-bottom: 28px; }
+  .gap {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    border-radius: 5px;
+    padding: 15px 20px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .gap-n {
+    font-family: 'Fraunces', serif;
+    font-size: 1.55rem;
+    font-weight: 600;
+    color: var(--accent);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 26px;
+    opacity: 0.55;
+  }
+  .gap-title { font-size: 0.86rem; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .gap-desc  { font-size: 0.78rem; color: var(--text2); line-height: 1.62; }
+
+  /* ── ARCH GRID ── */
+  .arch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 13px;
+    margin-bottom: 24px;
+  }
+  .arch {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    border-top: 2px solid var(--accent-l);
+    border-radius: 5px;
+    padding: 18px 17px;
+  }
+  .arch-layer {
+    font-size: 0.57rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+    opacity: 0.75;
+  }
+  .arch ul { list-style: none; }
+  .arch ul li {
+    font-size: 0.77rem;
+    color: var(--text2);
+    padding: 3px 0;
+    border-bottom: 1px solid var(--border);
+    line-height: 1.5;
+  }
+  .arch ul li:last-child { border-bottom: none; }
+  .arch ul li::before { content: '·  '; color: var(--accent); opacity: 0.55; }
+
+  /* ── ROADMAP ── */
+  .roadmap { display: grid; gap: 0; }
+  .rs {
+    display: flex;
+    gap: 22px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+  .rs:last-child { border-bottom: none; }
+  .rs-n {
+    font-family: 'Fraunces', serif;
+    font-size: 2.3rem;
+    font-weight: 600;
+    color: var(--accent);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 42px;
+    opacity: 0.4;
+  }
+  .rs-tag {
+    display: inline-block;
+    font-size: 0.56rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-d);
+    border: 1px solid var(--accent-l);
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-bottom: 5px;
+  }
+  .rs-title { font-size: 0.92rem; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .rs-desc  { font-size: 0.79rem; color: var(--text2); line-height: 1.65; }
+
+  /* ── MONEY ── */
+  .money-card {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    border-radius: 7px;
+    padding: 34px 38px;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .money-card::before {
+    content: '';
+    position: absolute;
+    top: -50px; right: -50px;
+    width: 250px; height: 250px;
+    background: radial-gradient(circle, rgba(0,212,255,0.05), transparent 70%);
+    pointer-events: none;
+  }
+  .money-range {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-weight: 600;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 7px;
+    text-shadow: 0 0 50px rgba(0,212,255,0.18);
+  }
+  .money-label {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 16px;
+  }
+  .money-basis { font-size: 0.84rem; color: var(--text2); line-height: 1.78; max-width: 580px; }
+  .money-tiers {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(195px, 1fr));
+    gap: 13px;
+    margin-top: 24px;
+  }
+  .mt {
+    background: var(--bg4);
+    border: 1px solid var(--border2);
+    border-radius: 5px;
+    padding: 15px 17px;
+  }
+  .mt-name  { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; opacity: 0.75; }
+  .mt-price { font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .mt-desc  { font-size: 0.73rem; color: var(--text2); line-height: 1.55; }
+
+  /* ── TARGETS ── */
+  .targets { display: grid; gap: 11px; margin-bottom: 24px; }
+  .target {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 15px 19px;
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    gap: 14px;
+    align-items: start;
+  }
+  .target-icon {
+    width: 30px; height: 30px;
+    background: var(--accent-d);
+    border: 1px solid var(--accent-l);
+    border-radius: 5px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem; flex-shrink: 0;
+  }
+  .target-name  { font-size: 0.86rem; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+  .target-why   { font-size: 0.77rem; color: var(--text2); line-height: 1.6; }
+
+  /* ── VERDICT ── */
+  .verdict-wrap { text-align: center; padding: 44px 0 16px; }
+  .verdict-badge {
+    display: inline-block;
+    font-family: 'Fraunces', serif;
+    font-size: 3.2rem;
+    font-weight: 600;
+    padding: 16px 50px;
+    border-radius: 7px;
+    letter-spacing: 0.04em;
+    margin-bottom: 18px;
+    background: rgba(255,185,0,0.08);
+    border: 2px solid rgba(255,185,0,0.35);
+    color: #FFB900;
+    text-shadow: 0 0 40px rgba(255,185,0,0.25);
+  }
+  .verdict-label {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 14px;
+  }
+  .verdict-summary {
+    font-size: 0.88rem;
+    color: var(--text2);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.82;
+  }
+  .blockers { display: grid; gap: 9px; margin: 26px auto; max-width: 620px; }
+  .blocker {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    border-radius: 5px;
+    padding: 11px 17px;
+    display: flex;
+    gap: 11px;
+    align-items: center;
+    font-size: 0.82rem;
+    color: var(--text2);
+  }
+  .blocker::before { content: '⚠'; color: var(--warn); flex-shrink: 0; }
+  .next-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+    gap: 13px;
+    margin-top: 30px;
+  }
+  .na {
+    background: var(--accent-d);
+    border: 1px solid var(--accent-l);
+    border-radius: 5px;
+    padding: 17px 19px;
+    text-align: left;
+  }
+  .na-n     { font-family: 'Fraunces', serif; font-size: 1.9rem; font-weight: 600; color: var(--accent); line-height: 1; opacity: 0.45; margin-bottom: 7px; }
+  .na-title { font-size: 0.84rem; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .na-desc  { font-size: 0.76rem; color: var(--text2); line-height: 1.6; }
+
+  /* ── UNIQUE INSIGHT BOX ── */
+  .insight {
+    border: 1px solid var(--gold-d);
+    background: rgba(201,168,76,0.04);
+    border-radius: 5px;
+    padding: 22px 26px;
+    margin: 24px 0;
+  }
+  .insight-label {
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+    opacity: 0.85;
+  }
+  .insight p { font-size: 0.88rem; color: var(--text2); line-height: 1.78; }
+  .insight p strong { color: var(--text); font-weight: 600; }
+
+  /* ── FOOTER ── */
+  footer {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 44px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    border-top: 1px solid var(--border2);
+  }
+  .foot-l { font-size: 0.76rem; color: var(--text3); }
+  .foot-r { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); opacity: 0.5; }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 640px) {
+    .masthead, .sec { padding-left: 22px; padding-right: 22px; }
+    footer { padding-left: 22px; padding-right: 22px; }
+  }
+
+  @media print {
+    body { background: #080808; color: #e2e2e2; }
+    body::after { display: none; }
+    @keyframes rise { from { opacity:1; } to { opacity:1; } }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar"></div>
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="mast-eyebrow">App Audit Report · 2026-04-03</div>
+  <h1 class="mast-name">Kameron<br><em>Norwood</em></h1>
+  <p class="mast-sub">A dual-purpose HTML document — press release for a BizTucson 2026 Next Gen Leader award, embedded inside an unsolicited AI pitch deck targeting a named CRE broker. Beautifully executed. Technically hollow. Strategically audacious.</p>
+  <div class="mast-meta">
+    <div><div class="mm-n">1,168</div><div class="mm-l">Lines of HTML</div></div>
+    <div><div class="mm-n">2</div><div class="mm-l">Documents in One File</div></div>
+    <div><div class="mm-n">4</div><div class="mm-l">Proposed AI Products</div></div>
+    <div><div class="mm-n">0</div><div class="mm-l">Functional Features</div></div>
+    <div><div class="mm-n">7</div><div class="mm-l">Critical Gaps</div></div>
+  </div>
+</header>
+
+<!-- SECTION 01: OVERVIEW -->
+<section class="sec">
+  <div class="sec-id"><span>SECTION 01</span> · FILE OVERVIEW</div>
+  <h2 class="sec-h">What <em>this file actually is.</em></h2>
+  <p class="sec-intro">A 1,168-line single-file HTML document that operates simultaneously as two distinct artifacts: a polished personal press release for Kameron Norwood's BizTucson 2026 Next Gen Leader recognition, and an unsolicited strategic pitch proposing a four-phase AI technology stack for Norwood's commercial real estate practice. Neither document is functional. Both are exceptionally designed.</p>
+
+  <div class="callout">
+    <div class="callout-label">Core Product Identity</div>
+    <p>This is an <strong>outbound sales document disguised as a press release</strong>. The press release section (bio, career milestones, quote, sidebar cards) establishes credibility and demonstrates deep research into the subject. The AI Enhancement section then pivots into a six-pain-point pitch proposing four billable software products: a LoopNet-class CRE search platform, an AI proposal/content engine, an intelligent CRM, and a market intelligence dashboard. The CTA ("Schedule a Strategic Session") is a dead <code>&lt;a&gt;</code> tag with no href. <strong>The entire document is a cold approach, not a live product.</strong></p>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-tag">Document Type</div>
+      <div class="card-title">Hybrid Press Release / Sales Pitch</div>
+      <div class="card-desc">Part 1: award announcement for Kameron Norwood. Part 2: AI product pitch targeting Kameron Norwood. One HTML file, two audiences, one dead CTA.</div>
+    </div>
+    <div class="card">
+      <div class="card-tag">Subject</div>
+      <div class="card-title">Kameron Norwood, CRE Broker</div>
+      <div class="card-desc">Industrial specialist at Cushman & Wakefield | PICOR. 40+ closed industrial transactions, $19M in deals, BizTucson 2026 Next Gen Leader. Former Half Day CBD founder and PackDash operator.</div>
+    </div>
+    <div class="card">
+      <div class="card-tag">Implied User Roles</div>
+      <div class="card-title">Prospect + Audience</div>
+      <div class="card-desc">Kameron Norwood as the sales prospect. Media / business community as the press release audience. No logged-in user state anywhere. No auth contemplated.</div>
+    </div>
+    <div class="card">
+      <div class="card-tag">Proposed Stack</div>
+      <div class="card-title">4-Phase AI Product Suite</div>
+      <div class="card-desc">Phase 01: Custom LoopNet clone. Phase 02: AI proposal &amp; content engine. Phase 03: AI-enriched CRM. Phase 04: Market intelligence dashboard. All proposed, none built.</div>
+    </div>
+    <div class="card">
+      <div class="card-tag">Design Quality</div>
+      <div class="card-title">Production-Grade</div>
+      <div class="card-desc">Sticky nav, full-viewport hero with split-panel layout, hover-reveal pain cards, animated staggered load, grain overlay, Playfair Display + DM Mono + Outfit type stack. Genuinely impressive for a cold pitch.</div>
+    </div>
+    <div class="card">
+      <div class="card-tag">Destination</div>
+      <div class="card-title">No Working CTA</div>
+      <div class="card-desc">"Schedule a Strategic Session →" is an &lt;a&gt; tag with no href attribute. The single conversion point in the entire document does nothing when clicked.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 02: FEATURE INVENTORY -->
+<section class="sec">
+  <div class="sec-id"><span>SECTION 02</span> · UI / FEATURE INVENTORY</div>
+  <h2 class="sec-h">What <em>it has.</em></h2>
+  <p class="sec-intro">Despite being entirely static, the Kameron Norwood file is one of the most sophisticated single-file HTML documents in this audit series. It implements a sticky translucent masthead, a full-viewport two-column hero with a sticky image panel, hover-reveal interaction cards, animated ROI metrics, a 4-block solutions strip, and a comprehensive press release + sidebar layout — all without a single framework dependency.</p>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-tag">Navigation</div>
+      <div class="card-title">Sticky Translucent Header</div>
+      <div class="card-desc">Backdrop-blur navbar with publication label on left and date on right. Stays fixed at scroll. Zero JavaScript — pure CSS position:sticky with backdrop-filter.</div>
+    </div>
+    <div class="card">
+      <div class="card-tag">Hero</div>
+      <div class="card-title">Split-Panel Full-Viewport Hero</div>
+      <div class="card-desc">42% sticky image panel (position:sticky, 100vh) alongside scrolling content column. Award tag, massive Playfair Display name, career tagline, and three key stats. Radial glow ambient effect.</div>
+    </div>
+    <div class="card">
+      <div class="card-tag">Interaction</div>
+      <div class="card-title">Hover-Reveal Pain Cards</div>
+      <div class="card-desc">6-card CSS grid where each card expands a hidden solution panel on hover using max-height transition. No JavaScript. Smooth 0.4s ease reveal. The most technically interesting UI element in the file.</div>
+    </div>
+    <div class="card">
+      <div class="card-tag">Press Release</div>
+      <div class="card-title">Two-Column Editorial Layout</div>
+      <div class="card-desc">Main editorial column (dateline, headline, sub-headline, body paragraphs, pull quote) alongside a structured sidebar with 4 context cards: background, specialty, board memberships, recognition.</div>
+    </div>
+    <div class="card">
+      <div class="card-tag">Sales Section</div>
+      <div class="card-title">ROI Metrics + Solutions Strip</div>
+      <div class="card-desc">4 metric boxes (3× proposal speed, ↑68% repeat business, $0 gatekeeping fees, 24/7 AI). 4-column solutions strip outlining Phase 01–04 of the proposed tech stack. Both are static HTML — no real data behind any number.</div>
+    </div>
+    <div class="card">
+      <div class="card-tag">Content Depth</div>
+      <div class="card-title">Substantial Subject Research</div>
+      <div class="card-desc">Named awards, named companies (Insight Global, Half Day CBD, PackDash), named board memberships (7 organizations), named people (Barbi Reuter), verified statistics ($19M, 40+ transactions, 14 awards). Serious research investment.</div>
+    </div>
+    <div class="card">
+      <div class="card-tag">Animation</div>
+      <div class="card-title">Staggered CSS Load Animations</div>
+      <div class="card-desc">fadeIn, fadeDown, slideUp keyframes with staggered animation-delay on hero elements. Clean, editorial feel. No JS animation library. No runtime cost.</div>
+    </div>
+    <div class="card">
+      <div class="card-tag">Footer</div>
+      <div class="card-title">In-Progress Development Note</div>
+      <div class="card-desc">Explicit disclosure: "Currently In Development · For Kameron Norwood" — a LoopNet clone + CoStar intelligence layer is described as "actively being built." Implies a real development relationship may exist or is being proposed.</div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <div class="insight-label">Critical Observation</div>
+    <p>This file is not a product — it is a <strong>business development asset</strong>. Its purpose is to impress a single named prospect enough to book a call. Evaluated as a sales document, it is exceptional. Evaluated as an app, it has zero functional features. The audit proceeds on the premise that the <strong>four proposed AI products</strong> (LoopNet clone, content engine, CRM, market intelligence dashboard) are the real deliverables to be built, and this file is their pitch document.</p>
+  </div>
+</section>
+
+<!-- SECTION 03: TECH AUDIT -->
+<section class="sec">
+  <div class="sec-id"><span>SECTION 03</span> · TECHNOLOGY AUDIT</div>
+  <h2 class="sec-h">What <em>breaks requirements.</em></h2>
+  <p class="sec-intro">The file has zero prohibited dependencies — no Firebase, no Databutton, no Riff, no proprietary platform code. The violations are entirely architectural: the pitch promises four complex software products, none of which have a single line of implementation. Additionally, several design assumptions carry hidden technical debt that must be called out before any build begins.</p>
+
+  <div class="violations">
+    <div class="viol">
+      <div class="viol-badge">⚠ Flag 01</div>
+      <div class="viol-title">Dead CTA — The Entire Document's Conversion Point Does Nothing</div>
+      <div class="viol-desc">The ROI section closes with <code>&lt;a class="roi-cta"&gt;Schedule a Strategic Session →&lt;/a&gt;</code> — no href, no onclick, no form. This is the single call-to-action for the entire 1,168-line sales document. If this was ever shown to Kameron Norwood, every impressed visitor hit a dead link.</div>
+      <div class="viol-fix">Replace with a real Calendly embed, a mailto: link, or a React contact form posting to a FastAPI /leads endpoint with PostgreSQL persistence.</div>
+    </div>
+    <div class="viol">
+      <div class="viol-badge">⚠ Flag 02</div>
+      <div class="viol-title">Hero Image Panel — Broken Without Real Asset</div>
+      <div class="viol-desc">The hero layout is built around a 42% sticky image panel using an <code>&lt;img&gt;</code> tag with no src attribute visible in the HTML. The entire visual composition of the most impactful section of the document depends on an image file that either isn't referenced or isn't co-deployed with the HTML.</div>
+      <div class="viol-fix">Either embed the image as a base64 data URI inside the HTML (self-contained requirement), or ensure the React version serves the asset through the frontend's /public directory with a proper static asset pipeline.</div>
+    </div>
+    <div class="viol">
+      <div class="viol-badge">⚠ Flag 03</div>
+      <div class="viol-title">ROI Metrics Are Invented — No Data Source</div>
+      <div class="viol-desc">"↑68% Repeat Business from Systematic Follow-Up" and "3× Proposal Speed with AI Drafting" are presented as authoritative metrics in a sales context. Neither has a cited source. If shown to a sophisticated CRE broker, these unattributed statistics undermine credibility precisely where trust is most needed.</div>
+      <div class="viol-fix">Source each metric from published CRE technology research (NAR, CBRE, Deloitte CRE Tech reports) or replace with conservative, attributed claims. A FastAPI analytics endpoint fed by real usage data from Kameron's own platform post-deployment is the long-term fix.</div>
+    </div>
+    <div class="viol">
+      <div class="viol-badge">⚠ Flag 04</div>
+      <div class="viol-title">LoopNet Clone — Described as "Actively Being Built," No Code Exists Here</div>
+      <div class="viol-desc">The footer development note states the platform is in active development. No codebase, no API contract, no database schema, no React component tree is present anywhere in this file or implied by its structure. "Currently in development" is a sales claim, not an engineering status.</div>
+      <div class="viol-fix">See Implementation Roadmap (Section 06) for the full build plan. The LoopNet clone is the most complex deliverable: property search with geo-filtering, listing management, lead capture, and a CoStar/correct.com data integration layer.</div>
+    </div>
+    <div class="viol">
+      <div class="viol-badge">⚠ Flag 05</div>
+      <div class="viol-title">CoStar / correct.com Intelligence Layer — Referenced Without Specification</div>
+      <div class="viol-desc">The development note mentions a "CoStar / correct.com intelligence layer already in progress." CoStar data is proprietary and licensed — integrating it requires a paid API agreement, legal compliance with CoStar's terms of service, and a data pipeline architecture. None of this is specified or accounted for.</div>
+      <div class="viol-fix">Clarify data source: CoStar API (enterprise pricing, restrictive ToS), public county assessor records (free, limited), or a hybrid scraping approach (legal risk). Document the data strategy before any market intelligence dashboard work begins.</div>
+    </div>
+    <div class="viol">
+      <div class="viol-badge">⚠ Flag 06</div>
+      <div class="viol-title">AI Writing Assistant — "Fine-Tuned on Your Voice" Is Misleading</div>
+      <div class="viol-desc">Pain card #3 proposes "a fine-tuned AI writing assistant trained on your voice, your market, and CRE deal structures." Fine-tuning a base LLM requires a substantial curated dataset of Norwood's own writing, significant compute cost, and ongoing maintenance. In practice, this is a prompt-engineered wrapper around a commercial API, not a custom model — and that distinction matters when pitching to a sophisticated buyer.</div>
+      <div class="viol-fix">Reframe as a RAG (Retrieval-Augmented Generation) system: Claude or GPT-4 API + a vector database of Norwood's past proposals, listings, and market reports. Honest, achievable, and still highly valuable. FastAPI orchestration layer + PostgreSQL + pgvector.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 04: GAP ANALYSIS -->
+<section class="sec">
+  <div class="sec-id"><span>SECTION 04</span> · MISSING FUNCTIONAL REQUIREMENTS</div>
+  <h2 class="sec-h">What it needs to become <em>four real products.</em></h2>
+  <p class="sec-intro">The Kameron Norwood file proposes not one app but four interconnected platforms. Each has its own gap list. The analysis below treats them as a unified suite with a shared auth layer and common data infrastructure, which is the correct architecture for a single-broker deployment.</p>
+
+  <div class="gaps">
+    <div class="gap">
+      <div class="gap-n">1</div>
+      <div>
+        <div class="gap-title">CRE Property Search Platform (Phase 01 — The LoopNet Clone)</div>
+        <div class="gap-desc">Property listing CRUD, geographic search with polygon/radius filtering, property type facets (industrial / warehouse / flex / land), availability status, lease vs sale distinction, SF and price range filters, listing detail pages, inquiry forms, saved searches, broker contact attribution. This is a full MLS-class application. PostgreSQL PostGIS extension required for geospatial queries.</div>
+      </div>
+    </div>
+    <div class="gap">
+      <div class="gap-n">2</div>
+      <div>
+        <div class="gap-title">Lead Capture + CRM Pipeline (Phase 03)</div>
+        <div class="gap-desc">Every inquiry from the property search platform must feed a CRM: contact record creation, property interest tagging, pipeline stage management (prospect → active → under contract → closed → post-close), follow-up scheduling at 6/12/18/24 months, activity logging, and the "who to call this week" AI surfacing logic. PostgreSQL contacts/leads/activities schema + FastAPI CRUD + React kanban or list view.</div>
+      </div>
+    </div>
+    <div class="gap">
+      <div class="gap-n">3</div>
+      <div>
+        <div class="gap-title">AI Proposal + Content Engine (Phase 02)</div>
+        <div class="gap-desc">RAG system: ingest Norwood's past proposals, LOIs, listing copy, and LinkedIn posts into a vector store (pgvector or Pinecone). Claude/GPT-4 API with retrieval-augmented prompting for: listing description generation, LOI summary drafting, client proposal narrative, LinkedIn post suggestions from deal activity. FastAPI orchestration + streaming response to React textarea. Token cost management.</div>
+      </div>
+    </div>
+    <div class="gap">
+      <div class="gap-n">4</div>
+      <div>
+        <div class="gap-title">Market Intelligence Dashboard (Phase 04)</div>
+        <div class="gap-desc">Data pipeline: Tucson industrial absorption rates, vacancy rates, average asking rents, comparable transaction history. Sources: county assessor records (public), CoStar API (licensed) or CREXI data, broker-supplied comps. ETL pipeline → PostgreSQL → FastAPI aggregation endpoints → React dashboard with charts (Recharts/Plotly). "Custom pre-meeting brief" = parameterized report generator by submarket + date range.</div>
+      </div>
+    </div>
+    <div class="gap">
+      <div class="gap-n">5</div>
+      <div>
+        <div class="gap-title">Authentication + Role Management</div>
+        <div class="gap-desc">The suite needs at minimum two roles: admin (Norwood — full access to all four modules) and prospect (unauthenticated or registered buyers/tenants with access only to property search + inquiry forms). JWT auth via FastAPI. Optionally: affiliate/referral agent role if Norwood works with co-brokers.</div>
+      </div>
+    </div>
+    <div class="gap">
+      <div class="gap-n">6</div>
+      <div>
+        <div class="gap-title">Automated Lifecycle Touchpoint Scheduler</div>
+        <div class="gap-desc">Pain point #6 proposes touchpoints at 6, 12, 18, 24 months post-close. This requires: a scheduled job system (APScheduler or Celery + Redis), a notification dispatch layer (email via SendGrid + optional SMS via Twilio), and a touchpoint template library editable by Norwood. PostgreSQL post_close_schedule table. FastAPI background tasks.</div>
+      </div>
+    </div>
+    <div class="gap">
+      <div class="gap-n">7</div>
+      <div>
+        <div class="gap-title">Personal Brand / Content Publishing Layer</div>
+        <div class="gap-desc">Pain point #5 proposes an AI content engine that repurposes deals and wins into LinkedIn + website posts. This requires: deal activity event triggers in the CRM that generate content prompts, a review/edit UI for Norwood to approve drafts before publishing, and optionally a LinkedIn API integration for one-click publishing. The website content layer needs a headless CMS or at minimum a FastAPI /posts endpoint consumed by a public-facing React blog/news page.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 05: ARCHITECTURE -->
+<section class="sec">
+  <div class="sec-id"><span>SECTION 05</span> · TARGET ARCHITECTURE</div>
+  <h2 class="sec-h">The proposed <em>real stack.</em></h2>
+  <p class="sec-intro">Four interconnected products sharing a single FastAPI backend, PostgreSQL database, and React frontend monorepo. The architecture should be built as a single deployable platform — not four separate apps — with role-based access separating the broker's internal tools from the public-facing property search.</p>
+
+  <div class="arch-grid">
+    <div class="arch">
+      <div class="arch-layer">React Frontend</div>
+      <ul>
+        <li>pages/PropertySearch (public)</li>
+        <li>pages/ListingDetail (public)</li>
+        <li>pages/BrokerDashboard (auth)</li>
+        <li>pages/CRMPipeline (auth)</li>
+        <li>pages/AIWriter (auth)</li>
+        <li>pages/MarketIntel (auth)</li>
+        <li>pages/ContentEngine (auth)</li>
+        <li>components/PropertyCard</li>
+        <li>components/MapSearch (Mapbox/Leaflet)</li>
+        <li>components/AITextEditor</li>
+        <li>services/api.ts (Axios client)</li>
+      </ul>
+    </div>
+    <div class="arch">
+      <div class="arch-layer">FastAPI Backend</div>
+      <ul>
+        <li>routers/auth (JWT, login)</li>
+        <li>routers/properties (CRUD, search)</li>
+        <li>routers/leads (inquiry capture)</li>
+        <li>routers/contacts (CRM CRUD)</li>
+        <li>routers/pipeline (stages, activities)</li>
+        <li>routers/ai (RAG content gen)</li>
+        <li>routers/market (intel aggregation)</li>
+        <li>routers/scheduler (touchpoints)</li>
+        <li>services/llm (Claude/OpenAI client)</li>
+        <li>services/email (SendGrid)</li>
+        <li>services/etl (market data ingestion)</li>
+      </ul>
+    </div>
+    <div class="arch">
+      <div class="arch-layer">PostgreSQL Schema</div>
+      <ul>
+        <li>users (id, email, role)</li>
+        <li>properties (id, address, type, SF, price, status, geom)</li>
+        <li>property_images (property_id, url, order)</li>
+        <li>leads (id, property_id, contact_id, status)</li>
+        <li>contacts (id, name, email, phone, type)</li>
+        <li>pipeline_stages (contact_id, stage, ts)</li>
+        <li>activities (contact_id, type, notes, due_date)</li>
+        <li>market_data (submarket, metric, value, date)</li>
+        <li>documents (user_id, type, content, vector)</li>
+        <li>touchpoint_schedule (contact_id, trigger_date, sent)</li>
+      </ul>
+    </div>
+    <div class="arch">
+      <div class="arch-layer">Extensions + Services</div>
+      <ul>
+        <li>PostGIS (geospatial property search)</li>
+        <li>pgvector (AI document embeddings)</li>
+        <li>Mapbox GL JS (property map)</li>
+        <li>Claude API or OpenAI GPT-4</li>
+        <li>LangChain or LlamaIndex (RAG)</li>
+        <li>SendGrid (lifecycle email)</li>
+        <li>APScheduler (touchpoint jobs)</li>
+        <li>Alembic (DB migrations)</li>
+        <li>DATABASE_URL, JWT_SECRET</li>
+        <li>LLM_API_KEY, SENDGRID_KEY</li>
+        <li>MAPBOX_TOKEN, COSTAR_API_KEY</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-label">Data Strategy Note</div>
+    <p>The market intelligence dashboard requires a clear data sourcing decision before any build begins. <strong>CoStar API</strong> is the gold standard but carries enterprise pricing ($15k–$30k/yr) and restrictive redistribution ToS. <strong>County assessor records</strong> are free and public but require ETL work. <strong>CREXI API</strong> or broker-contributed comps are the pragmatic middle path for a single-market deployment. Recommend starting with county records + manual broker-uploaded comps, then upgrading to CoStar if ARR justifies licensing cost.</p>
+  </div>
+</section>
+
+<!-- SECTION 06: ROADMAP -->
+<section class="sec">
+  <div class="sec-id"><span>SECTION 06</span> · IMPLEMENTATION ROADMAP</div>
+  <h2 class="sec-h">Step-by-step <em>build plan.</em></h2>
+  <p class="sec-intro">Eight sequential phases to transform the Kameron Norwood pitch document into a live, deployable four-product CRE technology suite. Phases are ordered by dependency, not by pitch order — the CRM is built before the LoopNet clone because it captures leads from day one.</p>
+
+  <div class="roadmap">
+    <div class="rs">
+      <div class="rs-n">1</div>
+      <div>
+        <div class="rs-tag">Foundation</div>
+        <div class="rs-title">Repo + Auth + Database Setup</div>
+        <div class="rs-desc">Monorepo: /frontend (Vite + React + TypeScript + Tailwind), /backend (FastAPI + SQLAlchemy + Alembic). PostgreSQL with PostGIS and pgvector extensions. JWT auth with operator (Norwood) and public prospect roles. Seed DB with Norwood's 40+ closed transactions as initial dataset.</div>
+      </div>
+    </div>
+    <div class="rs">
+      <div class="rs-n">2</div>
+      <div>
+        <div class="rs-tag">CRM Core</div>
+        <div class="rs-title">Contact + Lead + Pipeline Infrastructure</div>
+        <div class="rs-desc">Build the CRM first — it's the foundation everything else feeds. PostgreSQL contacts/leads/pipeline_stages/activities schema. FastAPI CRUD endpoints. React pipeline view. Manual data entry for Norwood's existing contact book. This is immediately usable before any AI features are added.</div>
+      </div>
+    </div>
+    <div class="rs">
+      <div class="rs-n">3</div>
+      <div>
+        <div class="rs-tag">Property Search</div>
+        <div class="rs-title">LoopNet Clone — Listings + Public Search</div>
+        <div class="rs-desc">PostgreSQL properties table with PostGIS geometry. FastAPI property CRUD (broker-facing) + search endpoints (public-facing, with SF/price/type/status filters). React public search page with Mapbox GL JS map view, property card grid, listing detail page. Inquiry form → leads table → CRM pipeline entry.</div>
+      </div>
+    </div>
+    <div class="rs">
+      <div class="rs-n">4</div>
+      <div>
+        <div class="rs-tag">AI Writing</div>
+        <div class="rs-title">RAG Content + Proposal Engine</div>
+        <div class="rs-desc">Ingest corpus: Norwood's past proposals, LOIs, listing copy (PDF/DOCX upload → text extraction → chunking → embedding via Claude or OpenAI → pgvector storage). FastAPI /ai/generate endpoint with RAG retrieval. React AI Writer tab: input context (property type, deal stage, client) → streaming output → edit → save as document.</div>
+      </div>
+    </div>
+    <div class="rs">
+      <div class="rs-n">5</div>
+      <div>
+        <div class="rs-tag">Market Intel</div>
+        <div class="rs-title">Tucson Industrial Data Dashboard</div>
+        <div class="rs-desc">ETL pipeline: ingest Pima County assessor data + manually entered comps → PostgreSQL market_data table. FastAPI aggregation endpoints (absorption rate, vacancy trend, avg asking rent by submarket). React dashboard with Recharts line/bar charts. "Pre-meeting brief" = parameterized PDF export via WeasyPrint.</div>
+      </div>
+    </div>
+    <div class="rs">
+      <div class="rs-n">6</div>
+      <div>
+        <div class="rs-tag">Lifecycle</div>
+        <div class="rs-title">Automated Post-Close Touchpoint System</div>
+        <div class="rs-desc">APScheduler background jobs in FastAPI: query touchpoint_schedule for upcoming due dates → generate personalized email draft via LLM → dispatch via SendGrid → log sent status. React settings UI for Norwood to customize touchpoint templates per interval (6/12/18/24 months) and toggle auto-send vs draft-for-review.</div>
+      </div>
+    </div>
+    <div class="rs">
+      <div class="rs-n">7</div>
+      <div>
+        <div class="rs-tag">Brand Engine</div>
+        <div class="rs-title">Content Publishing + LinkedIn Layer</div>
+        <div class="rs-desc">CRM deal events trigger content suggestions: deal closed → AI generates LinkedIn post draft referencing transaction (anonymized or public per Norwood's preference). React content queue: review → edit → one-click LinkedIn API publish or copy to clipboard. Public website /news page consuming FastAPI /posts endpoint for press release-style announcements.</div>
+      </div>
+    </div>
+    <div class="rs">
+      <div class="rs-n">8</div>
+      <div>
+        <div class="rs-tag">Polish</div>
+        <div class="rs-title">Live CTA + Production Deploy + This Press Release as Real Page</div>
+        <div class="rs-desc">Fix the dead CTA: wire "Schedule a Strategic Session" to a Calendly embed or FastAPI /leads form. Convert this HTML press release into a React /about page served by the platform. Docker Compose for prod. GitHub Actions CI. README with full setup. Deploy to Render or Railway with managed PostgreSQL.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 07: MONETIZATION -->
+<section class="sec">
+  <div class="sec-id"><span>SECTION 07</span> · MONETIZATION POTENTIAL</div>
+  <h2 class="sec-h">What this is worth <em>when it's built.</em></h2>
+  <p class="sec-intro">Two distinct monetization paths exist: building this as a bespoke platform exclusively for Kameron Norwood (services revenue), or building it as a white-label SaaS product for the broader CRE broker market (product revenue). The smarter play is to do both — build custom for Norwood, then generalize.</p>
+
+  <div class="money-card">
+    <div class="money-range">$60k–$350k / yr</div>
+    <div class="money-label">Estimated Monetization Range · Justified Below</div>
+    <div class="money-basis">Three-layer ceiling: bespoke build revenue for Norwood himself, white-label SaaS licensing to the CRE broker market (80,000+ licensed commercial brokers in the US), and a transaction data network effect if the property search platform gains traction in the Tucson industrial market. The market intelligence layer alone, if built with clean Tucson industrial data, has independent value to developers, investors, and economic development agencies.</div>
+    <div class="money-tiers">
+      <div class="mt">
+        <div class="mt-name">Bespoke Build</div>
+        <div class="mt-price">$45k–$90k one-time</div>
+        <div class="mt-desc">Custom deployment for Norwood's practice. All four phases. Ongoing retainer at $2,500–$5,000/mo for maintenance and data updates.</div>
+      </div>
+      <div class="mt">
+        <div class="mt-name">SaaS — Per Broker</div>
+        <div class="mt-price">$199–$499/mo per broker</div>
+        <div class="mt-desc">White-label CRE platform (search + CRM + AI writing + lifecycle) marketed to industrial/commercial brokers. Comparable to Buildout at $300/mo or Rethink CRM at $400/mo.</div>
+      </div>
+      <div class="mt">
+        <div class="mt-name">Market Data Layer</div>
+        <div class="mt-price">$500–$2,000/mo per subscriber</div>
+        <div class="mt-desc">The Tucson industrial market intelligence dashboard sold as a standalone data subscription to developers, institutional investors, and economic development orgs.</div>
+      </div>
+      <div class="mt">
+        <div class="mt-name">Agency / Done-For-You</div>
+        <div class="mt-price">$15k–$40k per broker</div>
+        <div class="mt-desc">White-glove deployment for individual brokers or small teams who want the platform customized to their market and brand. High-margin, low-volume.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 08: TARGET MARKET -->
+<section class="sec">
+  <div class="sec-id"><span>SECTION 08</span> · TARGET MARKET</div>
+  <h2 class="sec-h">Who buys this. <em>Why they'd pay.</em></h2>
+  <p class="sec-intro">The immediate prospect is Kameron Norwood himself. The broader market is the commercial real estate brokerage community — a technology-underserved industry where the average broker still uses spreadsheets for pipeline management and LoopNet for search, both of which extract margin while adding friction.</p>
+
+  <div class="targets">
+    <div class="target">
+      <div class="target-icon">🏗️</div>
+      <div>
+        <div class="target-name">Independent CRE Brokers (Industrial / Flex / Logistics)</div>
+        <div class="target-why">The most underserved segment. National platforms (LoopNet, CoStar) charge them to list while capturing their leads. A branded search platform that owns lead flow is a direct-revenue argument. They're already spending $200–$600/mo on platforms that don't work for them.</div>
+      </div>
+    </div>
+    <div class="target">
+      <div class="target-icon">🏢</div>
+      <div>
+        <div class="target-name">Regional CRE Boutiques (10–50 brokers)</div>
+        <div class="target-why">Team-level deployment of the CRM + AI writing + lifecycle scheduler is a competitive advantage play. The pitch is: "Your senior brokers do more deals. Your junior brokers ramp faster. Your firm stops losing second transactions to competitors who called first."</div>
+      </div>
+    </div>
+    <div class="target">
+      <div class="target-icon">📊</div>
+      <div>
+        <div class="target-name">Industrial Real Estate Developers + Investors</div>
+        <div class="target-why">The market intelligence dashboard is an independent product for this audience. They need absorption rates, vacancy trends, and comp data for underwriting — and they currently pay CoStar $15k+/yr for it. A Tucson-specific product at $500–$2,000/mo is immediately price-competitive.</div>
+      </div>
+    </div>
+    <div class="target">
+      <div class="target-icon">🌆</div>
+      <div>
+        <div class="target-name">Secondary Market CRE Hubs (Tucson, Albuquerque, El Paso, Boise)</div>
+        <div class="target-why">CoStar and LoopNet over-index on tier-1 markets. Secondary market industrial corridors — especially those benefiting from nearshoring and domestic manufacturing growth — are data deserts. A regional platform has outsized value precisely because national incumbents ignore these markets.</div>
+      </div>
+    </div>
+    <div class="target">
+      <div class="target-icon">🎓</div>
+      <div>
+        <div class="target-name">Economic Development Orgs + Chambers of Commerce</div>
+        <div class="target-why">The market intelligence dashboard (vacancy, absorption, available industrial SF by submarket) is exactly what economic development orgs publish in their annual reports. A live, embeddable version of this data would be purchased or sponsored by Tucson Metro Chamber, GPEC, Arizona Commerce Authority.</div>
+      </div>
+    </div>
+    <div class="target">
+      <div class="target-icon">⚙️</div>
+      <div>
+        <div class="target-name">Logistics, Manufacturing &amp; Distribution Companies</div>
+        <div class="target-why">The property search platform's ultimate end user. Companies scouting Tucson's industrial corridor for expansion, relocation, or distribution hub siting. If the platform has the deepest industrial inventory in Southern Arizona, it becomes the first search destination for site selectors — which in turn strengthens Norwood's broker position significantly.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 09: VERDICT -->
+<section class="sec">
+  <div class="sec-id"><span>SECTION 09</span> · GO / NO-GO READINESS</div>
+  <h2 class="sec-h">The <em>verdict.</em></h2>
+  <p class="sec-intro">The Kameron Norwood file is the most strategically sophisticated document in this audit series — and also the furthest from being a functional product. It is an exceptionally executed pitch for four complex software products, wrapped in a beautifully researched press release. The brief is excellent. The build hasn't started.</p>
+
+  <div class="verdict-wrap">
+    <div class="verdict-label">Readiness Rating</div>
+    <div class="verdict-badge">MEDIUM</div>
+    <p class="verdict-summary">Outstanding brand asset and compelling sales document. Zero functional implementation. The four proposed products represent 600–900 hours of combined engineering work. The development note claiming the LoopNet clone is "actively being built" needs to be verified — if that work is real, the readiness rating rises significantly.</p>
+  </div>
+
+  <div class="blockers">
+    <div class="blocker">Dead CTA — the document's only conversion point does nothing on click</div>
+    <div class="blocker">Hero image missing src — the most visually critical element may render as a broken image</div>
+    <div class="blocker">Four proposed products — none have a single line of implementation code</div>
+    <div class="blocker">CoStar data strategy undefined — without a licensed data source, Phase 04 cannot be built</div>
+    <div class="blocker">"Fine-tuned AI" claim is misleading — a RAG system is what's actually achievable and what should be built</div>
+    <div class="blocker">No database schema, no API contract, no component tree — no engineering artifacts exist yet</div>
+  </div>
+
+  <div style="margin: 8px 0 16px;">
+    <div class="callout">
+      <div class="callout-label">Effort Estimate</div>
+      <p><strong>Phase 01 only (LoopNet clone + CRM MVP): 200–260 hours.</strong> Phase 02 (AI writing engine): 80–100 hours. Phase 03 (CRM full): 60–80 hours (if built on Phase 01 foundation). Phase 04 (market intelligence): 120–160 hours plus data sourcing. <strong>Full four-phase suite: 550–700 hours.</strong> CoStar data licensing adds cost and legal complexity outside the engineering estimate. Recommend a Phase 01-only MVP engagement to validate the relationship and the market before committing to the full suite.</p>
+    </div>
+  </div>
+
+  <div class="next-actions">
+    <div class="na">
+      <div class="na-n">1</div>
+      <div class="na-title">Fix the CTA Today</div>
+      <div class="na-desc">Add an href to "Schedule a Strategic Session" — even a mailto: link. If this document was ever shared with Norwood, every impressed reader hit a dead end. This is a 90-second fix that unblocks the entire sales funnel.</div>
+    </div>
+    <div class="na">
+      <div class="na-n">2</div>
+      <div class="na-title">Clarify the Data Strategy</div>
+      <div class="na-desc">Before writing a single line of market intelligence code, confirm the data source. CoStar API costs, county assessor ETL scope, and CREXI availability for Tucson industrial must be researched and scoped. This decision determines Phase 04's budget and timeline.</div>
+    </div>
+    <div class="na">
+      <div class="na-n">3</div>
+      <div class="na-title">Build the CRM First, Not the Search Platform</div>
+      <div class="na-desc">The pitch leads with the LoopNet clone (most impressive), but the CRM delivers immediate daily value to Norwood. Build the contact + pipeline + lifecycle scheduler first — it's operational on day one, generates goodwill, and funds the more complex search platform build.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-l">Audit generated 2026-04-03 · kameron_norwood_press_release.html · 1,168 lines analyzed</div>
+  <div class="foot-r">React · FastAPI · PostgreSQL · PostGIS · pgvector</div>
+</footer>
+
+</body>
+</html>

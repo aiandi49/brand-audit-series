@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audit — AINI Outreach Kit · 2026-04-03</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Epilogue:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080808;
+    --bg2: #0d0d0d;
+    --bg3: #141414;
+    --bg4: #1a1a1a;
+    --accent: #00E5A0;
+    --accent-dim: rgba(0,229,160,0.08);
+    --accent-mid: rgba(0,229,160,0.25);
+    --accent-line: rgba(0,229,160,0.18);
+    --warn: #FF6B35;
+    --warn-dim: rgba(255,107,53,0.10);
+    --text: #E8E8E8;
+    --text2: #A0A0A0;
+    --text3: #555;
+    --border: rgba(255,255,255,0.06);
+    --border2: rgba(255,255,255,0.11);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Epilogue', sans-serif;
+    font-size: 16px;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  }
+
+  /* Accent bar */
+  .top-bar { height: 5px; background: linear-gradient(90deg, var(--accent), rgba(0,229,160,0.3)); }
+
+  /* MASTHEAD */
+  .masthead {
+    padding: 80px 0 70px;
+    max-width: 860px;
+    margin: 0 auto;
+    padding-left: 60px;
+    padding-right: 60px;
+    animation: fadeUp 0.8s ease both;
+    border-bottom: 1px solid var(--border2);
+  }
+  .masthead-label {
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    opacity: 0.9;
+  }
+  .masthead-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 700;
+    line-height: 1.0;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+  .masthead-title em {
+    font-style: italic;
+    background: linear-gradient(135deg, var(--accent), #00b87a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+  }
+  .masthead-tag {
+    font-size: 1rem;
+    color: var(--text2);
+    font-weight: 400;
+    max-width: 540px;
+    line-height: 1.7;
+    margin-bottom: 36px;
+  }
+  .masthead-meta {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .meta-item {}
+  .meta-n {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: var(--accent);
+    line-height: 1;
+    text-shadow: 0 0 30px rgba(0,229,160,0.3);
+  }
+  .meta-l {
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-top: 4px;
+  }
+
+  /* SECTIONS */
+  .section {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 64px 60px;
+    border-bottom: 1px solid var(--border);
+    animation: fadeUp 0.8s ease both;
+  }
+  .section:nth-child(2) { animation-delay: 0.1s; }
+  .section:nth-child(3) { animation-delay: 0.2s; }
+  .section:nth-child(4) { animation-delay: 0.25s; }
+  .section:nth-child(5) { animation-delay: 0.3s; }
+  .section:nth-child(6) { animation-delay: 0.35s; }
+  .section:nth-child(7) { animation-delay: 0.4s; }
+  .section:nth-child(8) { animation-delay: 0.45s; }
+  .section:nth-child(9) { animation-delay: 0.5s; }
+  .section:nth-child(10) { animation-delay: 0.55s; }
+
+  .section-id {
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 14px;
+  }
+  .section-id span { color: var(--accent); opacity: 0.7; }
+  .section-h {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.7rem, 3.5vw, 2.6rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+  .section-h em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .section-intro {
+    font-size: 0.95rem;
+    color: var(--text2);
+    max-width: 660px;
+    margin-bottom: 36px;
+    line-height: 1.85;
+  }
+  hr.divider {
+    border: none;
+    border-top: 1px solid var(--border2);
+    margin: 40px 0;
+  }
+
+  /* FEATURE GRID */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+  .feature-card {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    border-radius: 6px;
+    padding: 18px 20px;
+  }
+  .feature-card-tag {
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 7px;
+    opacity: 0.8;
+  }
+  .feature-card-title {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 5px;
+  }
+  .feature-card-desc {
+    font-size: 0.8rem;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+
+  /* VIOLATION ITEMS */
+  .violation-list { display: grid; gap: 16px; margin-bottom: 32px; }
+  .violation {
+    background: var(--warn-dim);
+    border: 1px solid rgba(255,107,53,0.2);
+    border-left: 4px solid var(--warn);
+    border-radius: 6px;
+    padding: 20px 22px;
+  }
+  .violation-badge {
+    display: inline-block;
+    background: var(--warn);
+    color: #fff;
+    font-size: 0.58rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+  }
+  .violation-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 5px;
+  }
+  .violation-desc {
+    font-size: 0.82rem;
+    color: var(--text2);
+    line-height: 1.65;
+    margin-bottom: 10px;
+  }
+  .violation-fix {
+    font-size: 0.78rem;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .violation-fix::before { content: '→ Fix: '; opacity: 0.7; }
+
+  /* GAP LIST */
+  .gap-list { display: grid; gap: 12px; margin-bottom: 32px; }
+  .gap-item {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    border-radius: 6px;
+    padding: 16px 20px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .gap-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--accent);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 28px;
+    opacity: 0.7;
+  }
+  .gap-body {}
+  .gap-title {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .gap-desc {
+    font-size: 0.8rem;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+
+  /* CALLOUT */
+  .callout {
+    border-left: 4px solid var(--accent);
+    background: var(--accent-dim);
+    border-radius: 0 6px 6px 0;
+    padding: 22px 26px;
+    margin: 28px 0;
+  }
+  .callout-label {
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .callout-text {
+    font-size: 0.9rem;
+    color: var(--text2);
+    line-height: 1.75;
+  }
+  .callout-text strong { color: var(--text); font-weight: 600; }
+
+  /* ARCH BLOCKS */
+  .arch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .arch-block {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    border-top: 3px solid var(--accent-line);
+    border-radius: 6px;
+    padding: 20px 18px;
+  }
+  .arch-layer {
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+    opacity: 0.8;
+  }
+  .arch-items { list-style: none; }
+  .arch-items li {
+    font-size: 0.8rem;
+    color: var(--text2);
+    padding: 4px 0;
+    border-bottom: 1px solid var(--border);
+    line-height: 1.5;
+  }
+  .arch-items li:last-child { border-bottom: none; }
+  .arch-items li::before { content: '·  '; color: var(--accent); opacity: 0.6; }
+
+  /* ROADMAP */
+  .roadmap { display: grid; gap: 0; }
+  .roadmap-step {
+    display: flex;
+    gap: 24px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .roadmap-step:last-child { border-bottom: none; }
+  .step-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 44px;
+    opacity: 0.5;
+  }
+  .step-body {}
+  .step-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 5px;
+  }
+  .step-desc {
+    font-size: 0.82rem;
+    color: var(--text2);
+    line-height: 1.65;
+  }
+  .step-tag {
+    display: inline-block;
+    font-size: 0.58rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-dim);
+    border: 1px solid var(--accent-line);
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-bottom: 6px;
+  }
+
+  /* MONEY CARD */
+  .money-card {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    padding: 36px 40px;
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .money-card::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 220px; height: 220px;
+    background: radial-gradient(circle, rgba(0,229,160,0.06), transparent 70%);
+    pointer-events: none;
+  }
+  .money-range {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 8px;
+    text-shadow: 0 0 40px rgba(0,229,160,0.2);
+  }
+  .money-label {
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 18px;
+  }
+  .money-basis {
+    font-size: 0.85rem;
+    color: var(--text2);
+    line-height: 1.75;
+    max-width: 560px;
+  }
+  .money-tiers {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 14px;
+    margin-top: 26px;
+  }
+  .money-tier {
+    background: var(--bg4);
+    border: 1px solid var(--border2);
+    border-radius: 6px;
+    padding: 16px 18px;
+  }
+  .tier-name {
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 5px;
+    opacity: 0.8;
+  }
+  .tier-price {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .tier-desc {
+    font-size: 0.75rem;
+    color: var(--text2);
+    line-height: 1.55;
+  }
+
+  /* TARGETS */
+  .target-grid { display: grid; gap: 12px; margin-bottom: 24px; }
+  .target-item {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px 20px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+  .target-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--accent-dim);
+    border: 1px solid var(--accent-line);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .target-name {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+  .target-why {
+    font-size: 0.78rem;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+
+  /* VERDICT */
+  .verdict-wrap { text-align: center; padding: 48px 0 20px; }
+  .verdict-badge {
+    display: inline-block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    padding: 18px 52px;
+    border-radius: 8px;
+    letter-spacing: 0.04em;
+    margin-bottom: 20px;
+    background: rgba(255,180,0,0.1);
+    border: 2px solid rgba(255,180,0,0.4);
+    color: #FFB400;
+    text-shadow: 0 0 40px rgba(255,180,0,0.3);
+  }
+  .verdict-label {
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 16px;
+  }
+  .verdict-summary {
+    font-size: 0.9rem;
+    color: var(--text2);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+  .blockers-list {
+    display: grid;
+    gap: 10px;
+    margin: 28px 0;
+    max-width: 620px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .blocker {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    border-radius: 6px;
+    padding: 12px 18px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    font-size: 0.84rem;
+    color: var(--text2);
+  }
+  .blocker::before {
+    content: '⚠';
+    color: var(--warn);
+    flex-shrink: 0;
+  }
+  .next-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+    margin-top: 32px;
+  }
+  .action-card {
+    background: var(--accent-dim);
+    border: 1px solid var(--accent-line);
+    border-radius: 6px;
+    padding: 18px 20px;
+    text-align: left;
+  }
+  .action-n {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    opacity: 0.5;
+    margin-bottom: 8px;
+  }
+  .action-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 5px;
+  }
+  .action-desc {
+    font-size: 0.77rem;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+
+  /* FOOTER */
+  footer {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 48px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border2);
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .footer-left {
+    font-size: 0.8rem;
+    color: var(--text3);
+  }
+  .footer-accent {
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    opacity: 0.5;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 640px) {
+    .masthead, .section { padding-left: 24px; padding-right: 24px; }
+    footer { padding-left: 24px; padding-right: 24px; }
+  }
+
+  @media print {
+    body { background: #080808; color: #e8e8e8; }
+    body::before { display: none; }
+    @keyframes fadeUp { from { opacity:1; } to { opacity:1; } }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar"></div>
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="masthead-label">App Audit Report · 2026-04-03</div>
+  <h1 class="masthead-title">AINI<br><em>Outreach Kit</em></h1>
+  <p class="masthead-tag">A complete affiliate growth playbook for the AI&amp;I Marketplace — 7 outreach channels, 20+ copy-paste scripts, and a daily execution framework. Beautifully built. Operationally orphaned.</p>
+  <div class="masthead-meta">
+    <div class="meta-item"><div class="meta-n">926</div><div class="meta-l">Lines of HTML</div></div>
+    <div class="meta-item"><div class="meta-n">7</div><div class="meta-l">Outreach Channels</div></div>
+    <div class="meta-item"><div class="meta-n">20+</div><div class="meta-l">Copy-Ready Scripts</div></div>
+    <div class="meta-item"><div class="meta-n">0</div><div class="meta-l">Backend Touches</div></div>
+    <div class="meta-item"><div class="meta-n">6</div><div class="meta-l">Critical Gaps</div></div>
+  </div>
+</header>
+
+<!-- SECTION 1: OVERVIEW -->
+<section class="section">
+  <div class="section-id"><span>SECTION 01</span> · FILE OVERVIEW</div>
+  <h2 class="section-h">What <em>this file is.</em></h2>
+  <p class="section-intro">A single-file interactive HTML toolkit for an affiliate marketing program attached to the AI&amp;I Marketplace — a curated collection of 57 AI-powered business systems at $99/month (White Label) and $999 (Full License), with 30% recurring commissions paid to Solana wallets.</p>
+
+  <div class="callout">
+    <div class="callout-label">Core Product Identity</div>
+    <div class="callout-text">This is an <strong>affiliate recruiter and growth playbook</strong> — not a customer-facing marketing site. It exists purely to turn the product owner (and eventually affiliate partners) into a distribution machine. It's a daily operating manual disguised as a web page. It contains copy-ready scripts for 6 platforms, a visual daily schedule, platform-specific best practices, and an interactive checklist. All in a single 926-line HTML file with zero server dependency.</div>
+  </div>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="feature-card-tag">Product</div>
+      <div class="feature-card-title">AI&amp;I Marketplace</div>
+      <div class="feature-card-desc">57 AI business systems. White Label ($99/mo) or Full License ($999). Target: entrepreneurs, side-hustlers, digital product buyers.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card-tag">User Role</div>
+      <div class="feature-card-title">Affiliate Recruiter / Operator</div>
+      <div class="feature-card-desc">The file is addressed to a single operator running a 0→10 sales sprint. No multi-user assumptions — pure solo playbook.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card-tag">User Journey</div>
+      <div class="feature-card-title">Execute → Track → Iterate</div>
+      <div class="feature-card-desc">Open file → Read daily schedule → Pull script from relevant tab → Post or send → Check off checklist item. Fully linear, human-executed flow.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card-tag">Destination URL</div>
+      <div class="feature-card-title">aini-marketplace.vercel.app</div>
+      <div class="feature-card-desc">A separate Vercel-hosted app (not in this file). This kit is a pre-funnel layer — it drives traffic TO that URL, not from it.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2: FEATURE INVENTORY -->
+<section class="section">
+  <div class="section-id"><span>SECTION 02</span> · UI / FEATURE INVENTORY</div>
+  <h2 class="section-h">What <em>it has.</em></h2>
+  <p class="section-intro">Despite being a static HTML file, the AINI Outreach Kit is genuinely well-executed for what it is. It uses tabbed navigation, interactive checklists, one-click copy buttons, styled script cards, a scheduling grid, and a curated community target list. Every UI element works today without a backend.</p>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="feature-card-tag">Navigation</div>
+      <div class="feature-card-title">7-Tab Interface</div>
+      <div class="feature-card-desc">Daily Schedule, Facebook Groups, Affiliate Outreach, LinkedIn, Reddit, Video Scripts, Daily Checklist. Tab switching via vanilla JS. No routing needed.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card-tag">Interaction</div>
+      <div class="feature-card-title">One-Click Copy Buttons</div>
+      <div class="feature-card-desc">Every script card has a "Copy" button using navigator.clipboard API. Toggles to "Copied!" on success with green feedback. Genuinely useful, genuinely works.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card-tag">Task Management</div>
+      <div class="feature-card-title">Interactive Checklist</div>
+      <div class="feature-card-desc">Click-to-check items across 3 priority tiers (Top 5, Secondary, Content Bonus). CSS toggles green completion state. Resets on page refresh — by design.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card-tag">Schedule</div>
+      <div class="feature-card-title">4-Block Time Grid</div>
+      <div class="feature-card-desc">Morning / Midday / Afternoon / Evening blocks with specific action items per slot. Designed for &lt;90min/day execution cadence.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card-tag">Scripts</div>
+      <div class="feature-card-title">20+ Platform-Specific Scripts</div>
+      <div class="feature-card-desc">DM outreach (cold + warm), email templates, Facebook group posts, LinkedIn text posts, Reddit threads + value comments, TikTok/Reels video scripts with hooks, and 30 rotating hook ideas.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card-tag">Community Intel</div>
+      <div class="feature-card-title">Target Group Database</div>
+      <div class="feature-card-desc">Named Facebook groups with member counts and posting strategy tags. Named subreddits with rules and optimal posting windows. Affiliate finder targeting criteria for TikTok/YouTube/IG.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card-tag">Priority Ranking</div>
+      <div class="feature-card-title">Numbered Action Priority List</div>
+      <div class="feature-card-desc">4-level hierarchy: Affiliate Outreach → Facebook Groups → LinkedIn → Video Content. Clear ROI justification per tier.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card-tag">Design</div>
+      <div class="feature-card-title">Production-Grade Visual Design</div>
+      <div class="feature-card-desc">Dark theme, Bebas Neue + DM Serif Display + Instrument Sans + DM Mono stack. Gold accent system. Radial glow header effects. Responsive down to 600px. Genuinely polished.</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-label">Key Observation</div>
+    <div class="callout-text">This file has <strong>zero prohibited platform dependencies</strong> — no Firebase, no Databutton, no Riff, no third-party SDK, no vendor lock-in of any kind. The only external resource is Google Fonts. The entire file is pure HTML/CSS/JS. This is not a violation — it's a clean slate.</div>
+  </div>
+</section>
+
+<!-- SECTION 3: TECH AUDIT -->
+<section class="section">
+  <div class="section-id"><span>SECTION 03</span> · TECHNOLOGY AUDIT</div>
+  <h2 class="section-h">What <em>breaks the requirements.</em></h2>
+  <p class="section-intro">Unlike previous files in this series, the AINI Outreach Kit contains no Firebase calls, no proprietary widgets, and no vendor-locked dependencies. The violations here are architectural omissions, not prohibited inclusions — this file was never intended to be an app, but it needs to become one.</p>
+
+  <div class="violation-list">
+    <div class="violation">
+      <div class="violation-badge">⚠ Flag 01</div>
+      <div class="violation-title">Solana Wallet Payout — No Infrastructure</div>
+      <div class="violation-desc">Every affiliate script and the WarriorForum post explicitly states payouts go to Phantom/Solana wallets with "no threshold, instant access." This is not implemented anywhere. There is no wallet collection form, no payout trigger, no transaction record, and no affiliate ID system. The promise exists in copy but has no backend truth behind it.</div>
+      <div class="violation-fix">FastAPI endpoint for wallet address collection + PostgreSQL affiliate table with wallet_address field + manual or programmatic Solana payout trigger via Phantom SDK or direct RPC.</div>
+    </div>
+    <div class="violation">
+      <div class="violation-badge">⚠ Flag 02</div>
+      <div class="violation-title">Affiliate Link Tracking — Implied But Missing</div>
+      <div class="violation-desc">Scripts direct all traffic to aini-marketplace.vercel.app/affiliate but there is zero affiliate tracking infrastructure. No UTM generation, no referral code system, no conversion attribution. The WarriorForum post mentions "wallet-based tracking (permanent — no cookie expiry)" — but this mechanism does not exist in any code visible in this file or implied in the stack.</div>
+      <div class="violation-fix">FastAPI referral code generation endpoint → PostgreSQL referral_clicks and conversions tables → React affiliate dashboard showing clicks, conversions, earnings per code.</div>
+    </div>
+    <div class="violation">
+      <div class="violation-badge">⚠ Flag 03</div>
+      <div class="violation-title">Checklist State — Session-Only, No Persistence</div>
+      <div class="violation-desc">The interactive checklist resets on every page refresh. The file acknowledges this ("Reset tomorrow") — but for a daily habit tool used repeatedly by the same operator, this means zero streak tracking, zero completion history, and no accountability data over time.</div>
+      <div class="violation-fix">PostgreSQL daily_checklist_completions table with date + item_id + user_id → FastAPI PATCH endpoint → React state hydrated from DB on load. Adds streak counter and 30-day history view.</div>
+    </div>
+    <div class="violation">
+      <div class="violation-badge">⚠ Flag 04</div>
+      <div class="violation-title">Vercel Analytics Referenced — No Dashboard in Kit</div>
+      <div class="violation-desc">The daily schedule explicitly instructs: "Check Vercel Analytics — see which source is driving traffic to your affiliate page." This requires a separate Vercel account and links to zero data inside this tool. The outreach kit doesn't aggregate its own performance data.</div>
+      <div class="violation-fix">Replace Vercel Analytics with a self-hosted analytics pipeline: FastAPI event tracking endpoint → PostgreSQL events table → React analytics tab in the kit showing traffic source, conversion rate per channel, best-performing script by click-through.</div>
+    </div>
+    <div class="violation">
+      <div class="violation-badge">⚠ Flag 05</div>
+      <div class="violation-title">No Affiliate Enrollment Flow</div>
+      <div class="violation-desc">Multiple scripts reference "free to join, no approval required" and direct traffic to aini-marketplace.vercel.app/affiliate. That page is not in this file. If it doesn't exist or isn't functional, every piece of outreach in this kit leads to a dead end. Enrollment, affiliate ID assignment, and onboarding are entirely unbuilt.</div>
+      <div class="violation-fix">React /affiliate page with enrollment form → FastAPI POST /affiliates → PostgreSQL affiliates table → automated welcome email + unique referral code generation on signup.</div>
+    </div>
+    <div class="violation">
+      <div class="violation-badge">⚠ Flag 06</div>
+      <div class="violation-title">Script Performance — Zero Tracking</div>
+      <div class="violation-desc">30 TikTok hook ideas, 4 LinkedIn posts, 4 Reddit scripts, 4 affiliate DMs — none of them have any tracking instrumentation. The user has no way to know which script is generating the most affiliate sign-ups or sales. The "rotate daily" instruction is operationally sound but strategically blind without data.</div>
+      <div class="violation-fix">Add copy-event logging (POST /events on each Copy button click) → PostgreSQL script_usage table → React analytics view ranking scripts by usage and (if conversion data is piped in) by downstream conversion rate.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4: GAP ANALYSIS -->
+<section class="section">
+  <div class="section-id"><span>SECTION 04</span> · MISSING FUNCTIONAL REQUIREMENTS</div>
+  <h2 class="section-h">What it needs to become <em>a real app.</em></h2>
+  <p class="section-intro">The AINI Outreach Kit is a content asset masquerading as an app. Converting it into a production-grade affiliate management platform requires building the full operational layer that the copy promises but none of the code delivers.</p>
+
+  <div class="gap-list">
+    <div class="gap-item">
+      <div class="gap-num">1</div>
+      <div class="gap-body">
+        <div class="gap-title">Affiliate Authentication + Identity System</div>
+        <div class="gap-desc">No login, no user identity, no session management. Every affiliate needs an account with a unique referral code, wallet address, and dashboard. FastAPI JWT auth + PostgreSQL users/affiliates tables with role separation (operator vs affiliate).</div>
+      </div>
+    </div>
+    <div class="gap-item">
+      <div class="gap-num">2</div>
+      <div class="gap-body">
+        <div class="gap-title">Referral Code + Link Generation Engine</div>
+        <div class="gap-desc">The product's value proposition is that referral tracking is "permanent" and "wallet-based." Neither mechanism is built. Need: unique code generation on enrollment, link builder UI, click/impression/conversion tracking per code, PostgreSQL referrals schema.</div>
+      </div>
+    </div>
+    <div class="gap-item">
+      <div class="gap-num">3</div>
+      <div class="gap-body">
+        <div class="gap-title">Solana Payout Infrastructure</div>
+        <div class="gap-desc">Wallet address collection (Phantom-compatible), payout calculation logic (30% of sale price based on tier), payout scheduling or manual trigger, transaction log, confirmation notifications. This is the core financial promise of the product and it is entirely absent.</div>
+      </div>
+    </div>
+    <div class="gap-item">
+      <div class="gap-num">4</div>
+      <div class="gap-body">
+        <div class="gap-title">Affiliate Dashboard</div>
+        <div class="gap-desc">Real-time view of: clicks per referral link, sign-ups attributed, sales converted, earnings (pending + paid), payout history. React frontend consuming FastAPI aggregation endpoints. The "10 affiliates × 10 referrals" math in the scripts needs a live ledger behind it.</div>
+      </div>
+    </div>
+    <div class="gap-item">
+      <div class="gap-num">5</div>
+      <div class="gap-body">
+        <div class="gap-title">Operator CRM / Outreach Tracker</div>
+        <div class="gap-desc">The checklist resets daily and tracks nothing. Need a persistent outreach log: who was DM'd, what script was used, when, follow-up date, response status. PostgreSQL outreach_log table + React CRM tab in the kit. Turns the "3 DMs/day" habit into an auditable pipeline.</div>
+      </div>
+    </div>
+    <div class="gap-item">
+      <div class="gap-num">6</div>
+      <div class="gap-body">
+        <div class="gap-title">Script Performance Analytics</div>
+        <div class="gap-desc">Copy button events should be logged (which script, what time, what platform tab was active). Link downstream to conversion data. Surface highest-performing scripts in a "Top Performers" view. This transforms the outreach kit from a static reference into a feedback loop.</div>
+      </div>
+    </div>
+    <div class="gap-item">
+      <div class="gap-num">7</div>
+      <div class="gap-body">
+        <div class="gap-title">Affiliate Enrollment Page + Onboarding Flow</div>
+        <div class="gap-desc">Every script in the kit leads to aini-marketplace.vercel.app/affiliate — that page needs to be a real React enrollment flow: intro copy → form (name, email, wallet address, niche/audience size) → unique code assignment → welcome email → dashboard redirect.</div>
+      </div>
+    </div>
+    <div class="gap-item">
+      <div class="gap-num">8</div>
+      <div class="gap-body">
+        <div class="gap-title">Email Notification System</div>
+        <div class="gap-desc">No notifications anywhere. Affiliates need: welcome email on enrollment, new sale notification, payout confirmation. Operator needs: new affiliate sign-up alert, weekly performance digest. FastAPI background tasks + SMTP or SendGrid integration.</div>
+      </div>
+    </div>
+    <div class="gap-item">
+      <div class="gap-num">9</div>
+      <div class="gap-body">
+        <div class="gap-title">Rate Limiting + Abuse Prevention</div>
+        <div class="gap-desc">The affiliate program is explicitly "no approval required." Without rate limiting and input validation on the enrollment form, this is an open invitation for spam sign-ups and fake referral clicks. FastAPI middleware for rate limiting + CAPTCHA on enrollment + click fraud detection logic.</div>
+      </div>
+    </div>
+    <div class="gap-item">
+      <div class="gap-num">10</div>
+      <div class="gap-body">
+        <div class="gap-title">Admin Panel for Operator</div>
+        <div class="gap-desc">The operator needs visibility across all affiliates: who joined, their referral activity, pending payouts, top performers, fraud flags. React admin UI consuming FastAPI /admin/* routes. Separate from affiliate-facing dashboard. Role-gated.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 5: ARCHITECTURE -->
+<section class="section">
+  <div class="section-id"><span>SECTION 05</span> · TARGET ARCHITECTURE</div>
+  <h2 class="section-h">The proposed <em>real stack.</em></h2>
+  <p class="section-intro">The AINI Outreach Kit should become a two-sided affiliate platform: an operator-facing outreach toolkit (expanded from this file) and an affiliate-facing portal (enrollment, dashboard, payout management). React + FastAPI + PostgreSQL with a Solana payout integration layer.</p>
+
+  <div class="arch-grid">
+    <div class="arch-block">
+      <div class="arch-layer">React Frontend</div>
+      <ul class="arch-items">
+        <li>pages/OutreachKit (this file, rebuilt)</li>
+        <li>pages/AffiliateEnroll</li>
+        <li>pages/AffiliateDashboard</li>
+        <li>pages/AdminPanel</li>
+        <li>components/ScriptCard (with event logging)</li>
+        <li>components/ChecklistTracker (persistent)</li>
+        <li>components/OutreachCRM</li>
+        <li>components/PayoutHistory</li>
+        <li>services/api.ts (Axios client)</li>
+        <li>state/auth, state/affiliate</li>
+      </ul>
+    </div>
+    <div class="arch-block">
+      <div class="arch-layer">FastAPI Backend</div>
+      <ul class="arch-items">
+        <li>routers/auth (JWT, login, register)</li>
+        <li>routers/affiliates (CRUD, enroll)</li>
+        <li>routers/referrals (code gen, click tracking)</li>
+        <li>routers/conversions (sales attribution)</li>
+        <li>routers/payouts (Solana payout trigger)</li>
+        <li>routers/analytics (aggregations)</li>
+        <li>routers/admin (operator endpoints)</li>
+        <li>routers/events (script usage logging)</li>
+        <li>services/email (SMTP/SendGrid)</li>
+        <li>services/solana (payout dispatch)</li>
+      </ul>
+    </div>
+    <div class="arch-block">
+      <div class="arch-layer">PostgreSQL Schema</div>
+      <ul class="arch-items">
+        <li>users (id, email, role, created_at)</li>
+        <li>affiliates (user_id, wallet_address, referral_code, status)</li>
+        <li>referral_clicks (code, ip, referrer, ts)</li>
+        <li>conversions (affiliate_id, product_id, amount, type)</li>
+        <li>payouts (affiliate_id, amount_sol, status, tx_hash)</li>
+        <li>outreach_log (user_id, platform, script_id, contact, status)</li>
+        <li>checklist_completions (user_id, item_id, date)</li>
+        <li>script_events (script_id, platform, user_id, ts)</li>
+      </ul>
+    </div>
+    <div class="arch-block">
+      <div class="arch-layer">Environment + Config</div>
+      <ul class="arch-items">
+        <li>DATABASE_URL (PostgreSQL)</li>
+        <li>SECRET_KEY (JWT signing)</li>
+        <li>SOLANA_RPC_URL</li>
+        <li>OPERATOR_WALLET_PRIVATE_KEY</li>
+        <li>SMTP_HOST / SENDGRID_API_KEY</li>
+        <li>FRONTEND_URL (CORS origin)</li>
+        <li>COMMISSION_RATE (default 0.30)</li>
+        <li>Alembic for migrations</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-label">Solana Integration Note</div>
+    <div class="callout-text">The Solana payout layer is the highest-risk technical component. Use <strong>solana-py</strong> on the FastAPI side for transaction signing, or proxy to a managed service like <strong>Helius</strong> or <strong>QuickNode RPC</strong>. Wallets should be collected as base58 public keys, validated on input, and stored in the affiliates table. Never store private keys in the DB — use environment-secured operator wallet.</div>
+  </div>
+</section>
+
+<!-- SECTION 6: ROADMAP -->
+<section class="section">
+  <div class="section-id"><span>SECTION 06</span> · IMPLEMENTATION ROADMAP</div>
+  <h2 class="section-h">Step-by-step <em>build plan.</em></h2>
+  <p class="section-intro">8 sequential phases to transform the AINI Outreach Kit from a static HTML file into a fully operational affiliate management platform with live tracking, Solana payouts, and a persistent operator CRM.</p>
+
+  <div class="roadmap">
+    <div class="roadmap-step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-tag">Foundation</div>
+        <div class="step-title">Repo + Project Structure</div>
+        <div class="step-desc">Init monorepo: /frontend (Vite React + TypeScript + Tailwind), /backend (FastAPI + SQLAlchemy + Alembic), /infra (Docker Compose for local PostgreSQL + Redis). Establish shared types contract. README with setup instructions.</div>
+      </div>
+    </div>
+    <div class="roadmap-step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-tag">Database</div>
+        <div class="step-title">PostgreSQL Schema + Migrations</div>
+        <div class="step-desc">Define all 8 tables as SQLAlchemy models. Generate Alembic migration scripts. Seed script with the 57 products as a static catalog table. Validate schema with unit tests against a test database.</div>
+      </div>
+    </div>
+    <div class="roadmap-step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-tag">Auth</div>
+        <div class="step-title">Authentication Layer</div>
+        <div class="step-desc">FastAPI JWT auth: register, login, refresh. Role enum: operator | affiliate. React auth context + protected route wrapper. Operator account seeded via ENV variable — no public registration for operators.</div>
+      </div>
+    </div>
+    <div class="roadmap-step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-tag">Affiliate Core</div>
+        <div class="step-title">Enrollment + Referral Code System</div>
+        <div class="step-desc">React /affiliate enrollment page. FastAPI POST /affiliates: validate email, validate Solana wallet address (base58 regex + checksum), generate unique 8-char referral code, insert to DB, dispatch welcome email. GET /affiliates/:code for link landing page attribution.</div>
+      </div>
+    </div>
+    <div class="roadmap-step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <div class="step-tag">Tracking</div>
+        <div class="step-title">Click + Conversion Attribution Pipeline</div>
+        <div class="step-desc">FastAPI GET /r/:code — logs click to referral_clicks table, redirects to marketplace. FastAPI POST /conversions — called by marketplace on checkout completion, records sale with affiliate_id, product_id, amount, type (white_label | full_license). Earnings calculated: amount × commission_rate.</div>
+      </div>
+    </div>
+    <div class="roadmap-step">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <div class="step-tag">Payouts</div>
+        <div class="step-title">Solana Payout Integration</div>
+        <div class="step-desc">FastAPI POST /payouts/dispatch (admin-only): aggregates unpaid earnings per affiliate, signs SOL transfer transactions from operator wallet using solana-py, stores tx_hash and status in payouts table. Affiliate dashboard shows pending vs paid with Solscan TX links.</div>
+      </div>
+    </div>
+    <div class="roadmap-step">
+      <div class="step-num">7</div>
+      <div class="step-body">
+        <div class="step-tag">Outreach Kit</div>
+        <div class="step-title">Rebuild This File as React App</div>
+        <div class="step-desc">Convert the HTML outreach kit into React components. Add persistent checklist (POST /checklist with date + item_id). Add outreach CRM tab (log DMs with contact name, platform, script used, follow-up date, response). Add copy event logging (POST /events on each Copy click). Script analytics view showing usage counts per script.</div>
+      </div>
+    </div>
+    <div class="roadmap-step">
+      <div class="step-num">8</div>
+      <div class="step-body">
+        <div class="step-tag">Polish + Deploy</div>
+        <div class="step-title">Admin Panel + QA + Repo Readiness</div>
+        <div class="step-desc">React /admin: affiliate roster, outreach stats, payout queue, fraud flags. Rate limiting via FastAPI slowapi. Input validation on all forms. End-to-end test: enroll affiliate → click link → log conversion → trigger payout → verify TX. Docker Compose for prod. README with full setup. GitHub Actions CI for lint + test.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 7: MONETIZATION -->
+<section class="section">
+  <div class="section-id"><span>SECTION 07</span> · MONETIZATION POTENTIAL</div>
+  <h2 class="section-h">What this is worth <em>when it's built.</em></h2>
+  <p class="section-intro">The AINI Outreach Kit is not the product — it's the growth engine for the product. Monetization analysis must therefore cover both the platform-as-a-tool (sellable SaaS) and the platform-as-a-business (the AI&amp;I Marketplace itself running on it).</p>
+
+  <div class="money-card">
+    <div class="money-range">$35k–$180k / yr</div>
+    <div class="money-label">Estimated Monetization Range · Justified Below</div>
+    <div class="money-basis">Two distinct revenue streams with different ceilings. The marketplace affiliate revenue scales with affiliate count and conversion rate. The platform software itself (the outreach kit + affiliate management system rebuilt as SaaS) is independently sellable to any operator running a digital product business with an affiliate program — a large, underserved market.</div>
+    <div class="money-tiers">
+      <div class="money-tier">
+        <div class="tier-name">Marketplace Revenue</div>
+        <div class="tier-price">$25k–$120k/yr</div>
+        <div class="tier-desc">10 active affiliates × avg 5 White Label referrals each × $99/mo × 12mo = $59,400. Scales non-linearly with affiliate count and email list sizes.</div>
+      </div>
+      <div class="money-tier">
+        <div class="tier-name">SaaS Platform License</div>
+        <div class="tier-price">$49–$149/mo per operator</div>
+        <div class="tier-desc">The affiliate management platform (outreach kit + CRM + Solana payouts + analytics) is a standalone product for digital marketplace operators. White-label and resell it.</div>
+      </div>
+      <div class="money-tier">
+        <div class="tier-name">Done-For-You Setup</div>
+        <div class="tier-price">$2,500–$5,000 one-time</div>
+        <div class="tier-desc">Custom deployment of the platform for a client's affiliate program. High-margin, low-volume agency play for boutique digital product operators.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 8: TARGET MARKET -->
+<section class="section">
+  <div class="section-id"><span>SECTION 08</span> · TARGET MARKET</div>
+  <h2 class="section-h">Ideal customers. <em>Why they'd buy.</em></h2>
+  <p class="section-intro">Two distinct target markets: buyers of the AI&amp;I Marketplace products themselves (entrepreneurs), and buyers of the outreach/affiliate management platform (operators building similar businesses).</p>
+
+  <div class="target-grid">
+    <div class="target-item">
+      <div class="target-icon">🤖</div>
+      <div>
+        <div class="target-name">AI Creator Economy Operators</div>
+        <div class="target-why">Indie developers and solopreneurs selling AI tools who want recurring affiliate revenue without building their own affiliate infrastructure. They have the product — they need the flywheel.</div>
+      </div>
+    </div>
+    <div class="target-item">
+      <div class="target-icon">💰</div>
+      <div>
+        <div class="target-name">Affiliate Marketing Course Creators</div>
+        <div class="target-why">People running newsletters, YouTube channels, or courses in the "make money online" space. 30% recurring commission on AI tools is a compelling offer for an audience that already understands passive income math.</div>
+      </div>
+    </div>
+    <div class="target-item">
+      <div class="target-icon">📈</div>
+      <div>
+        <div class="target-name">Digital Product Marketplace Builders</div>
+        <div class="target-why">Anyone building a Gumroad-style or AppSumo-style marketplace who needs an affiliate recruitment and management layer. The outreach kit + CRM + Solana payouts is a turnkey solution they'd pay $49–$149/mo for.</div>
+      </div>
+    </div>
+    <div class="target-item">
+      <div class="target-icon">🏗️</div>
+      <div>
+        <div class="target-name">Build-in-Public Founders on Twitter/X</div>
+        <div class="target-why">High engagement with the "I rebuilt my marketplace" narrative. This audience actively seeks and amplifies genuine founder stories — a direct product-market-narrative fit with the existing LinkedIn and TikTok scripts.</div>
+      </div>
+    </div>
+    <div class="target-item">
+      <div class="target-icon">🌐</div>
+      <div>
+        <div class="target-name">Web3 / Crypto Adjacent Operators</div>
+        <div class="target-why">The Solana wallet payout structure is a native differentiator in the Web3 space. Operators in crypto education, NFT tooling, and DeFi services are uniquely positioned to understand and benefit from crypto-native affiliate payouts.</div>
+      </div>
+    </div>
+    <div class="target-item">
+      <div class="target-icon">🎓</div>
+      <div>
+        <div class="target-name">Online Business Coaches and Consultants</div>
+        <div class="target-why">Coaches with email lists who want a "done-for-you" business system to recommend to clients. The 57-product catalog gives them a diverse menu — something for every client vertical, with recurring commission on every referral.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 9: VERDICT -->
+<section class="section">
+  <div class="section-id"><span>SECTION 09</span> · GO / NO-GO READINESS</div>
+  <h2 class="section-h">The <em>verdict.</em></h2>
+  <p class="section-intro">The AINI Outreach Kit is a well-crafted content asset built on top of an unverifiable business promise. The copy is excellent. The design is production-ready. The functional infrastructure to deliver on that copy does not exist yet.</p>
+
+  <div class="verdict-wrap">
+    <div class="verdict-label">Readiness Rating</div>
+    <div class="verdict-badge">MEDIUM</div>
+    <p class="verdict-summary">Strong brand voice, zero prohibited dependencies, clear business model. The blocker is structural: every financial and tracking promise in the copy points to a backend that hasn't been built. The playbook is ready. The platform is not.</p>
+  </div>
+
+  <div class="blockers-list">
+    <div class="blocker">No affiliate tracking or referral code infrastructure — the core product promise is undelivered</div>
+    <div class="blocker">Solana payout system mentioned in 5+ scripts but has no implementation anywhere</div>
+    <div class="blocker">The affiliate enrollment destination (vercel.app/affiliate) may not exist or may not be functional</div>
+    <div class="blocker">All checklist/outreach activity is ephemeral — no data survives a page refresh</div>
+    <div class="blocker">No authentication — the "founding affiliate group" concept has no identity management behind it</div>
+  </div>
+
+  <div style="margin-top:8px; margin-bottom:16px;">
+    <div style="font-size:0.7rem;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:var(--text3);margin-bottom:16px;text-align:center;">EFFORT ESTIMATE</div>
+    <div class="callout">
+      <div class="callout-label">Engineering Hours</div>
+      <div class="callout-text"><strong>160–220 hours to MVP</strong> (affiliate enrollment + referral tracking + basic Solana payout + persistent checklist + outreach CRM). <strong>320–400 hours to full platform</strong> (admin panel, analytics dashboard, rate limiting, email notifications, production deployment, CI/CD). Solana integration adds 20–30 hours of specialist risk depending on team familiarity with the ecosystem.</div>
+    </div>
+  </div>
+
+  <div class="next-actions">
+    <div class="action-card">
+      <div class="action-n">1</div>
+      <div class="action-title">Verify the Destination</div>
+      <div class="action-desc">Audit aini-marketplace.vercel.app/affiliate right now. If the enrollment page doesn't exist or doesn't collect data, every piece of outreach in this kit is driving traffic to a dead end. Fix this before sending a single DM.</div>
+    </div>
+    <div class="action-card">
+      <div class="action-n">2</div>
+      <div class="action-title">Build Affiliate + Referral Core</div>
+      <div class="action-desc">Stand up PostgreSQL + FastAPI. Implement the affiliates table, enrollment endpoint, referral code generation, and click tracking. This is the minimum viable backend that makes the existing scripts financially meaningful.</div>
+    </div>
+    <div class="action-card">
+      <div class="action-n">3</div>
+      <div class="action-title">Rebuild Kit as Persistent React App</div>
+      <div class="action-desc">Port this HTML file to React with persistent checklist, outreach CRM tab, and copy event logging. The content is exceptional — it just needs state that survives a page refresh and data that feeds a feedback loop.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">Audit generated 2026-04-03 · aini-outreach-kit-FINAL.html · 926 lines analyzed</div>
+  <div class="footer-accent">React · FastAPI · PostgreSQL · Solana</div>
+</footer>
+
+</body>
+</html>

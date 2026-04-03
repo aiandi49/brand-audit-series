@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Brand Audit Series — April 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #05050a;
+  --surface: #0b0b14;
+  --surface2: #0f0f1c;
+  --gold: #f5c842;
+  --teal: #00e5c8;
+  --violet: #a78bfa;
+  --coral: #ff6b6b;
+  --orange: #ff9f43;
+  --text: #f0eee8;
+  --text2: #9998a8;
+  --text3: #4a4a60;
+  --rule: rgba(245,200,66,0.15);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+.orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(130px);
+  pointer-events: none;
+  z-index: 0;
+}
+.orb-1 { width: 650px; height: 650px; background: rgba(108,61,245,0.22); top: -200px; left: -200px; }
+.orb-2 { width: 500px; height: 500px; background: rgba(0,229,200,0.15); bottom: 5%; right: -150px; }
+.orb-3 { width: 350px; height: 350px; background: rgba(245,200,66,0.12); top: 45%; left: 35%; }
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+.top-stripe {
+  height: 3px;
+  background: linear-gradient(90deg, var(--violet) 0%, var(--teal) 40%, var(--gold) 70%, var(--coral) 100%);
+  position: relative; z-index: 10;
+}
+.page {
+  position: relative; z-index: 2;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 2.5rem 8rem;
+}
+
+/* HERO */
+.hero {
+  padding: 90px 0 70px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: end;
+  border-bottom: 1px solid var(--rule);
+  opacity: 0;
+  animation: fadeIn 1s ease 0.1s forwards;
+}
+.hero-kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+.hero-kicker-line { width: 36px; height: 1px; background: var(--gold); }
+.hero-kicker-text {
+  font-size: 10px;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3.2rem, 5.5vw, 5.5rem);
+  font-weight: 900;
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  color: var(--text);
+  margin-bottom: 1.5rem;
+}
+.hero h1 .accent {
+  background: linear-gradient(135deg, var(--gold) 0%, var(--coral) 50%, var(--violet) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-style: italic;
+}
+.hero-sub { color: var(--text2); font-size: 15px; max-width: 420px; line-height: 1.9; }
+.hero-right { display: flex; flex-direction: column; gap: 1.5rem; padding-bottom: 0.5rem; }
+.hero-stat-row {
+  display: flex;
+  border: 1px solid rgba(245,200,66,0.2);
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(245,200,66,0.03);
+}
+.hero-stat {
+  flex: 1;
+  padding: 1.4rem 1.1rem;
+  border-right: 1px solid rgba(245,200,66,0.1);
+  text-align: center;
+}
+.hero-stat:last-child { border-right: none; }
+.stat-n {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--gold);
+  margin-bottom: 0.3rem;
+}
+.stat-l { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--text3); font-weight: 500; }
+.hero-quote {
+  padding: 1.4rem;
+  border-left: 2px solid var(--teal);
+  background: rgba(0,229,200,0.04);
+  border-radius: 0 6px 6px 0;
+}
+.hero-quote p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.95rem; color: var(--text2); line-height: 1.7; }
+.hero-quote cite { display: block; margin-top: 0.5rem; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--teal); font-style: normal; }
+
+/* SECTION HEADER */
+.sec-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3.5rem 0 2.25rem;
+  opacity: 0;
+  animation: fadeIn 0.8s ease 0.4s forwards;
+}
+.sec-label { display: flex; align-items: center; gap: 0.75rem; }
+.sec-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 12px var(--gold); }
+.sec-txt { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--text3); font-weight: 500; }
+.sec-count { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text3); border: 1px solid var(--text3); padding: 4px 12px; border-radius: 20px; }
+
+/* MAGAZINE GRID */
+.magazine-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2px;
+  opacity: 0;
+  animation: fadeIn 0.8s ease 0.55s forwards;
+}
+.card:nth-child(1)  { grid-column: span 7; min-height: 300px; }
+.card:nth-child(2)  { grid-column: span 5; }
+.card:nth-child(3)  { grid-column: span 5; }
+.card:nth-child(4)  { grid-column: span 4; }
+.card:nth-child(5)  { grid-column: span 3; }
+.card:nth-child(6)  { grid-column: span 4; }
+.card:nth-child(7)  { grid-column: span 4; }
+.card:nth-child(8)  { grid-column: span 4; }
+.card:nth-child(9)  { grid-column: span 6; }
+.card:nth-child(10) { grid-column: span 6; }
+.card:nth-child(11) { grid-column: span 3; }
+.card:nth-child(12) { grid-column: span 4; }
+.card:nth-child(13) { grid-column: span 5; }
+.card:nth-child(14) { grid-column: span 5; }
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: inherit;
+  background: var(--surface);
+  border: 1px solid rgba(255,255,255,0.04);
+  padding: 1.9rem 1.7rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+  min-height: 210px;
+  cursor: pointer;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--c-accent, var(--gold));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% -20%, var(--c-glow, rgba(245,200,66,0.07)) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.09); background: var(--surface2); z-index: 5; }
+.card:hover::before { transform: scaleX(1); }
+.card:hover::after { opacity: 1; }
+
+.card:nth-child(1)  { --c-accent: #f5c842; --c-glow: rgba(245,200,66,0.08); }
+.card:nth-child(2)  { --c-accent: #00e5c8; --c-glow: rgba(0,229,200,0.08); }
+.card:nth-child(3)  { --c-accent: #a78bfa; --c-glow: rgba(167,139,250,0.08); }
+.card:nth-child(4)  { --c-accent: #ff6b6b; --c-glow: rgba(255,107,107,0.08); }
+.card:nth-child(5)  { --c-accent: #f5c842; --c-glow: rgba(245,200,66,0.08); }
+.card:nth-child(6)  { --c-accent: #00e5c8; --c-glow: rgba(0,229,200,0.08); }
+.card:nth-child(7)  { --c-accent: #ff9f43; --c-glow: rgba(255,159,67,0.08); }
+.card:nth-child(8)  { --c-accent: #a78bfa; --c-glow: rgba(167,139,250,0.08); }
+.card:nth-child(9)  { --c-accent: #f5c842; --c-glow: rgba(245,200,66,0.08); }
+.card:nth-child(10) { --c-accent: #ff6b6b; --c-glow: rgba(255,107,107,0.08); }
+.card:nth-child(11) { --c-accent: #00e5c8; --c-glow: rgba(0,229,200,0.08); }
+.card:nth-child(12) { --c-accent: #a78bfa; --c-glow: rgba(167,139,250,0.08); }
+.card:nth-child(13) { --c-accent: #ff9f43; --c-glow: rgba(255,159,67,0.08); }
+.card:nth-child(14) { --c-accent: #f5c842; --c-glow: rgba(245,200,66,0.08); }
+
+.card-index { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--text3); font-weight: 500; }
+.card-tag {
+  display: inline-block;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 20px;
+  width: fit-content;
+  border: 1px solid;
+  margin-bottom: 0.2rem;
+}
+.tg { color: #f5c842; border-color: rgba(245,200,66,0.3); background: rgba(245,200,66,0.06); }
+.tt { color: #00e5c8; border-color: rgba(0,229,200,0.3); background: rgba(0,229,200,0.06); }
+.tv { color: #a78bfa; border-color: rgba(167,139,250,0.3); background: rgba(167,139,250,0.06); }
+.tc { color: #ff6b6b; border-color: rgba(255,107,107,0.3); background: rgba(255,107,107,0.06); }
+.to { color: #ff9f43; border-color: rgba(255,159,67,0.3); background: rgba(255,159,67,0.06); }
+
+.card h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--text);
+  flex: 1;
+}
+.card:nth-child(1) h2 { font-size: 2rem; }
+.card:nth-child(9) h2, .card:nth-child(10) h2 { font-size: 1.6rem; }
+.card-desc { font-size: 12.5px; color: var(--text2); line-height: 1.8; display: none; }
+.card:nth-child(1) .card-desc,
+.card:nth-child(9) .card-desc,
+.card:nth-child(10) .card-desc { display: block; }
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.card-date { font-size: 10px; letter-spacing: 1.5px; color: var(--text3); }
+.card-arrow { font-size: 15px; color: var(--text3); transition: color 0.2s ease, transform 0.2s ease; }
+.card:hover .card-arrow { transform: translate(3px, -3px); color: var(--c-accent, var(--gold)); }
+
+.divider { height: 1px; background: linear-gradient(90deg, transparent, var(--rule) 30%, var(--rule) 70%, transparent); margin: 5rem 0; }
+
+footer {
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  opacity: 0;
+  animation: fadeIn 0.8s ease 0.7s forwards;
+}
+.footer-brand { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: var(--gold); }
+.footer-meta { font-size: 10px; letter-spacing: 1.5px; color: var(--text3); text-transform: uppercase; }
+.footer-bar { height: 2px; width: 80px; background: linear-gradient(90deg, var(--violet), var(--teal), var(--gold), var(--coral)); border-radius: 2px; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; gap: 2.5rem; }
+  .magazine-grid { grid-template-columns: 1fr 1fr; }
+  .card:nth-child(n) { grid-column: span 1 !important; }
+  .card:nth-child(1) { grid-column: span 2 !important; }
+}
+@media (max-width: 560px) {
+  .page { padding: 0 1.25rem 5rem; }
+  .magazine-grid { grid-template-columns: 1fr; }
+  .card:nth-child(n) { grid-column: span 1 !important; }
+  .hero h1 { font-size: 2.8rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<div class="top-stripe"></div>
+
+<div class="page">
+
+  <header class="hero">
+    <div class="hero-left">
+      <div class="hero-kicker">
+        <div class="hero-kicker-line"></div>
+        <span class="hero-kicker-text">aiandi49 · Brand Audit Series · April 2026</span>
+      </div>
+      <h1>14 Brands.<br><span class="accent">One Verdict</span><br>Each.</h1>
+      <p class="hero-sub">A complete series of engineering & brand audits — each a deep-dive into readiness, gaps, monetization potential, and the three moves to make immediately.</p>
+    </div>
+    <div class="hero-right">
+      <div class="hero-stat-row">
+        <div class="hero-stat">
+          <div class="stat-n">14</div>
+          <div class="stat-l">Audits</div>
+        </div>
+        <div class="hero-stat">
+          <div class="stat-n">9</div>
+          <div class="stat-l">Sections</div>
+        </div>
+        <div class="hero-stat">
+          <div class="stat-n">'26</div>
+          <div class="stat-l">Series</div>
+        </div>
+      </div>
+      <div class="hero-quote">
+        <p>"Every brand here has a real ceiling — the audit names the blockers and the three moves to reach it."</p>
+        <cite>Generated by Anthropic Claude · April 3, 2026</cite>
+      </div>
+    </div>
+  </header>
+
+  <div class="sec-header">
+    <div class="sec-label">
+      <div class="sec-dot"></div>
+      <span class="sec-txt">All Audits — Click to Open</span>
+    </div>
+    <span class="sec-count">14 Reports</span>
+  </div>
+
+  <div class="magazine-grid">
+
+    <a class="card" href="audit_haritaki_2026-04-03.html">
+      <div class="card-index">01 · 14</div>
+      <span class="card-tag tg">Ayurvedic Supplements</span>
+      <h2>Haritaki</h2>
+      <p class="card-desc">DTC supplement brand built around an Ayurvedic herb and a custom avatar character. React + FastAPI platform with community, e-commerce, and 30-day challenge tracker. Revenue ceiling: $120k–$600k ARR.</p>
+      <div class="card-footer"><span class="card-date">Apr 3, 2026</span><span class="card-arrow">↗</span></div>
+    </a>
+
+    <a class="card" href="audit_just_solutions_2026-04-03.html">
+      <div class="card-index">02 · 14</div>
+      <span class="card-tag tt">Services</span>
+      <h2>Just Solutions</h2>
+      <div class="card-footer"><span class="card-date">Apr 3, 2026</span><span class="card-arrow">↗</span></div>
+    </a>
+
+    <a class="card" href="audit_justice_path_2026-04-03.html">
+      <div class="card-index">03 · 14</div>
+      <span class="card-tag tv">Legal / Advocacy</span>
+      <h2>Justice Path</h2>
+      <div class="card-footer"><span class="card-date">Apr 3, 2026</span><span class="card-arrow">↗</span></div>
+    </a>
+
+    <a class="card" href="audit_kameron-norwood-press-release_2026-04-03.html">
+      <div class="card-index">04 · 14</div>
+      <span class="card-tag tc">Press / Personal Brand</span>
+      <h2>Kameron Norwood</h2>
+      <div class="card-footer"><span class="card-date">Apr 3, 2026</span><span class="card-arrow">↗</span></div>
+    </a>
+
+    <a class="card" href="audit_aini-outreach-kit_2026-04-03.html">
+      <div class="card-index">05 · 14</div>
+      <span class="card-tag tg">Outreach</span>
+      <h2>Aini Outreach Kit</h2>
+      <div class="card-footer"><span class="card-date">Apr 3, 2026</span><span class="card-arrow">↗</span></div>
+    </a>
+
+    <a class="card" href="audit_metaearth_outreach_platform_2026-04-03.html">
+      <div class="card-index">06 · 14</div>
+      <span class="card-tag tt">Web3 / Platform</span>
+      <h2>MetaEarth</h2>
+      <div class="card-footer"><span class="card-date">Apr 3, 2026</span><span class="card-arrow">↗</span></div>
+    </a>
+
+    <a class="card" href="audit_MSLEE_CAS3701_ExamGuide_2026-04-03.html">
+      <div class="card-index">07 · 14</div>
+      <span class="card-tag to">EdTech</span>
+      <h2>MSLEE CAS3701 Exam Guide</h2>
+      <div class="card-footer"><span class="card-date">Apr 3, 2026</span><span class="card-arrow">↗</span></div>
+    </a>
+
+    <a class="card" href="audit_mslee-global-marketing-rollout_2026-04-03.html">
+      <div class="card-index">08 · 14</div>
+      <span class="card-tag tv">Marketing / Global</span>
+      <h2>MSLEE Global Rollout</h2>
+      <div class="card-footer"><span class="card-date">Apr 3, 2026</span><span class="card-arrow">↗</span></div>
+    </a>
+
+    <a class="card" href="audit_index_2026-04-03.html">
+      <div class="card-index">09 · 14</div>
+      <span class="card-tag tg">Platform / Directory</span>
+      <h2>Index</h2>
+      <p class="card-desc">Directory-style platform audit — architecture review, content strategy, and monetization potential for a directory product.</p>
+      <div class="card-footer"><span class="card-date">Apr 3, 2026</span><span class="card-arrow">↗</span></div>
+    </a>
+
+    <a class="card" href="audit_paypal_action_guide_2026-04-03.html">
+      <div class="card-index">10 · 14</div>
+      <span class="card-tag tc">Fintech / Guide</span>
+      <h2>PayPal Action Guide</h2>
+      <p class="card-desc">Brand and content audit — clarity, conversion, distribution strategy, and monetization ceiling for a fintech guide product.</p>
+      <div class="card-footer"><span class="card-date">Apr 3, 2026</span><span class="card-arrow">↗</span></div>
+    </a>
+
+    <a class="card" href="audit_paw_pound_2026-04-03.html">
+      <div class="card-index">11 · 14</div>
+      <span class="card-tag tt">Pet / Consumer</span>
+      <h2>Paw Pound</h2>
+      <div class="card-footer"><span class="card-date">Apr 3, 2026</span><span class="card-arrow">↗</span></div>
+    </a>
+
+    <a class="card" href="audit_prostate_advocate_plan_2026-04-03.html">
+      <div class="card-index">12 · 14</div>
+      <span class="card-tag tv">Health / Advocacy</span>
+      <h2>Prostate Advocate</h2>
+      <div class="card-footer"><span class="card-date">Apr 3, 2026</span><span class="card-arrow">↗</span></div>
+    </a>
+
+    <a class="card" href="audit_sam_farrell_vollara_marketing_plan_2026-04-03.html">
+      <div class="card-index">13 · 14</div>
+      <span class="card-tag to">Marketing Plan</span>
+      <h2>Sam Farrell · Vollara</h2>
+      <div class="card-footer"><span class="card-date">Apr 3, 2026</span><span class="card-arrow">↗</span></div>
+    </a>
+
+    <a class="card" href="audit_UGLY_McKinley_Dove_DaMoore_eBook_2026-04-03.html">
+      <div class="card-index">14 · 14</div>
+      <span class="card-tag tg">Publishing / eBook</span>
+      <h2>UGLY — McKinley Dove DaMoore</h2>
+      <div class="card-footer"><span class="card-date">Apr 3, 2026</span><span class="card-arrow">↗</span></div>
+    </a>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <footer>
+    <div class="footer-brand">Brand Audit Series</div>
+    <div class="footer-bar"></div>
+    <div class="footer-meta">aiandi49 · April 2026 · Generated by Anthropic Claude</div>
+  </footer>
+
+</div>
+</body>
+</html>

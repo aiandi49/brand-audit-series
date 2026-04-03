@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>U.G.L.Y. — Audit Report | McKinley's-Dove-DaMoore eBook</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Sora:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #080808;
+    --bg2:      #0e0e0e;
+    --bg3:      #141414;
+    --gold:     #C9A84C;
+    --gold2:    #E8C96A;
+    --dim:      #7a6a4a;
+    --text:     #E2DDD4;
+    --muted:    #8a8078;
+    --accent:   #C9A84C;
+    --border:   rgba(201,168,76,0.18);
+    --border2:  rgba(201,168,76,0.08);
+    --red:      #8B3A3A;
+    --red2:     #B85050;
+    --glow:     rgba(201,168,76,0.12);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Sora', sans-serif;
+    font-size: 16px;
+    line-height: 1.75;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── grain overlay ─── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ─── top accent bar ─── */
+  .topbar {
+    height: 5px;
+    background: linear-gradient(90deg, transparent 0%, var(--gold) 20%, var(--gold2) 50%, var(--gold) 80%, transparent 100%);
+    box-shadow: 0 0 30px rgba(201,168,76,0.4), 0 0 60px rgba(201,168,76,0.15);
+  }
+
+  /* ─── layout ─── */
+  .wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 28px 100px;
+  }
+
+  /* ─── masthead ─── */
+  .masthead {
+    padding: 80px 0 60px;
+    text-align: center;
+    animation: fadeUp 1s ease both;
+  }
+
+  .masthead-eyebrow {
+    font-size: 10px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 24px;
+  }
+
+  .masthead-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(48px, 8vw, 88px);
+    font-weight: 900;
+    line-height: 0.95;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 40%, var(--gold) 70%, #a07830 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 40px rgba(201,168,76,0.3));
+    margin-bottom: 12px;
+    letter-spacing: -1px;
+  }
+
+  .masthead-sub {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(14px, 2vw, 20px);
+    color: var(--muted);
+    letter-spacing: 2px;
+    margin-bottom: 28px;
+  }
+
+  .masthead-divider {
+    width: 120px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 0 auto 24px;
+  }
+
+  .masthead-meta {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  /* ─── section pattern ─── */
+  .section {
+    margin: 64px 0;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .section.visible { opacity: 1; transform: translateY(0); }
+
+  .section-label {
+    font-size: 9px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.7;
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 3.5vw, 36px);
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+
+  .section-title span.gold {
+    background: linear-gradient(90deg, var(--gold), var(--gold2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .section-rule {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold), rgba(201,168,76,0.1));
+    margin-bottom: 28px;
+    opacity: 0.35;
+  }
+
+  /* ─── card ─── */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 40px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0.5;
+  }
+
+  .card-inner {
+    position: relative;
+  }
+
+  /* ─── prose ─── */
+  .prose {
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.85;
+  }
+
+  .prose p { margin-bottom: 18px; }
+  .prose p:last-child { margin-bottom: 0; }
+
+  .prose strong { color: var(--gold2); font-weight: 600; }
+  .prose em { color: var(--muted); font-style: italic; }
+
+  /* ─── stat callouts ─── */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    margin: 32px 0;
+  }
+
+  .stat-box {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    padding: 24px 20px;
+    text-align: center;
+    position: relative;
+  }
+
+  .stat-box::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0.4;
+  }
+
+  .stat-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 6px;
+    text-shadow: 0 0 20px rgba(201,168,76,0.3);
+  }
+
+  .stat-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ─── feature list ─── */
+  .feature-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .feature-list li {
+    padding: 14px 20px;
+    background: var(--bg3);
+    border-left: 2px solid var(--gold);
+    border-radius: 0 2px 2px 0;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--text);
+  }
+
+  .feature-list li .fl-tag {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.8;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  /* ─── violation / warning list ─── */
+  .warn-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .warn-list li {
+    padding: 16px 20px;
+    background: rgba(139,58,58,0.07);
+    border-left: 2px solid var(--red2);
+    border-radius: 0 2px 2px 0;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .warn-list li .w-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red2);
+    display: block;
+    margin-bottom: 3px;
+  }
+
+  .warn-list li .w-fix {
+    display: block;
+    margin-top: 6px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .warn-list li .w-fix::before {
+    content: '→ Replacement: ';
+    color: var(--gold);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* ─── roadmap steps ─── */
+  .roadmap {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+  }
+
+  .roadmap::before {
+    content: '';
+    position: absolute;
+    left: 22px; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, var(--gold), rgba(201,168,76,0.1));
+    opacity: 0.3;
+  }
+
+  .roadmap-step {
+    display: flex;
+    gap: 24px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border2);
+  }
+  .roadmap-step:last-child { border-bottom: none; }
+
+  .roadmap-num {
+    flex-shrink: 0;
+    width: 44px; height: 44px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 900;
+    color: var(--gold);
+    background: var(--bg);
+    position: relative; z-index: 1;
+    flex-shrink: 0;
+    box-shadow: 0 0 16px rgba(201,168,76,0.15);
+  }
+
+  .roadmap-content { flex: 1; padding-top: 8px; }
+
+  .roadmap-content strong {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--gold2);
+    margin-bottom: 4px;
+  }
+
+  .roadmap-content p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ─── pull quote ─── */
+  .pull-quote {
+    border-left: 3px solid var(--gold);
+    margin: 36px 0;
+    padding: 20px 32px;
+    background: var(--glow);
+    position: relative;
+  }
+
+  .pull-quote::before {
+    content: '"';
+    position: absolute;
+    top: -10px; left: 20px;
+    font-family: 'Playfair Display', serif;
+    font-size: 72px;
+    color: var(--gold);
+    opacity: 0.25;
+    line-height: 1;
+  }
+
+  .pull-quote p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(16px, 2vw, 20px);
+    color: var(--gold2);
+    line-height: 1.6;
+  }
+
+  .pull-quote cite {
+    display: block;
+    margin-top: 10px;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--dim);
+    font-style: normal;
+  }
+
+  /* ─── monetization callout ─── */
+  .money-card {
+    background: linear-gradient(135deg, rgba(201,168,76,0.07) 0%, var(--bg3) 100%);
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 36px 44px;
+    text-align: center;
+    position: relative;
+    margin: 32px 0;
+  }
+
+  .money-card::before, .money-card::after {
+    content: '';
+    position: absolute;
+    width: 40px; height: 40px;
+  }
+  .money-card::before { top: 0; left: 0; border-top: 1px solid var(--gold); border-left: 1px solid var(--gold); }
+  .money-card::after  { bottom: 0; right: 0; border-bottom: 1px solid var(--gold); border-right: 1px solid var(--gold); }
+
+  .money-range {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 6vw, 56px);
+    font-weight: 900;
+    color: var(--gold);
+    text-shadow: 0 0 40px rgba(201,168,76,0.4);
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+
+  .money-label {
+    font-size: 10px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 16px;
+  }
+
+  .money-desc {
+    font-size: 14px;
+    color: var(--muted);
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* ─── verdict badge ─── */
+  .verdict {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 32px;
+    border: 1px solid;
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 28px auto;
+    display: block;
+    text-align: center;
+    max-width: 300px;
+  }
+
+  .verdict.medium {
+    border-color: rgba(201,168,76,0.5);
+    color: var(--gold);
+    background: rgba(201,168,76,0.07);
+    box-shadow: 0 0 30px rgba(201,168,76,0.1);
+  }
+
+  /* ─── target market list ─── */
+  .target-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 14px;
+    margin: 20px 0;
+  }
+
+  .target-list li {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    padding: 18px 20px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .target-list li .t-type {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* ─── blocker tags ─── */
+  .blocker-tag {
+    display: inline-block;
+    background: rgba(139,58,58,0.15);
+    border: 1px solid rgba(139,58,58,0.4);
+    color: #cc8888;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 2px;
+    margin: 3px;
+  }
+
+  .next-tag {
+    display: inline-block;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 2px;
+    margin: 3px;
+    font-weight: 600;
+  }
+
+  /* ─── architecture block ─── */
+  .arch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    margin: 24px 0;
+  }
+
+  .arch-box {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    padding: 22px 20px;
+  }
+
+  .arch-box .arch-icon {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .arch-box .arch-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    color: var(--gold2);
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+
+  .arch-box ul {
+    list-style: none;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .arch-box ul li::before {
+    content: '› ';
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  /* ─── footer ─── */
+  .page-footer {
+    border-top: 1px solid var(--border2);
+    padding: 60px 0 40px;
+    text-align: center;
+  }
+
+  .page-footer .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: var(--gold);
+    margin-bottom: 12px;
+    text-shadow: 0 0 20px rgba(201,168,76,0.3);
+  }
+
+  .page-footer p {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    max-width: 600px;
+    margin: 0 auto 8px;
+  }
+
+  /* ─── animations ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .section:nth-child(1) { transition-delay: 0.05s; }
+  .section:nth-child(2) { transition-delay: 0.1s; }
+  .section:nth-child(3) { transition-delay: 0.15s; }
+
+  /* ─── scrollbar ─── */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); border-radius: 3px; }
+
+  /* ─── print ─── */
+  @media print {
+    body { background: #111 !important; color: #ddd !important; }
+    .topbar { background: #c9a84c !important; }
+    .section { opacity: 1 !important; transform: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar"></div>
+
+<div class="wrap">
+
+  <!-- ═══════════════════ MASTHEAD ═══════════════════ -->
+  <header class="masthead">
+    <p class="masthead-eyebrow">App Audit &amp; Gap Analysis &nbsp;·&nbsp; Press Release Edition</p>
+    <h1 class="masthead-title">U.G.L.Y.</h1>
+    <p class="masthead-sub">The McKinley's · Dove · DaMoore Chronicles</p>
+    <div class="masthead-divider"></div>
+    <p class="masthead-meta">Audit Date: April 3, 2026 &nbsp;·&nbsp; File: UGLY_McKinley_Dove_DaMoore_eBook.html &nbsp;·&nbsp; Stack Target: React · FastAPI · PostgreSQL</p>
+  </header>
+
+  <!-- ═══════════════════ SECTION 1 — FILE OVERVIEW ═══════════════════ -->
+  <div class="section" id="s1">
+    <p class="section-label">Section 01 &nbsp;·&nbsp; File Overview</p>
+    <h2 class="section-title">What This File <span class="gold">Is</span></h2>
+    <div class="section-rule"></div>
+
+    <div class="card">
+      <div class="card-inner prose">
+        <p>The uploaded HTML file is a <strong>standalone, single-page eBook reader</strong> — a dark-themed, narrative horror presentation titled <em>"U.G.L.Y. — The McKinley's-Dove-DaMoore Chronicles."</em> It is a fictional story rendered entirely as a self-contained HTML page with embedded CSS animations, a JavaScript narration engine, a speech synthesis player, and scroll-driven chapter reveals.</p>
+
+        <p>The core product this represents is a <strong>self-published eBook / digital story product</strong> — likely intended as a shareable, interactive web-based narrative. Think of it as a cross between a Wattpad story, a horror magazine spread, and a personal creative publishing platform, with built-in audio narration powered by the Web Speech API.</p>
+
+        <div class="stat-row">
+          <div class="stat-box">
+            <div class="stat-value">1,617</div>
+            <div class="stat-label">Lines of HTML</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value">10</div>
+            <div class="stat-label">Story Chapters</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value">100%</div>
+            <div class="stat-label">Self-Contained</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value">1</div>
+            <div class="stat-label">Implied User Role</div>
+          </div>
+        </div>
+
+        <p><strong>Implied user role:</strong> Reader / Audience (no auth, no personalization). The only implied journey is: land → scroll → read → listen via the narrator widget → reach the epilogue.</p>
+
+        <p><strong>Core product identity:</strong> An interactive dark fiction eBook platform with atmospheric presentation — a personal story told with serious design investment. Potential pivot points include a multi-author publishing platform, a personal brand story product, or a drama / memoir serialization tool.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ SECTION 2 — FEATURE INVENTORY ═══════════════════ -->
+  <div class="section" id="s2">
+    <p class="section-label">Section 02 &nbsp;·&nbsp; UI / Feature Inventory</p>
+    <h2 class="section-title">What the File <span class="gold">Contains</span></h2>
+    <div class="section-rule"></div>
+
+    <div class="card">
+      <div class="card-inner">
+        <ul class="feature-list">
+          <li>
+            <span class="fl-tag">Navigation / Structure</span>
+            Full-page scroll layout with a fixed top-bar accent, animated cover masthead, table of contents with 10 chapters, and scroll-triggered chapter reveal animations (IntersectionObserver).
+          </li>
+          <li>
+            <span class="fl-tag">Chapter System</span>
+            10 narrative chapters plus an epilogue. Each chapter is a styled card with drop-cap typography, pull-quote callout blocks, ornament dividers, and chapter numbering. Each maps to a named DOM anchor.
+          </li>
+          <li>
+            <span class="fl-tag">Narration Engine (JavaScript)</span>
+            A fully custom Web Speech API narrator widget: floating FAB trigger button, collapsible player panel, chapter-by-chapter playback with prev/next navigation, speed controls (Slow / Normal / Fast), word-by-word highlighting synced to speech boundary events, voice selection logic with preferred voice priority list, and a Chrome 15-second TTS keepalive fix.
+          </li>
+          <li>
+            <span class="fl-tag">Horror Visual System</span>
+            Fixed blood-drip top-bar with flicker animation, silhouette figure with SVG base64 embedded image (breathing pulse animation), animated fog layer, radial crimson/purple gradient horror background, grain overlay via SVG filter, and multiple CSS keyframe animations.
+          </li>
+          <li>
+            <span class="fl-tag">Typography</span>
+            Google Fonts: Cinzel Decorative (display/horror headings), Crimson Text (body serif), Rajdhani (sans-serif labels). Color-coded "U.G.L.Y." styling with red text-shadow glow effects.
+          </li>
+          <li>
+            <span class="fl-tag">Press Release Header</span>
+            Editorial-styled press release intro block with byline, book announcement, and advance copy branding.
+          </li>
+          <li>
+            <span class="fl-tag">Disclaimer / Warning System</span>
+            Full-width fiction disclaimer box rendered before all story content.
+          </li>
+          <li>
+            <span class="fl-tag">Responsive Design</span>
+            Fluid clamp() typography, max-width 860px centered layout, mobile-friendly padding. No breakpoints needed — purely fluid.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ SECTION 3 — TECHNOLOGY AUDIT ═══════════════════ -->
+  <div class="section" id="s3">
+    <p class="section-label">Section 03 &nbsp;·&nbsp; Technology &amp; Dependency Audit</p>
+    <h2 class="section-title">What <span class="gold">Breaks</span> the Requirements</h2>
+    <div class="section-rule"></div>
+
+    <div class="card">
+      <div class="card-inner prose">
+        <p>The good news: this file contains <strong>zero proprietary platforms</strong>. No Firebase, no Databutton, no Riff, no vendor-locked backend. All logic is native HTML/CSS/JS. Here are the specific dependency flags and their resolutions:</p>
+      </div>
+      <br>
+      <ul class="warn-list">
+        <li>
+          <span class="w-label">⚠ External Dependency — Google Fonts CDN</span>
+          Two Google Fonts imports loaded via &lt;link&gt; from fonts.googleapis.com. While not vendor-locked in the problematic sense, a production app should self-host fonts for GDPR compliance, performance, and offline capability.
+          <span class="w-fix">Self-host via @font-face declarations with locally bundled .woff2 files. Use `fontsource` npm packages in the React build.</span>
+        </li>
+        <li>
+          <span class="w-label">⚠ Browser API — Web Speech API (SpeechSynthesis)</span>
+          The narrator engine uses window.speechSynthesis — a browser-native API with inconsistent cross-browser support (limited Firefox, unreliable on mobile Safari, Chrome-only for boundary events). No server-side TTS whatsoever.
+          <span class="w-fix">Replace with a real TTS API: ElevenLabs, AWS Polly, or Google Cloud TTS. Pre-generate audio files per chapter, store in S3/object storage, stream via FastAPI endpoints. Far more consistent and enables offline/cached playback.</span>
+        </li>
+        <li>
+          <span class="w-label">⚠ No Persistence — Content Hardcoded in HTML</span>
+          All story content — chapters, titles, disclaimers — is hardcoded directly in the HTML. There is no CMS, no database, no API. Editing a single paragraph requires opening the HTML file.
+          <span class="w-fix">Move all story content into PostgreSQL (books, chapters, paragraphs tables). Serve via FastAPI. Render dynamically in React. Enables editing, versioning, multi-story support.</span>
+        </li>
+        <li>
+          <span class="w-label">⚠ No Auth / No Reader State</span>
+          No user identity, no reading progress saved, no bookmarks, no chapter completion tracking. The narrator state is ephemeral — refreshing loses your place.
+          <span class="w-fix">Add JWT auth (FastAPI), a reading_progress table in PostgreSQL, and a React context for reader state. Persist chapter position and narrator playback index to the DB.</span>
+        </li>
+        <li>
+          <span class="w-label">⚠ Embedded Binary Asset — Base64 Silhouette PNG</span>
+          The silhouette figure is a 15,000+ character base64 PNG embedded directly in the CSS. This inflates page weight and is unmaintainable.
+          <span class="w-fix">Extract to a proper image file. Serve from a CDN or static file server. Reference via standard &lt;img&gt; or CSS background-image url().</span>
+        </li>
+        <li>
+          <span class="w-label">⚠ No SEO / Meta / OG Tags</span>
+          Zero Open Graph tags, no Twitter card, no canonical URL, no &lt;meta description&gt;. The press-release framing makes this a shareable asset — but it can't be shared effectively without social preview metadata.
+          <span class="w-fix">Add full OG/Twitter meta. Generate dynamic og:image previews server-side per book. Use FastAPI + React Helmet / next/head equivalent.</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ SECTION 4 — GAP ANALYSIS ═══════════════════ -->
+  <div class="section" id="s4">
+    <p class="section-label">Section 04 &nbsp;·&nbsp; Missing Functional Requirements</p>
+    <h2 class="section-title">The <span class="gold">Gap</span> List</h2>
+    <div class="section-rule"></div>
+
+    <div class="card">
+      <div class="card-inner">
+        <div class="pull-quote">
+          <p>This file is a beautiful, polished <em>front-end demo</em>. What it is not yet is a product. The gap between these two things is precisely what this section defines.</p>
+          <cite>App Audit Team</cite>
+        </div>
+
+        <ul class="feature-list" style="margin-top: 20px;">
+          <li>
+            <span class="fl-tag">Authentication &amp; Authorization</span>
+            No login, no reader accounts, no author/admin separation. Need: JWT auth, role-based access (reader, author, admin), email verification flow, password reset.
+          </li>
+          <li>
+            <span class="fl-tag">Database Models Required</span>
+            Users, Books, Chapters, Paragraphs, ReadingProgress, NarratorSettings, AudioFiles, Comments (optional), PublishStatus. Minimum 6 PostgreSQL tables to support a real product.
+          </li>
+          <li>
+            <span class="fl-tag">Backend API Endpoints</span>
+            GET /books/:id, GET /books/:id/chapters, GET /chapters/:id, GET /chapters/:id/audio, POST /progress, GET /progress/:user/:book, PUT /users/:id/preferences. Minimum 8 REST endpoints.
+          </li>
+          <li>
+            <span class="fl-tag">Real TTS / Audio Pipeline</span>
+            Web Speech API is a demo. A real product needs server-side TTS generation (ElevenLabs / AWS Polly), audio file storage (S3), signed URL delivery, and chapter-level audio caching. This is the single highest-complexity gap.
+          </li>
+          <li>
+            <span class="fl-tag">Content Management</span>
+            Authors need a way to write, edit, reorder, and publish chapters. Minimum: a basic admin CRUD interface for Books and Chapters. Stretch: a rich-text editor with dark theme.
+          </li>
+          <li>
+            <span class="fl-tag">Frontend State Management</span>
+            Narrator state (current chapter, position, speed), reading progress, user auth state all need React context or a lightweight store (Zustand). Currently all state is lost on page refresh.
+          </li>
+          <li>
+            <span class="fl-tag">Error Handling &amp; Loading States</span>
+            Zero error states, zero loading skeletons. A production app needs: chapter load failures, audio fetch timeouts, auth errors, and graceful fallbacks throughout.
+          </li>
+          <li>
+            <span class="fl-tag">Monetization Infrastructure</span>
+            No payment layer exists. To charge for content: Stripe integration, subscription tiers (free preview vs. full access), or one-time purchase per book. Requires a subscriptions/purchases table and webhook handler.
+          </li>
+          <li>
+            <span class="fl-tag">Security</span>
+            No CORS policy, no rate limiting, no input sanitization, no auth guards on content endpoints. FastAPI middleware layer needed before any public deployment.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ SECTION 5 — TARGET ARCHITECTURE ═══════════════════ -->
+  <div class="section" id="s5">
+    <p class="section-label">Section 05 &nbsp;·&nbsp; Target Architecture</p>
+    <h2 class="section-title">The <span class="gold">Proposed</span> Final Structure</h2>
+    <div class="section-rule"></div>
+
+    <div class="card">
+      <div class="card-inner">
+        <div class="arch-grid">
+          <div class="arch-box">
+            <div class="arch-icon">⚛️</div>
+            <div class="arch-title">React Frontend</div>
+            <ul>
+              <li>pages/ (Home, Book, Reader, Auth, Admin)</li>
+              <li>components/ (NarratorPlayer, ChapterCard, Cover, TOC)</li>
+              <li>context/ (AuthContext, ReaderContext)</li>
+              <li>services/ (api.ts, audio.ts)</li>
+              <li>hooks/ (useReading, useNarrator, useProgress)</li>
+            </ul>
+          </div>
+          <div class="arch-box">
+            <div class="arch-icon">🐍</div>
+            <div class="arch-title">FastAPI Backend</div>
+            <ul>
+              <li>routers/ (books, chapters, auth, audio, progress)</li>
+              <li>schemas/ (Pydantic models per domain)</li>
+              <li>services/ (tts_service, auth_service, storage)</li>
+              <li>repositories/ (book_repo, user_repo)</li>
+              <li>models/ (SQLAlchemy ORM models)</li>
+            </ul>
+          </div>
+          <div class="arch-box">
+            <div class="arch-icon">🐘</div>
+            <div class="arch-title">PostgreSQL Schema</div>
+            <ul>
+              <li>users (id, email, role, created_at)</li>
+              <li>books (id, title, slug, author_id, status)</li>
+              <li>chapters (id, book_id, order, title, content)</li>
+              <li>audio_files (id, chapter_id, url, duration)</li>
+              <li>reading_progress (user_id, book_id, chapter_idx)</li>
+              <li>subscriptions (user_id, tier, stripe_id)</li>
+            </ul>
+          </div>
+          <div class="arch-box">
+            <div class="arch-icon">🔧</div>
+            <div class="arch-title">Environment &amp; Config</div>
+            <ul>
+              <li>DATABASE_URL (PostgreSQL)</li>
+              <li>JWT_SECRET</li>
+              <li>ELEVENLABS_API_KEY (or AWS)</li>
+              <li>S3_BUCKET / CLOUDFRONT_URL</li>
+              <li>STRIPE_SECRET_KEY</li>
+              <li>CORS_ORIGINS</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ SECTION 6 — IMPLEMENTATION PLAN ═══════════════════ -->
+  <div class="section" id="s6">
+    <p class="section-label">Section 06 &nbsp;·&nbsp; Implementation Plan</p>
+    <h2 class="section-title">Step-by-Step <span class="gold">Roadmap</span></h2>
+    <div class="section-rule"></div>
+
+    <div class="card">
+      <div class="card-inner">
+        <div class="roadmap">
+          <div class="roadmap-step">
+            <div class="roadmap-num">1</div>
+            <div class="roadmap-content">
+              <strong>Extract &amp; Convert UI to React Components</strong>
+              <p>Break the single HTML file into React components: Cover, TableOfContents, ChapterCard, PullQuote, NarratorPlayer, Footer. Preserve all visual styling (CSS modules or Tailwind). Self-host Google Fonts via fontsource. Extract base64 image to a proper asset file.</p>
+            </div>
+          </div>
+          <div class="roadmap-step">
+            <div class="roadmap-num">2</div>
+            <div class="roadmap-content">
+              <strong>Define Data Contracts (Pydantic Schemas)</strong>
+              <p>Model Book, Chapter, User, AudioFile, ReadingProgress as Pydantic schemas in FastAPI. Define request/response shapes for every endpoint before writing any route logic.</p>
+            </div>
+          </div>
+          <div class="roadmap-step">
+            <div class="roadmap-num">3</div>
+            <div class="roadmap-content">
+              <strong>Build PostgreSQL Models &amp; Migrations</strong>
+              <p>Use SQLAlchemy ORM with Alembic for migrations. Seed the existing U.G.L.Y. story content as initial data. Establish foreign key relationships between books → chapters → audio_files.</p>
+            </div>
+          </div>
+          <div class="roadmap-step">
+            <div class="roadmap-num">4</div>
+            <div class="roadmap-content">
+              <strong>Implement FastAPI Routes &amp; Business Logic</strong>
+              <p>Build CRUD routes for books, chapters, and reading progress. Add JWT authentication middleware. Implement rate limiting. Wire up CORS for the React frontend origin.</p>
+            </div>
+          </div>
+          <div class="roadmap-step">
+            <div class="roadmap-num">5</div>
+            <div class="roadmap-content">
+              <strong>Build Real TTS Audio Pipeline</strong>
+              <p>Integrate ElevenLabs or AWS Polly. On chapter publish, trigger async audio generation via a background task (FastAPI BackgroundTasks or Celery). Store .mp3 files in S3. Return signed URLs to the frontend. Replace the Web Speech API narrator entirely.</p>
+            </div>
+          </div>
+          <div class="roadmap-step">
+            <div class="roadmap-num">6</div>
+            <div class="roadmap-content">
+              <strong>Connect Frontend to Backend (Real API Requests)</strong>
+              <p>Replace hardcoded HTML content with API fetches. Implement React context for auth state and reading progress. Wire the narrator player to real audio URLs from the backend. Persist chapter position on advance.</p>
+            </div>
+          </div>
+          <div class="roadmap-step">
+            <div class="roadmap-num">7</div>
+            <div class="roadmap-content">
+              <strong>Add Auth, Validation &amp; Monetization</strong>
+              <p>Build login/register flows. Protect chapter content behind auth guards. Integrate Stripe for subscriptions. Add a free-preview model (first 2 chapters free, rest paywalled). Handle Stripe webhooks in FastAPI.</p>
+            </div>
+          </div>
+          <div class="roadmap-step">
+            <div class="roadmap-num">8</div>
+            <div class="roadmap-content">
+              <strong>QA &amp; Repo Readiness</strong>
+              <p>Write Pytest unit tests for all FastAPI routes. Test React components with Testing Library. Add README with setup instructions, env variable documentation, and seed data script. Add Dockerfile + docker-compose for local development. Verify the full read→narrate→progress flow end-to-end.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ SECTION 7 — MONETIZATION ═══════════════════ -->
+  <div class="section" id="s7">
+    <p class="section-label">Section 07 &nbsp;·&nbsp; Monetization Potential</p>
+    <h2 class="section-title">What This Is <span class="gold">Worth</span></h2>
+    <div class="section-rule"></div>
+
+    <div class="card">
+      <div class="card-inner">
+        <div class="money-card">
+          <div class="money-label">Estimated Monetization Range</div>
+          <div class="money-range">$8k – $40k</div>
+          <div class="money-label" style="margin-bottom: 12px;">One-Time Sale · or · $500–$2,500 / Month SaaS</div>
+          <div class="money-desc">As a fully functional GitHub-ready codebase. As a niche personal publishing platform with audio narration — think self-publishing meets audio drama — there are two viable paths: sell it once as a premium template/script, or launch it as a subscription SaaS.</div>
+        </div>
+
+        <ul class="feature-list" style="margin-top: 24px;">
+          <li>
+            <span class="fl-tag">Pricing Model A — One-Time License / CodeCanyon</span>
+            A polished React + FastAPI dark fiction eBook platform with built-in TTS audio, sold as a GitHub-ready script on CodeCanyon, Gumroad, or directly. Target price: $149–$499. At 20–80 sales/month: $3k–$40k. Dark fiction / horror is a robust niche with dedicated communities.
+          </li>
+          <li>
+            <span class="fl-tag">Pricing Model B — SaaS: Self-Publishing Platform</span>
+            Multi-author version: authors pay $29–$99/month to host their own stories with the same dark atmospheric presentation, built-in narration, and reader analytics. 20–25 authors at $49/month = ~$1k/month recurring. Scales to $5k+ with minimal infra cost once built.
+          </li>
+        </ul>
+
+        <div class="pull-quote" style="margin-top: 28px;">
+          <p>The design quality here is the moat. Generic eBook platforms are everywhere. A platform that makes your story feel like a luxury horror magazine with voice narration — that is a differentiated product.</p>
+          <cite>Monetization Analysis</cite>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ SECTION 8 — TARGET MARKET ═══════════════════ -->
+  <div class="section" id="s8">
+    <p class="section-label">Section 08 &nbsp;·&nbsp; Target Industries &amp; Buyers</p>
+    <h2 class="section-title">Who <span class="gold">Buys</span> This</h2>
+    <div class="section-rule"></div>
+
+    <div class="card">
+      <div class="card-inner">
+        <ul class="target-list">
+          <li>
+            <span class="t-type">Self-Published Authors</span>
+            Dark fiction, horror, urban drama, and literary thriller writers who want a premium web presence beyond a static PDF. They want something that <em>feels</em> like their book.
+          </li>
+          <li>
+            <span class="t-type">Content Creators / Storytellers</span>
+            YouTube narrators, TikTok storytellers, and podcast hosts who want a companion web experience for their story universe. Built-in TTS makes this plug-and-play.
+          </li>
+          <li>
+            <span class="t-type">Personal Brand / Memoir Writers</span>
+            People with a powerful personal story — overcoming family trauma, survival narratives, generational patterns — who want to tell it with gravitas and craft.
+          </li>
+          <li>
+            <span class="t-type">Indie Publishing Agencies</span>
+            Small literary agencies or hybrid publishers looking for a white-label platform to host client work. Buy once, deploy for 10 authors.
+          </li>
+          <li>
+            <span class="t-type">Horror / Dark Fiction Communities</span>
+            Wattpad alternatives, NoSleep communities, creepypasta networks — audiences actively seeking premium experiences for long-form dark content.
+          </li>
+          <li>
+            <span class="t-type">Ghostwriters</span>
+            Professional ghostwriters who want to deliver a premium deliverable — not just a Word doc, but a fully designed, hosted, interactive story experience with narration.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ SECTION 9 — GO / NO-GO ═══════════════════ -->
+  <div class="section" id="s9">
+    <p class="section-label">Section 09 &nbsp;·&nbsp; Go / No-Go Readiness Check</p>
+    <h2 class="section-title">The <span class="gold">Verdict</span></h2>
+    <div class="section-rule"></div>
+
+    <div class="card">
+      <div class="card-inner">
+
+        <div class="verdict medium">⬛ MEDIUM READINESS</div>
+
+        <div class="prose" style="margin-top: 28px;">
+          <p>The front-end is exceptional — design quality is high, the narrator engine is sophisticated for a client-side implementation, and the overall UX is production-adjacent. What's missing is the entire back end, content persistence layer, and a real audio pipeline. This is a <strong>well-designed front-end demo in search of a product architecture.</strong></p>
+        </div>
+
+        <div style="margin-top: 24px;">
+          <p style="font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--dim); margin-bottom: 12px;">Primary Blockers</p>
+          <span class="blocker-tag">No Backend</span>
+          <span class="blocker-tag">No Database</span>
+          <span class="blocker-tag">No Auth</span>
+          <span class="blocker-tag">No Real TTS</span>
+          <span class="blocker-tag">Content Hardcoded</span>
+          <span class="blocker-tag">No Persistence</span>
+          <span class="blocker-tag">No Monetization</span>
+        </div>
+
+        <div style="margin-top: 28px;">
+          <p style="font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--dim); margin-bottom: 12px;">Effort Estimate</p>
+          <p class="prose" style="font-size: 15px;">
+            <strong>Large</strong> — approximately <strong>160–240 engineering hours</strong> for a solo developer to reach a fully deployable, GitHub-ready codebase. With a two-person team (1 React + 1 FastAPI), estimate <strong>4–6 weeks</strong>. The TTS audio pipeline is the highest-risk single component.
+          </p>
+        </div>
+
+        <div style="margin-top: 28px;">
+          <p style="font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--dim); margin-bottom: 12px;">Top 3 Next Actions</p>
+          <span class="next-tag">① Componentize the React UI</span>
+          <span class="next-tag">② Stand up FastAPI + PostgreSQL skeleton</span>
+          <span class="next-tag">③ Prototype the TTS audio pipeline</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ FOOTER ═══════════════════ -->
+  <footer class="page-footer section">
+    <div class="footer-logo">U.G.L.Y.</div>
+    <p>App Audit Report &nbsp;·&nbsp; McKinley's · Dove · DaMoore eBook</p>
+    <p style="margin-top: 16px; opacity: 0.5;">Generated April 3, 2026 &nbsp;·&nbsp; React + FastAPI + PostgreSQL Stack</p>
+    <div class="masthead-divider" style="margin: 24px auto;"></div>
+    <p style="font-size: 11px; opacity: 0.4; line-height: 1.8;">
+      This audit is based on the uploaded HTML file. All analysis, estimates, and recommendations refer to the technical architecture and commercial potential of the codebase — not to any story content within the file, which is entirely fictional per its own disclaimer.
+    </p>
+  </footer>
+
+</div><!-- /wrap -->
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.07 });
+  document.querySelectorAll('.section').forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>

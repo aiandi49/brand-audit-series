@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AUDIT — Just Solutions Estimating Platform — 2026-04-03</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #080808;
+    --bg1: #0d0d0d;
+    --bg2: #111111;
+    --bg3: #161616;
+    --amber: #C9A84C;
+    --amber-dim: rgba(201,168,76,0.35);
+    --amber-ghost: rgba(201,168,76,0.08);
+    --amber-glow: rgba(201,168,76,0.18);
+    --text: #E8E8E8;
+    --text2: #A0A0A0;
+    --text3: #505050;
+    --rule: rgba(201,168,76,0.2);
+    --warn: #C0392B;
+    --warn-bg: rgba(192,57,43,0.1);
+    --ok: #27AE60;
+    --ok-bg: rgba(39,174,96,0.1);
+    --caution: #E67E22;
+    --caution-bg: rgba(230,126,34,0.08);
+    --radius: 6px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-size: 16px;
+    line-height: 1.85;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
+  }
+
+  /* top accent bar */
+  .top-bar {
+    height: 5px;
+    background: linear-gradient(90deg, var(--amber) 0%, #e8b86d 50%, var(--amber) 100%);
+    width: 100%;
+  }
+
+  .page-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 2rem 6rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ─── MASTHEAD ─── */
+  .masthead {
+    padding: 80px 0 60px;
+    border-bottom: 1px solid var(--rule);
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.1s forwards;
+  }
+  .masthead-meta {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+  }
+  .masthead h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 8vw, 6.5rem);
+    font-weight: 700;
+    line-height: 0.92;
+    letter-spacing: -1px;
+    color: var(--text);
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #f0e0b0 0%, var(--amber) 40%, #e8a040 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .masthead-tagline {
+    font-size: 1.1rem;
+    color: var(--text2);
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    margin-bottom: 2rem;
+  }
+  .masthead-date {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text3);
+    font-variant: small-caps;
+  }
+
+  /* ─── SECTION WRAPPER ─── */
+  section.audit-section {
+    padding: 60px 0;
+    border-bottom: 1px solid var(--rule);
+    opacity: 0;
+  }
+  section.audit-section:nth-child(2)  { animation: fadeUp 0.7s ease 0.2s forwards; }
+  section.audit-section:nth-child(3)  { animation: fadeUp 0.7s ease 0.35s forwards; }
+  section.audit-section:nth-child(4)  { animation: fadeUp 0.7s ease 0.5s forwards; }
+  section.audit-section:nth-child(5)  { animation: fadeUp 0.7s ease 0.65s forwards; }
+  section.audit-section:nth-child(6)  { animation: fadeUp 0.7s ease 0.8s forwards; }
+  section.audit-section:nth-child(7)  { animation: fadeUp 0.7s ease 0.9s forwards; }
+  section.audit-section:nth-child(8)  { animation: fadeUp 0.7s ease 1s forwards; }
+  section.audit-section:nth-child(9)  { animation: fadeUp 0.7s ease 1.1s forwards; }
+  section.audit-section:nth-child(10) { animation: fadeUp 0.7s ease 1.2s forwards; }
+  section.audit-section:nth-child(11) { animation: fadeUp 0.7s ease 1.3s forwards; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .sec-label {
+    font-size: 10px;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    color: var(--amber);
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+    opacity: 0.7;
+  }
+  .sec-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.9rem, 4vw, 2.8rem);
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+  }
+  .sec-intro {
+    font-size: 1rem;
+    color: var(--text2);
+    font-weight: 300;
+    margin-bottom: 2rem;
+    max-width: 680px;
+  }
+
+  hr.rule { border: none; border-top: 1px solid var(--rule); margin: 2rem 0; }
+
+  /* ─── PROSE ─── */
+  p { color: var(--text2); margin-bottom: 1rem; font-size: 15.5px; }
+  strong { color: var(--text); font-weight: 600; }
+  em { color: var(--amber); font-style: italic; }
+
+  /* ─── PULL QUOTE / CALLOUT ─── */
+  .callout {
+    border-left: 3px solid var(--amber);
+    background: var(--amber-ghost);
+    padding: 1.25rem 1.5rem;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    margin: 1.5rem 0;
+  }
+  .callout p { margin: 0; font-size: 15px; color: var(--text); }
+  .callout strong { color: var(--amber); }
+
+  /* ─── FEATURE GRID ─── */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 1.5rem 0;
+  }
+  .feature-item {
+    background: var(--bg2);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+  }
+  .feature-item .fi-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--amber);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .feature-item p { margin: 0; font-size: 13.5px; color: var(--text2); line-height: 1.5; }
+
+  /* ─── WARNING BADGE ─── */
+  .violation-block {
+    background: var(--warn-bg);
+    border: 1px solid rgba(192,57,43,0.3);
+    border-left: 3px solid var(--warn);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 1rem 1.25rem;
+    margin: 12px 0;
+  }
+  .violation-block .vb-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--warn);
+    margin-bottom: 6px;
+  }
+  .violation-block p { font-size: 13.5px; margin: 0 0 4px; color: var(--text2); }
+  .violation-block .vb-fix { font-size: 12.5px; color: #7dcea0; margin-top: 6px; }
+
+  .ok-block {
+    background: var(--ok-bg);
+    border: 1px solid rgba(39,174,96,0.2);
+    border-left: 3px solid var(--ok);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 1rem 1.25rem;
+    margin: 12px 0;
+  }
+  .ok-block p { margin: 0; font-size: 14px; color: #a8e6c0; }
+
+  /* ─── GAP LIST ─── */
+  .gap-list { list-style: none; margin: 1rem 0; }
+  .gap-list li {
+    padding: 10px 0 10px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 14.5px;
+    color: var(--text2);
+    position: relative;
+  }
+  .gap-list li::before { content: '◆'; position: absolute; left: 0; color: var(--amber); font-size: 9px; top: 13px; }
+  .gap-list li strong { color: var(--text); }
+
+  /* ─── ARCH DIAGRAM ─── */
+  .arch-block {
+    background: var(--bg2);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    font-family: 'Outfit', monospace;
+  }
+  .arch-block .arch-title {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--amber);
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  .arch-layer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    background: var(--bg3);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 4px;
+    margin-bottom: 6px;
+    font-size: 13px;
+  }
+  .arch-layer .al-tag {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .al-fe  { background: rgba(201,168,76,0.15); color: var(--amber); }
+  .al-be  { background: rgba(79,163,232,0.12); color: #4fa3e8; }
+  .al-db  { background: rgba(45,212,176,0.12); color: #2dd4b0; }
+  .al-ai  { background: rgba(155,89,182,0.15); color: #a78bfa; }
+  .al-inf { background: rgba(230,126,34,0.12); color: #e8a040; }
+  .arch-layer span { color: var(--text2); font-size: 13px; }
+
+  /* ─── ROADMAP TIMELINE ─── */
+  .timeline { position: relative; margin: 1.5rem 0 1.5rem 1rem; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--amber), transparent);
+  }
+  .tl-item {
+    padding: 0 0 2rem 2rem;
+    position: relative;
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -4px;
+    top: 6px;
+    width: 9px;
+    height: 9px;
+    background: var(--amber);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--amber-glow);
+  }
+  .tl-num {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--amber);
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+  .tl-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .tl-desc { font-size: 13.5px; color: var(--text2); line-height: 1.6; margin: 0; }
+
+  /* ─── MONETIZATION CARD ─── */
+  .mono-card {
+    background: linear-gradient(135deg, rgba(201,168,76,0.07) 0%, rgba(232,160,64,0.04) 100%);
+    border: 1px solid rgba(201,168,76,0.35);
+    border-radius: var(--radius);
+    padding: 2.5rem;
+    margin: 1.5rem 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .mono-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 40% at 50% 100%, rgba(201,168,76,0.06), transparent);
+  }
+  .mono-range {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    font-weight: 700;
+    color: var(--amber);
+    text-shadow: 0 0 40px var(--amber-glow);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    position: relative;
+  }
+  .mono-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+  .mono-models {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 1.5rem;
+    position: relative;
+  }
+  .mono-model {
+    background: var(--bg2);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 4px;
+    padding: 14px;
+    text-align: left;
+  }
+  .mono-model .mm-label { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--amber); font-weight: 600; margin-bottom: 4px; }
+  .mono-model p { font-size: 13px; color: var(--text2); margin: 0; line-height: 1.5; }
+
+  /* ─── TARGET MARKET ─── */
+  .target-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 1.5rem 0;
+  }
+  .target-card {
+    background: var(--bg2);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: var(--radius);
+    padding: 16px;
+  }
+  .target-card .tc-who { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .target-card .tc-why { font-size: 13px; color: var(--text2); line-height: 1.5; }
+
+  /* ─── VERDICT ─── */
+  .verdict-card {
+    background: rgba(39,174,96,0.08);
+    border: 1px solid rgba(39,174,96,0.3);
+    border-radius: var(--radius);
+    padding: 2.5rem;
+    text-align: center;
+    margin: 1.5rem 0;
+  }
+  .verdict-badge {
+    display: inline-block;
+    padding: 10px 28px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    background: rgba(39,174,96,0.15);
+    color: #27AE60;
+    border: 1px solid rgba(39,174,96,0.4);
+    box-shadow: 0 0 20px rgba(39,174,96,0.12);
+    margin-bottom: 1.5rem;
+  }
+  .verdict-rating {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    color: #27AE60;
+    text-shadow: 0 0 30px rgba(39,174,96,0.3);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .verdict-sub { font-size: 14px; color: var(--text2); margin-bottom: 1.5rem; }
+  .verdict-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-top: 1.5rem;
+    text-align: left;
+  }
+  .va-item {
+    background: var(--bg2);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 4px;
+    padding: 12px;
+  }
+  .va-item .va-num { font-size: 10px; letter-spacing: 2px; color: var(--amber); font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+  .va-item p { font-size: 13px; color: var(--text2); margin: 0; line-height: 1.5; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 4rem 0 2rem;
+    text-align: center;
+    border-top: 1px solid var(--rule);
+    position: relative;
+    z-index: 1;
+  }
+  footer .ft-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    color: var(--amber);
+    opacity: 0.6;
+    letter-spacing: 4px;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  footer p { font-size: 12px; color: var(--text3); letter-spacing: 1px; }
+
+  @media (max-width: 640px) {
+    .feature-grid, .mono-models, .target-grid, .verdict-actions { grid-template-columns: 1fr; }
+    .page-wrap { padding: 0 1.25rem 4rem; }
+  }
+
+  @media print {
+    body { background: #080808 !important; color: #e8e8e8 !important; }
+    body::before { display: none; }
+    section.audit-section { opacity: 1 !important; transform: none !important; animation: none !important; }
+    .masthead { opacity: 1 !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="top-bar"></div>
+<div class="page-wrap">
+
+  <!-- ════════ MASTHEAD ════════ -->
+  <header class="masthead">
+    <div class="masthead-meta">Product Audit Report · App Series Vol. III</div>
+    <h1>Just<br>Solutions</h1>
+    <p class="masthead-tagline">AI-Powered Professional Estimating Platform for the Trades</p>
+    <p class="masthead-date">Audited April 3, 2026 &nbsp;·&nbsp; index.html &nbsp;·&nbsp; 2,165 lines</p>
+  </header>
+
+  <!-- ════════ 01 — FILE OVERVIEW ════════ -->
+  <section class="audit-section">
+    <div class="sec-label">Overview · Section 01</div>
+    <h2 class="sec-heading">File Overview</h2>
+    <p class="sec-intro">What this file is, what core product it represents, and who it is built for.</p>
+
+    <p>This is a <strong>fully designed, single-file SaaS estimating platform</strong> built for professional contractors in the concrete, masonry, flooring, and power washing trades. At 2,165 lines, it is the most technically complete and domain-specific file audited in this series. It functions as a multi-tab estimating suite with live cost calculations, AI integration hooks, a marketing copy generator, a white-label licensing module, and a rudimentary CRM — all in one HTML file.</p>
+
+    <div class="callout">
+      <p><strong>Core Product:</strong> A contractor back-office toolkit — estimate builder, AI job-site assistant, marketing copywriter, client relationship tracker, and white-label SaaS platform — positioned as <em>"Just Solutions LLC"</em> but architected to be resold to other contractors under their own brand.</p>
+    </div>
+
+    <p><strong>Implied User Roles:</strong> A single primary role is evident — the <em>contractor/business owner</em> who builds estimates, captures leads, and generates marketing content. A secondary role is implied by the white-label module: the <em>sub-licensee</em> who purchases the platform and rebrands it. No admin panel or multi-tenant management UI exists yet.</p>
+
+    <p><strong>Implied User Journey:</strong> Land on hero → select trade type → build a detailed estimate (takeoff → materials → labor → equipment → AI photo/audio analysis → bid summary → print quote) → generate marketing copy → capture leads in CRM → upgrade to white-label license.</p>
+  </section>
+
+  <!-- ════════ 02 — FEATURE INVENTORY ════════ -->
+  <section class="audit-section">
+    <div class="sec-label">Feature Inventory · Section 02</div>
+    <h2 class="sec-heading">UI & Feature Inventory</h2>
+    <p class="sec-intro">Every functional surface in the file, documented and categorized.</p>
+
+    <div class="feature-grid">
+      <div class="feature-item">
+        <div class="fi-label">Concrete Estimator</div>
+        <p>6-step tabbed workflow: Takeoff (dynamic sections with L×W×D, area/volume calc), Materials (concrete CY pricing, rebar, misc), Labor (foreman/laborer crews, burden rate, subs), Equipment (itemized rentals, permits, testing, mobilization), Photos + AI, Bid Summary with overhead/profit margin and print-to-quote.</p>
+      </div>
+      <div class="feature-item">
+        <div class="fi-label">Masonry Estimator</div>
+        <p>5-step flow covering CMU block, brick, stone, stucco, tuck-pointing. Dynamic wall sections (L×H), auto-calculated unit count and mortar bags, material pricing, labor crews, bid summary with $/SF output.</p>
+      </div>
+      <div class="feature-item">
+        <div class="fi-label">Flooring Estimator</div>
+        <p>Room-by-room L×W takeoff, waste factor, box count calculation, material + underlayment + adhesive + grout pricing, installation rate per SF, demo/prep/trim costs, overhead/profit rollup.</p>
+      </div>
+      <div class="feature-item">
+        <div class="fi-label">Power Washing Estimator</div>
+        <p>Surface area takeoff (multiple zones), surface type selector (concrete, wood, vinyl, roof), PSI/GPM specs, chemical cost, time estimate, labor and equipment, full bid summary.</p>
+      </div>
+      <div class="feature-item">
+        <div class="fi-label">AI Photo Analysis</div>
+        <p>Drag-and-drop photo upload zone per trade, image preview grid, "Analyze Photos with AI" button invoking <code>claude-sonnet-4-20250514</code> via direct API call with base64-encoded images.</p>
+      </div>
+      <div class="feature-item">
+        <div class="fi-label">AI Voice / Audio Notes</div>
+        <p>Audio file upload + live voice recording (MediaRecorder API). "Analyze with AI" sends audio file name + trade context to Claude to generate a walkthrough template. (Actual transcription is noted as not yet available.)</p>
+      </div>
+      <div class="feature-item">
+        <div class="fi-label">Quote Modal</div>
+        <p>Printable quote overlay — company name, project details, itemized cost table, total bid, signature line. Opened via "Preview & Print Quote" from any bid summary tab.</p>
+      </div>
+      <div class="feature-item">
+        <div class="fi-label">Marketing AI Generator</div>
+        <p>Configurable copy generator: select trade, platform (Facebook, Instagram, Google, etc.), goal (new clients, seasonal promo, review request), and custom details. Calls Claude API. Copy is rendered with a one-click clipboard copy button.</p>
+      </div>
+      <div class="feature-item">
+        <div class="fi-label">Contact CRM</div>
+        <p>Inline lead capture form (name, phone, email, service type, status, notes), status badges (New Lead, Estimate Sent, Follow Up, Won, Lost), add/remove contacts. All state lives in-memory only.</p>
+      </div>
+      <div class="feature-item">
+        <div class="fi-label">White Label / Licensing</div>
+        <p>Three-tier pricing display (Starter $497, Professional $997/mo, Enterprise $2,497/mo). Live brand preview with custom name, color, tagline, and initials. "Get License" triggers a pre-filled mailto: link to licensing@justsolutionsllc.com.</p>
+      </div>
+      <div class="feature-item">
+        <div class="fi-label">Export CSV</div>
+        <p>One-click export of the concrete bid summary as a CSV download via Blob URL. Other trade exports are stubbed (returns generic placeholder row).</p>
+      </div>
+      <div class="feature-item">
+        <div class="fi-label">Navigation + Hero</div>
+        <p>Full-viewport hero with animated badge, Bebas Neue display headline, service chip filters that deep-link to trade tabs. Sticky nav (ghost button for quote preview, gold CTA to estimator).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ 03 — TECHNOLOGY AUDIT ════════ -->
+  <section class="audit-section">
+    <div class="sec-label">Technology Audit · Section 03</div>
+    <h2 class="sec-heading">Technology & Dependency Audit</h2>
+    <p class="sec-intro">Explicit violations against the React + FastAPI + PostgreSQL requirement, each with a replacement plan.</p>
+
+    <div class="violation-block">
+      <div class="vb-title">🚨 Critical — Bare Anthropic API Key Exposure</div>
+      <p><strong>What it is:</strong> All three AI calls (photo analysis, audio analysis, marketing copy) call <code>https://api.anthropic.com/v1/messages</code> directly from the browser with <strong>no authorization header in the visible code</strong> — but the network request will require a key. In any deployment, the API key is either embedded in JS or exposed in network traffic.</p>
+      <p><strong>Why it violates requirements:</strong> Direct client-side API calls cannot be secured. Any user can extract the key, abuse it, and cause runaway billing.</p>
+      <div class="vb-fix">✦ Replacement: Move all AI calls to a FastAPI backend service (<code>POST /api/ai/analyze-photos</code>, <code>POST /api/ai/generate-marketing</code>). Store the Anthropic key in <code>.env</code>. Frontend sends images/params to the FastAPI route; backend proxies to Anthropic.</div>
+    </div>
+
+    <div class="violation-block">
+      <div class="vb-title">⚠️ High — Zero Persistence, All State In-Memory</div>
+      <p><strong>What it is:</strong> All estimator data, CRM contacts, and settings live in a single JavaScript <code>state</code> object. Page refresh = total data loss. There is no localStorage, no IndexedDB, no API call to save anything.</p>
+      <p><strong>Why it violates requirements:</strong> A production estimating tool must save estimates, retrieve past projects, and support multi-device access. This is UI-only behavior.</p>
+      <div class="vb-fix">✦ Replacement: PostgreSQL models for <code>estimates</code>, <code>line_items</code>, <code>contacts</code>. FastAPI CRUD endpoints. React state syncs to API on change (auto-save pattern or explicit save button).</div>
+    </div>
+
+    <div class="violation-block">
+      <div class="vb-title">⚠️ High — No Authentication Layer</div>
+      <p><strong>What it is:</strong> The app has no login, no session, no user identity. The white-label module allows "branding" but has no concept of which licensee is using the tool.</p>
+      <p><strong>Why it violates requirements:</strong> Without auth, estimates can't be owned, CRM contacts can't be isolated per business, and white-label multi-tenancy is impossible.</p>
+      <div class="vb-fix">✦ Replacement: FastAPI auth routes with JWT (access + refresh). User table in PostgreSQL. React auth context with protected routes (React Router).</div>
+    </div>
+
+    <div class="violation-block">
+      <div class="vb-title">⚠️ Medium — White Label via mailto: Link</div>
+      <p><strong>What it is:</strong> The "Get License" button for all three pricing tiers opens a pre-composed <code>mailto:</code> link. There is no payment gateway, no license provisioning, no database record created.</p>
+      <p><strong>Why it violates requirements:</strong> This is a placeholder. Real license purchases require payment, provisioning, and tenant creation.</p>
+      <div class="vb-fix">✦ Replacement: Stripe Checkout integration via FastAPI. On successful payment, create a <code>tenant</code> record in PostgreSQL, generate a license token, provision a branded sub-instance.</div>
+    </div>
+
+    <div class="violation-block">
+      <div class="vb-title">⚠️ Medium — CSV Export Stub (Non-Concrete Trades)</div>
+      <p><strong>What it is:</strong> <code>exportCSV(type)</code> only generates real data for the concrete estimator. All other trade exports return a single stub row: <code>["Total Bid","See app for details"]</code>.</p>
+      <p><strong>Why it violates requirements:</strong> Incomplete feature that will confuse users of the masonry, flooring, and power wash estimators.</p>
+      <div class="vb-fix">✦ Replacement: Implement per-trade CSV assembly in the backend export endpoint, or complete the JS logic for each trade's state object.</div>
+    </div>
+
+    <div class="violation-block">
+      <div class="vb-title">⚠️ Medium — Audio AI is Effectively Fake</div>
+      <p><strong>What it is:</strong> The audio analysis function explicitly states in its prompt that audio transcription is "not yet available in this environment" — it sends only the <em>filename</em> to Claude and asks for a generic walkthrough template.</p>
+      <p><strong>Why it violates requirements:</strong> The UI presents this as genuine AI audio interpretation. It is a placeholder that misrepresents the feature to users.</p>
+      <div class="vb-fix">✦ Replacement: FastAPI endpoint accepts audio file upload, calls Whisper API (OpenAI) or Anthropic's audio transcription, then sends the transcript + trade context to Claude for estimate suggestions.</div>
+    </div>
+
+    <div class="ok-block">
+      <p>✅ <strong>Clean sweep on prohibited platforms:</strong> Zero Firebase, zero Databutton, zero Riff, zero Supabase, zero third-party auth widgets, zero proprietary platform wrappers. The only external dependencies are Google Fonts and the Anthropic API — both replaceable/acceptable in a pure-stack build.</p>
+    </div>
+
+  </section>
+
+  <!-- ════════ 04 — GAP ANALYSIS ════════ -->
+  <section class="audit-section">
+    <div class="sec-label">Gap Analysis · Section 04</div>
+    <h2 class="sec-heading">Missing Functional Requirements</h2>
+    <p class="sec-intro">The complete gap list between the current HTML prototype and a production-ready application.</p>
+
+    <ul class="gap-list">
+      <li><strong>Authentication & Multi-Tenancy</strong> — JWT-based auth, user registration/login, password reset. White-label tenants need isolated data namespaces. Admin superuser role for managing licensees.</li>
+      <li><strong>Estimate Persistence & History</strong> — Save, name, retrieve, and delete estimates per user. Estimate status workflow (Draft → Sent → Accepted → Declined). Duplicate estimate function.</li>
+      <li><strong>PDF Quote Generation</strong> — The current quote modal is print-styled HTML only. A real app needs server-side PDF rendering (WeasyPrint or ReportLab) with the company logo, license brand colors, and a download/email link.</li>
+      <li><strong>Client / CRM Persistence</strong> — CRM contacts must be saved to PostgreSQL and linked to estimates. Contact history, follow-up reminders, and estimate-to-contact association.</li>
+      <li><strong>Real AI Audio Transcription</strong> — Actual audio-to-text pipeline (Whisper), followed by Claude analysis to auto-populate estimate line items from the transcript. Currently a UI stub.</li>
+      <li><strong>Complete CSV / Export Coverage</strong> — Full line-item CSV export for masonry, flooring, and power wash. Optional Excel export (.xlsx) for accounting integrations.</li>
+      <li><strong>White-Label Provisioning Pipeline</strong> — Stripe payment integration. On successful checkout: create tenant DB record, generate subdomain/license key, send welcome email with access credentials.</li>
+      <li><strong>Material Price Database</strong> — Currently all prices are manual inputs with hardcoded defaults. A real estimating tool benefits from a price list DB per region/zip code, with the ability to save and reuse custom price lists.</li>
+      <li><strong>Estimate Sharing & Client Portal</strong> — Generate a shareable link or portal where a client can view, accept, or decline a quote without logging in (signed URL with expiry).</li>
+      <li><strong>Real-Time Collaboration</strong> — For larger shops, multiple estimators working on the same job simultaneously. WebSocket-based state sync or optimistic locking.</li>
+      <li><strong>Input Validation & Error States</strong> — All form fields currently accept invalid or empty values without validation. NaN cascades through calculations silently. Need Zod/Pydantic validation end-to-end.</li>
+      <li><strong>Security Hardening</strong> — Rate limiting on AI endpoints (prevent key abuse), CORS configuration, JWT expiry handling, XSS/CSRF protection on the FastAPI layer.</li>
+      <li><strong>Admin Dashboard</strong> — For the platform owner: view all licensees, license expiry dates, usage stats per tenant, billing status, and the ability to revoke licenses.</li>
+      <li><strong>Notification System</strong> — Email notifications for: new estimate saved, quote sent to client, quote accepted/declined, license about to expire.</li>
+    </ul>
+  </section>
+
+  <!-- ════════ 05 — TARGET ARCHITECTURE ════════ -->
+  <section class="audit-section">
+    <div class="sec-label">Architecture · Section 05</div>
+    <h2 class="sec-heading">Target Architecture</h2>
+    <p class="sec-intro">The proposed full-stack structure for the GitHub-ready codebase.</p>
+
+    <div class="arch-block">
+      <div class="arch-title">Frontend — React App</div>
+      <div class="arch-layer"><span class="al-tag al-fe">Pages</span> <span>LandingPage, LoginPage, RegisterPage, DashboardPage, EstimatorPage (concrete/masonry/flooring/powerwash), CRMPage, MarketingPage, LicensePage, AdminPage, ClientQuoteView</span></div>
+      <div class="arch-layer"><span class="al-tag al-fe">Components</span> <span>EstimatorLayout, TakeoffSection, MaterialsPanel, LaborPanel, BidSummaryCard, QuoteModal, AIAnalysisCard, CRMTable, PricingCards, WhiteLabelPreview, TenantBrandProvider</span></div>
+      <div class="arch-layer"><span class="al-tag al-fe">State</span> <span>Zustand or React Query — auth state, active estimate, CRM slice, tenant branding config, AI result cache</span></div>
+      <div class="arch-layer"><span class="al-tag al-fe">Services</span> <span>api.ts (Axios instance with JWT interceptor), estimateService, crmService, aiService, authService, exportService</span></div>
+    </div>
+
+    <div class="arch-block">
+      <div class="arch-title">Backend — FastAPI</div>
+      <div class="arch-layer"><span class="al-tag al-be">Routers</span> <span>/auth (register, login, refresh, me), /estimates (CRUD + share link), /line-items, /contacts (CRM), /ai (analyze-photos, analyze-audio, marketing-copy), /export (pdf, csv), /tenants (admin + provisioning), /webhooks/stripe</span></div>
+      <div class="arch-layer"><span class="al-tag al-be">Schemas</span> <span>Pydantic v2 models: UserCreate, EstimateCreate, LineItemBase, ContactCreate, AIPhotoRequest, TenantCreate, LicenseResponse</span></div>
+      <div class="arch-layer"><span class="al-tag al-be">Services</span> <span>EstimateService, AIService (Anthropic + Whisper), PDFService (WeasyPrint), StripeService, EmailService (SendGrid), TenantService</span></div>
+      <div class="arch-layer"><span class="al-tag al-be">Auth</span> <span>JWT (python-jose), bcrypt, OAuth2PasswordBearer, tenant isolation middleware</span></div>
+    </div>
+
+    <div class="arch-block">
+      <div class="arch-title">Database — PostgreSQL</div>
+      <div class="arch-layer"><span class="al-tag al-db">Core Tables</span> <span>users, tenants, tenant_users, estimates, estimate_sections, line_items, contacts, price_lists, price_list_items</span></div>
+      <div class="arch-layer"><span class="al-tag al-db">Feature Tables</span> <span>quote_shares (signed URLs), ai_analysis_results (cached), licenses, stripe_events</span></div>
+      <div class="arch-layer"><span class="al-tag al-db">Migrations</span> <span>Alembic — versioned schema migration chain from initial setup through feature additions</span></div>
+    </div>
+
+    <div class="arch-block">
+      <div class="arch-title">AI & External Services</div>
+      <div class="arch-layer"><span class="al-tag al-ai">Anthropic</span> <span>claude-sonnet-4-20250514 for photo analysis, estimate advice, marketing copy — server-side only via ANTHROPIC_API_KEY env var</span></div>
+      <div class="arch-layer"><span class="al-tag al-ai">Whisper</span> <span>OpenAI Whisper API (or self-hosted) for audio transcription before Claude analysis</span></div>
+      <div class="arch-layer"><span class="al-tag al-inf">Infra</span> <span>Docker Compose (dev), Postgres 15, Redis (optional: rate limiting / session cache), Nginx reverse proxy, env-based config (python-dotenv)</span></div>
+    </div>
+
+    <div class="callout">
+      <p><strong>Key ENV vars:</strong> <code>ANTHROPIC_API_KEY</code>, <code>OPENAI_API_KEY</code> (Whisper), <code>STRIPE_SECRET_KEY</code>, <code>STRIPE_WEBHOOK_SECRET</code>, <code>DATABASE_URL</code>, <code>JWT_SECRET</code>, <code>SENDGRID_API_KEY</code>, <code>FRONTEND_URL</code></p>
+    </div>
+  </section>
+
+  <!-- ════════ 06 — IMPLEMENTATION ROADMAP ════════ -->
+  <section class="audit-section">
+    <div class="sec-label">Implementation Plan · Section 06</div>
+    <h2 class="sec-heading">Implementation Roadmap</h2>
+    <p class="sec-intro">A practical, sequenced build plan from HTML prototype to GitHub-ready full-stack application.</p>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-num">Phase 01</div>
+        <div class="tl-title">Repo Scaffold & Environment</div>
+        <p class="tl-desc">Initialize monorepo: <code>/frontend</code> (Vite + React + TypeScript) and <code>/backend</code> (FastAPI). Configure Docker Compose with Postgres, set up Alembic, create <code>.env.example</code>, write README. Establish folder conventions for both layers. Est: 4–6 hrs.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-num">Phase 02</div>
+        <div class="tl-title">Authentication Foundation</div>
+        <p class="tl-desc">FastAPI: user model, register/login/refresh/me endpoints, JWT middleware. React: auth context, login/register pages, protected route HOC, Axios JWT interceptor with token refresh logic. Est: 12–16 hrs.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-num">Phase 03</div>
+        <div class="tl-title">Estimator — React Component Conversion</div>
+        <p class="tl-desc">Convert each trade estimator (concrete, masonry, flooring, power wash) from raw HTML + vanilla JS into typed React components with hooks. Preserve all calculation logic in custom hooks (<code>useConcreteCalc</code>, etc.). Connect to local state first. Est: 24–32 hrs.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-num">Phase 04</div>
+        <div class="tl-title">Estimate Persistence (API + DB)</div>
+        <p class="tl-desc">Define Pydantic schemas for estimates and line items. Build CRUD endpoints. Add auto-save to React estimator (debounced PUT on change). Build estimate history dashboard with list, search, duplicate, and delete. Est: 16–20 hrs.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-num">Phase 05</div>
+        <div class="tl-title">AI Layer — Secure Server-Side Proxy</div>
+        <p class="tl-desc">Move all Anthropic calls to FastAPI AI router. Implement real multipart file upload for photos (base64 encode on backend). Implement Whisper transcription pipeline for audio → Claude analysis. Add rate limiting per user. Est: 16–20 hrs.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-num">Phase 06</div>
+        <div class="tl-title">PDF Quote Generation & Sharing</div>
+        <p class="tl-desc">WeasyPrint-based PDF template (Jinja2 HTML → PDF). API endpoint: <code>GET /estimates/{id}/pdf</code>. Signed share URL: <code>POST /estimates/{id}/share</code> → returns time-limited token. React: "Download PDF" and "Send to Client" flows. Est: 12–14 hrs.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-num">Phase 07</div>
+        <div class="tl-title">CRM Persistence & Lead Tracking</div>
+        <p class="tl-desc">PostgreSQL contacts table with tenant isolation. FastAPI CRUD. React CRM page with search, filter by status, link contacts to estimates. Basic follow-up date/reminder field. Est: 10–12 hrs.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-num">Phase 08</div>
+        <div class="tl-title">White-Label Provisioning + Stripe</div>
+        <p class="tl-desc">Stripe Checkout for three license tiers. Webhook handler creates tenant record on payment success. Tenant branding config (name, color, logo) stored in DB. Frontend reads tenant config from API to theme the UI. Admin dashboard for licensee management. Est: 20–26 hrs.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-num">Phase 09</div>
+        <div class="tl-title">Validation, Error Handling & Security</div>
+        <p class="tl-desc">End-to-end input validation (Zod on frontend, Pydantic on backend). NaN guards in all calculation functions. CORS configuration. SQL injection protection (SQLAlchemy ORM). Rate limiting (slowapi). Comprehensive error boundary components in React. Est: 8–12 hrs.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-num">Phase 10</div>
+        <div class="tl-title">QA, Repo Polish & Launch Readiness</div>
+        <p class="tl-desc">End-to-end testing of all trade estimators. Responsive layout QA. README with setup, env config, and run instructions. Docker Compose <code>up</code> smoke test. Deployment-ready Dockerfile for both services. Seed script with demo data. Est: 8–10 hrs.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p><strong>Total Estimated Engineering Effort:</strong> <em>130–168 hours for MVP</em> (auth + estimators + persistence + AI secure layer + PDF + CRM) &nbsp;|&nbsp; <em>+40–60 hours</em> for full white-label provisioning and admin. This is the shortest path to production of any multi-feature tool audited in this series.</p>
+    </div>
+  </section>
+
+  <!-- ════════ 07 — MONETIZATION ════════ -->
+  <section class="audit-section">
+    <div class="sec-label">Monetization · Section 07</div>
+    <h2 class="sec-heading">Monetization Potential</h2>
+    <p class="sec-intro">Revenue ceiling once fully functional and GitHub-ready, with two plausible pricing structures.</p>
+
+    <div class="mono-card">
+      <div class="mono-range">$90k – $480k</div>
+      <div class="mono-label">Estimated Annual Revenue Range · Once Fully Functional</div>
+      <p style="font-size:14px;color:var(--text2);max-width:560px;margin:0 auto;">Justified by the density of the feature set (AI estimating + CRM + marketing + white-label), the specificity of the target market (trades contractors), and the significant pain point it solves — manual estimating in Concrete and Masonry alone is a $8B+ industry in the US.</p>
+      <div class="mono-models">
+        <div class="mono-model">
+          <div class="mm-label">Model A — SaaS Subscription</div>
+          <p>Starter $49/mo · Pro $99/mo · Team $199/mo. At 150 paying Pro subscribers, that's $178k ARR. Realistic 12-month target for an independently marketed tool in the contractor niche.</p>
+        </div>
+        <div class="mono-model">
+          <div class="mm-label">Model B — White-Label Licensing</div>
+          <p>The file already shows this model: $497 (one-time), $997/mo, $2,497/mo. Selling 15 Professional licenses ($997/mo) alone generates $180k/year. White-label is the high-margin play — the codebase becomes the product sold to other software companies targeting the trades.</p>
+        </div>
+      </div>
+    </div>
+
+    <p>A third revenue stream exists but is not yet represented in the UI: <strong>AI usage metering</strong>. Anthropic API costs ~$3–15 per contractor per month at typical usage. Bundling a usage cap at lower tiers and offering unlimited AI on higher tiers is a natural upgrade lever.</p>
+  </section>
+
+  <!-- ════════ 08 — TARGET MARKET ════════ -->
+  <section class="audit-section">
+    <div class="sec-label">Target Market · Section 08</div>
+    <h2 class="sec-heading">Target Industries & Buyer Archetypes</h2>
+    <p class="sec-intro">The highest-probability customer profiles and why they will pay.</p>
+
+    <div class="target-grid">
+      <div class="target-card">
+        <div class="tc-who">Independent Concrete & Masonry Contractors (1–5 employees)</div>
+        <div class="tc-why">Currently estimating in Excel, Google Sheets, or by hand. No existing SaaS tool purpose-built for their trade. The AI photo-to-estimate feature alone is worth $50+/mo to reduce time spent on job-site takeoffs. High churn risk if the product is unreliable — high LTV if it saves them even 3 hours per week.</div>
+      </div>
+      <div class="target-card">
+        <div class="tc-who">Flooring Installation Companies (regional, 5–20 employees)</div>
+        <div class="tc-why">Flooring estimating requires precise waste calculation and box-count math. The room-by-room takeoff module directly addresses their daily workflow. Many use Measure Square ($99–$199/mo) and would switch for a lower-cost, AI-augmented alternative.</div>
+      </div>
+      <div class="target-card">
+        <div class="tc-who">Power Washing & Exterior Cleaning Businesses</div>
+        <div class="tc-why">Low-complexity estimates, but high volume. A contractor doing 6–10 estimates per week gets massive ROI from even a 15-minute time savings per bid. The marketing copy generator is especially compelling for this group — many are active on Facebook and Instagram and struggle with content.</div>
+      </div>
+      <div class="target-card">
+        <div class="tc-who">Contractor Software Agencies & White-Label Resellers</div>
+        <div class="tc-why">The white-label licensing module turns this product into a B2B2B play. Agencies that build SaaS tools for vertical markets (HVAC, painting, landscaping) would pay $997–$2,497/mo to rebrand this for their own niche — zero development cost on their end.</div>
+      </div>
+      <div class="target-card">
+        <div class="tc-who">General Contractors with Trade Subcontractors</div>
+        <div class="tc-why">GCs who self-perform concrete, masonry, or flatwork alongside subcontracted work need a consistent estimating format. The multi-trade coverage (4 distinct estimators) in one tool eliminates the need for multiple apps.</div>
+      </div>
+      <div class="target-card">
+        <div class="tc-who">Trade School Programs & Vocational Training</div>
+        <div class="tc-why">A surprising secondary market: trade school instructors teaching estimating could license the platform for classroom use. Institutional licensing ($200–$500/year per school) with a student-facing view mode is a low-hanging expansion.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ 09 — VERDICT ════════ -->
+  <section class="audit-section">
+    <div class="sec-label">Go / No-Go Verdict · Section 09</div>
+    <h2 class="sec-heading">Readiness Assessment</h2>
+    <p class="sec-intro">Final engineering verdict, primary blockers, and the three moves to make next.</p>
+
+    <div class="verdict-card">
+      <div class="verdict-badge">✓ Recommended to Proceed</div>
+      <div class="verdict-rating">HIGH READINESS</div>
+      <p class="verdict-sub">The most complete trade-specific estimating UI in this audit series. Four fully-designed, calculation-correct estimators. Legitimate AI integration hooks. A monetization model already embedded in the design. <strong>The gap is backend infrastructure, not product vision.</strong></p>
+
+      <hr class="rule" style="border-color:rgba(39,174,96,0.2);margin:1rem 0;">
+
+      <p style="font-size:14px;color:var(--text2);margin-bottom:1.5rem;"><strong style="color:var(--text)">Primary Blockers:</strong> (1) API key security — cannot ship to production with client-side AI calls; (2) zero persistence — all user data evaporates on refresh; (3) white-label licensing has no payment or provisioning pipeline.</p>
+      <p style="font-size:14px;color:var(--text2);"><strong style="color:var(--text)">Effort Estimate:</strong> Medium-Large — 130–168 hours to MVP with full persistence, auth, and secure AI. 40–60 additional hours for white-label provisioning and admin panel. <strong>Total: 170–228 hours to fully shippable product.</strong></p>
+
+      <div class="verdict-actions">
+        <div class="va-item">
+          <div class="va-num">Action 01</div>
+          <p>Immediately scaffold FastAPI backend with an <code>/api/ai</code> proxy router. Remove all direct Anthropic API calls from the frontend. This is the only blocker that also constitutes a security risk — it must be done before any public testing.</p>
+        </div>
+        <div class="va-item">
+          <div class="va-num">Action 02</div>
+          <p>Implement auth and the estimate persistence layer (Phases 02–04 in the roadmap). Until estimates can be saved, every other feature is functionally a demo. Auth + save unlocks the core value proposition.</p>
+        </div>
+        <div class="va-item">
+          <div class="va-num">Action 03</div>
+          <p>Complete the masonry, flooring, and power wash CSV exports and fix the audio analysis stub with a real Whisper transcription pipeline. These two items are the most visible "half-built" experiences and will damage trust with early users if shipped as-is.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ FOOTER ════════ -->
+  <footer>
+    <div class="ft-name">Just Solutions</div>
+    <p>App Audit Series · April 3, 2026 · Generated by Anthropic Claude</p>
+    <p style="margin-top:0.5rem;">React + FastAPI + PostgreSQL · Pure stack, no platform lock-in.</p>
+  </footer>
+
+</div>
+</body>
+</html>

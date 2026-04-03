@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AUDIT REPORT — Paw Pound | Hot or Not for Pups</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #080808;
+    --bg2:       #0d0d0d;
+    --bg3:       #111;
+    --bg4:       #161616;
+    --accent:    #FF5C6C;
+    --accent2:   rgba(255,92,108,0.55);
+    --accent3:   rgba(255,92,108,0.1);
+    --teal:      #00D4B4;
+    --teal-dim:  rgba(0,212,180,0.1);
+    --go:        #00E5A0;
+    --go-bg:     rgba(0,229,160,0.1);
+    --warn:      #F5C842;
+    --warn-bg:   rgba(245,200,66,0.08);
+    --purple:    #8B72FF;
+    --text:      #E8E8E8;
+    --muted:     #888;
+    --dim:       #444;
+    --border:    rgba(255,92,108,0.13);
+    --border2:   rgba(255,92,108,0.3);
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+
+  body {
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Sora',sans-serif;
+    font-size:16px;
+    line-height:1.75;
+    overflow-x:hidden;
+  }
+
+  /* GRAIN */
+  body::before {
+    content:'';
+    position:fixed; inset:0;
+    pointer-events:none; z-index:9999; opacity:0.3;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)' opacity='0.05'/%3E%3C/svg%3E");
+  }
+
+  /* AMBIENT GLOW */
+  body::after {
+    content:'';
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(ellipse 70% 40% at 0% 0%, rgba(255,92,108,0.07) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 40% at 100% 100%, rgba(139,114,255,0.05) 0%, transparent 65%);
+  }
+
+  /* TOP BAR */
+  .top-bar {
+    height:5px;
+    background:linear-gradient(90deg, #8B72FF, #FF5C6C, #F5C842, #00D4B4, #FF5C6C, #8B72FF);
+    background-size:300% 100%;
+    animation:barMove 8s linear infinite;
+  }
+  @keyframes barMove { 0%{background-position:0%} 100%{background-position:300%} }
+
+  /* FADE INS */
+  .fade { opacity:0; transform:translateY(24px); animation:fadeUp 0.65s ease forwards; }
+  .fade:nth-child(1){animation-delay:.1s}
+  .fade:nth-child(2){animation-delay:.22s}
+  .fade:nth-child(3){animation-delay:.36s}
+  .fade:nth-child(4){animation-delay:.5s}
+  .fade:nth-child(5){animation-delay:.64s}
+  @keyframes fadeUp { to{opacity:1;transform:translateY(0)} }
+
+  /* MASTHEAD */
+  .masthead {
+    padding:100px 40px 80px;
+    max-width:860px;
+    margin:0 auto;
+    border-bottom:1px solid var(--border);
+    position:relative; z-index:1;
+  }
+
+  .masthead-label {
+    font-size:10px;
+    letter-spacing:0.55em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:28px;
+    display:flex; align-items:center; gap:14px;
+    text-shadow:0 0 20px rgba(255,92,108,0.4);
+  }
+  .masthead-label::after { content:''; flex:1; max-width:60px; height:1px; background:var(--accent2); }
+
+  .masthead h1 {
+    font-family:'DM Serif Display', serif;
+    font-size:clamp(60px,10vw,120px);
+    font-weight:400;
+    line-height:0.88;
+    letter-spacing:-0.03em;
+    margin-bottom:22px;
+    background:linear-gradient(135deg, #fff 0%, #ffb3bb 45%, var(--accent) 100%);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+  }
+
+  .masthead-tagline {
+    font-family:'DM Serif Display', serif;
+    font-style:italic;
+    font-size:clamp(17px,2.5vw,22px);
+    color:var(--muted);
+    margin-bottom:36px;
+    line-height:1.45;
+  }
+
+  .masthead-meta {
+    display:flex; gap:10px; flex-wrap:wrap;
+  }
+
+  .meta-pill {
+    font-size:11px;
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+    color:var(--muted);
+    padding:6px 16px;
+    border:1px solid var(--border);
+    background:var(--bg2);
+  }
+  .meta-pill span { color:var(--accent); }
+
+  /* SECTION */
+  .section {
+    padding:80px 40px;
+    max-width:860px;
+    margin:0 auto;
+    border-bottom:1px solid var(--border);
+    position:relative; z-index:1;
+  }
+
+  .section-label {
+    font-size:9px;
+    letter-spacing:0.6em;
+    text-transform:uppercase;
+    color:rgba(255,92,108,0.5);
+    margin-bottom:12px;
+  }
+
+  .section h2 {
+    font-family:'DM Serif Display', serif;
+    font-size:clamp(30px,4.5vw,52px);
+    font-weight:400;
+    line-height:1.05;
+    letter-spacing:-0.02em;
+    margin-bottom:20px;
+    background:linear-gradient(120deg, var(--text) 55%, var(--accent));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+  }
+
+  .section-intro {
+    font-size:16px;
+    color:var(--muted);
+    max-width:680px;
+    line-height:1.9;
+    margin-bottom:48px;
+  }
+
+  /* CALLOUT */
+  .callout {
+    border-left:3px solid var(--accent);
+    padding:22px 28px;
+    background:var(--accent3);
+    margin:36px 0;
+    box-shadow:0 0 40px rgba(255,92,108,0.04);
+  }
+  .callout p {
+    font-family:'DM Serif Display', serif;
+    font-size:18px;
+    font-style:italic;
+    color:var(--text);
+    line-height:1.6;
+  }
+
+  /* STAT ROW */
+  .stat-row {
+    display:flex; gap:16px; flex-wrap:wrap; margin:40px 0;
+  }
+  .stat-box {
+    flex:1; min-width:140px;
+    padding:20px 22px;
+    background:var(--bg2);
+    border:1px solid var(--border);
+    border-top:2px solid var(--accent);
+  }
+  .stat-number {
+    font-family:'DM Serif Display', serif;
+    font-size:44px;
+    font-weight:400;
+    color:var(--accent);
+    line-height:1;
+    margin-bottom:6px;
+    text-shadow:0 0 30px rgba(255,92,108,0.3);
+  }
+  .stat-label {
+    font-size:10px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+
+  /* FEATURE GRID */
+  .feature-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:2px;
+    background:var(--border);
+    margin-top:40px;
+  }
+  .feature-cell {
+    background:var(--bg2);
+    padding:28px;
+  }
+  .feature-cell-label {
+    font-size:10px;
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:8px;
+  }
+  .feature-cell-title {
+    font-family:'DM Serif Display', serif;
+    font-size:19px;
+    color:var(--text);
+    margin-bottom:10px;
+  }
+  .feature-cell p { font-size:14px; color:var(--muted); line-height:1.7; }
+
+  /* EXTERNAL DEP BADGE */
+  .ext-badge {
+    display:inline-block;
+    background:rgba(245,200,66,0.08);
+    border:1px solid rgba(245,200,66,0.3);
+    color:var(--warn);
+    font-size:9px;
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+    padding:4px 12px;
+    margin-bottom:8px;
+  }
+  .ok-badge {
+    display:inline-block;
+    background:var(--go-bg);
+    border:1px solid rgba(0,229,160,0.3);
+    color:var(--go);
+    font-size:9px;
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+    padding:4px 12px;
+    margin-bottom:8px;
+  }
+  .flag-badge {
+    display:inline-block;
+    background:var(--accent3);
+    border:1px solid var(--border2);
+    color:var(--accent);
+    font-size:9px;
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+    padding:4px 12px;
+    margin-bottom:8px;
+  }
+
+  .violation-block {
+    padding:24px;
+    border:1px solid rgba(245,200,66,0.18);
+    background:var(--warn-bg);
+    margin-bottom:14px;
+  }
+  .violation-title {
+    font-family:'DM Serif Display', serif;
+    font-size:19px;
+    color:var(--warn);
+    margin-bottom:8px;
+  }
+  .violation-desc { font-size:14px; color:var(--muted); line-height:1.75; }
+  .violation-fix { font-size:13px; color:var(--text); margin-top:10px; }
+  .violation-fix strong { color:var(--teal); }
+
+  /* GAP LIST */
+  .gap-list { list-style:none; display:flex; flex-direction:column; gap:12px; margin-top:32px; }
+  .gap-list li {
+    display:flex; gap:16px;
+    font-size:15px; color:var(--muted);
+    padding:16px 20px;
+    background:var(--bg3);
+    border-left:2px solid var(--accent);
+    line-height:1.6;
+  }
+  .gap-list li strong { color:var(--text); }
+  .gap-num {
+    font-family:'DM Serif Display', serif;
+    font-size:26px;
+    color:rgba(255,92,108,0.2);
+    flex-shrink:0;
+    line-height:1;
+    margin-top:2px;
+  }
+
+  /* ARCH GRID */
+  .arch-grid {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+    margin-top:40px;
+  }
+  .arch-card {
+    background:var(--bg2);
+    border:1px solid var(--border);
+    padding:26px 22px;
+    border-top:3px solid var(--accent);
+  }
+  .arch-card-title {
+    font-size:11px;
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:16px;
+  }
+  .arch-card ul { list-style:none; display:flex; flex-direction:column; gap:8px; }
+  .arch-card ul li { font-size:13px; color:var(--muted); padding-left:14px; position:relative; line-height:1.55; }
+  .arch-card ul li::before { content:'›'; position:absolute; left:0; color:var(--accent); font-weight:700; }
+
+  /* ROADMAP */
+  .roadmap { margin-top:48px; position:relative; padding-left:48px; }
+  .roadmap::before {
+    content:'';
+    position:absolute;
+    left:12px; top:0; bottom:0;
+    width:2px;
+    background:linear-gradient(180deg, var(--accent), var(--purple), transparent);
+  }
+  .roadmap-step {
+    position:relative;
+    padding:26px 0 26px 32px;
+    border-bottom:1px solid rgba(255,255,255,0.04);
+  }
+  .roadmap-step:last-child { border-bottom:none; }
+  .roadmap-dot {
+    position:absolute; left:-40px; top:30px;
+    width:16px; height:16px; border-radius:50%;
+    border:2px solid var(--accent);
+    background:var(--bg);
+    box-shadow:0 0 10px rgba(255,92,108,0.3);
+  }
+  .step-num { font-size:9px; letter-spacing:0.4em; text-transform:uppercase; color:rgba(255,92,108,0.4); margin-bottom:6px; }
+  .step-title { font-family:'DM Serif Display', serif; font-size:20px; color:var(--text); margin-bottom:8px; }
+  .step-desc { font-size:14px; color:var(--muted); line-height:1.7; max-width:620px; }
+
+  /* MONEY CARD */
+  .money-card {
+    background:linear-gradient(135deg, #0a0608, #160b10);
+    border:1px solid var(--border2);
+    padding:48px;
+    margin-top:40px;
+    position:relative; overflow:hidden;
+  }
+  .money-card::before {
+    content:'🐾';
+    position:absolute;
+    right:20px; top:10px;
+    font-size:200px;
+    opacity:0.04;
+    pointer-events:none;
+    line-height:1;
+  }
+  .money-range {
+    font-family:'DM Serif Display', serif;
+    font-size:clamp(52px, 7vw, 84px);
+    font-weight:400;
+    line-height:1;
+    color:var(--accent);
+    text-shadow:0 0 60px rgba(255,92,108,0.35);
+    margin-bottom:10px;
+  }
+  .money-label { font-size:11px; letter-spacing:0.3em; text-transform:uppercase; color:rgba(255,92,108,0.5); margin-bottom:24px; }
+  .money-models { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:28px; }
+  .money-model { background:rgba(255,92,108,0.05); border:1px solid var(--border); padding:20px; }
+  .money-model-title { font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin-bottom:8px; }
+  .money-model p { font-size:14px; color:var(--muted); line-height:1.65; }
+
+  /* TARGET GRID */
+  .target-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:40px; }
+  .target-card { background:var(--bg2); border:1px solid var(--border); padding:24px; }
+  .target-card-title { font-family:'DM Serif Display', serif; font-size:17px; color:var(--text); margin-bottom:4px; }
+  .target-card-role { font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,92,108,0.5); margin-bottom:12px; }
+  .target-card p { font-size:13px; color:var(--muted); line-height:1.65; }
+
+  /* TABLE */
+  table { width:100%; border-collapse:collapse; margin-top:28px; }
+  th { font-size:10px; letter-spacing:0.3em; text-transform:uppercase; color:rgba(255,92,108,0.5); padding:12px 16px; text-align:left; background:var(--bg2); border-bottom:1px solid var(--border2); }
+  td { font-size:14px; color:var(--muted); padding:13px 16px; border-bottom:1px solid var(--border); vertical-align:top; line-height:1.6; }
+  tr:hover td { background:rgba(255,92,108,0.02); }
+  td strong { color:var(--text); }
+  td code { font-size:12px; background:var(--bg3); padding:2px 7px; color:var(--teal); }
+
+  /* VERDICT */
+  .verdict-wrap {
+    padding:80px 40px;
+    max-width:860px;
+    margin:0 auto;
+    position:relative; z-index:1;
+  }
+  .verdict-badge {
+    display:inline-block;
+    font-family:'DM Serif Display', serif;
+    font-size:clamp(44px, 7vw, 76px);
+    font-weight:400;
+    line-height:1;
+    padding:26px 46px;
+    border:2px solid;
+    margin-bottom:40px;
+  }
+  .verdict-badge.high {
+    color:var(--go);
+    border-color:var(--go);
+    background:var(--go-bg);
+    box-shadow:0 0 60px rgba(0,229,160,0.1);
+  }
+  .verdict-badge.medium {
+    color:var(--warn);
+    border-color:var(--warn);
+    background:var(--warn-bg);
+    box-shadow:0 0 60px rgba(245,200,66,0.08);
+  }
+
+  .blockers-list { list-style:none; display:flex; flex-direction:column; gap:10px; margin:24px 0; }
+  .blockers-list li { font-size:15px; color:var(--muted); padding-left:20px; position:relative; line-height:1.6; }
+  .blockers-list li::before { content:'×'; position:absolute; left:0; color:var(--accent); font-weight:700; }
+
+  .next-actions { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:32px; }
+  .next-card { background:var(--bg2); border:1px solid var(--border); border-top:2px solid var(--accent); padding:22px; }
+  .next-num { font-family:'DM Serif Display', serif; font-size:38px; color:rgba(255,92,108,0.2); line-height:1; margin-bottom:10px; }
+  .next-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:8px; }
+  .next-desc { font-size:13px; color:var(--muted); line-height:1.65; }
+
+  /* DEMO SHOWCASE BLOCK */
+  .demo-block {
+    background:linear-gradient(135deg, #0e080a, #14100a);
+    border:1px solid rgba(245,200,66,0.2);
+    padding:32px;
+    margin:32px 0;
+  }
+  .demo-block-title {
+    font-family:'DM Serif Display', serif;
+    font-size:21px;
+    color:var(--warn);
+    margin-bottom:10px;
+  }
+  .demo-block p { font-size:14px; color:var(--muted); line-height:1.75; }
+  .demo-block strong { color:var(--text); }
+
+  /* FOOTER */
+  footer {
+    border-top:1px solid var(--border);
+    padding:44px 40px;
+    max-width:860px;
+    margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:20px;
+    position:relative; z-index:1;
+  }
+  .footer-brand { font-family:'DM Serif Display', serif; font-size:20px; color:var(--accent); font-style:italic; }
+  .footer-meta { font-size:12px; color:var(--dim); letter-spacing:0.1em; }
+
+  @media (max-width:640px) {
+    .masthead,.section,.verdict-wrap,footer { padding-left:24px; padding-right:24px; }
+    .feature-grid,.arch-grid,.money-models,.target-grid,.next-actions { grid-template-columns:1fr; }
+    .money-range { font-size:48px; }
+  }
+  @media print {
+    body { background:#000; color:#ddd; }
+    body::before, body::after { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar"></div>
+
+<!-- ====== MASTHEAD ====== -->
+<header class="masthead">
+  <div class="fade masthead-label">App Audit Report · 2026</div>
+  <h1 class="fade">Paw<br>Pound</h1>
+  <p class="fade masthead-tagline">Hot or Not for Pups — Full Platform Audit<br>& React + FastAPI + PostgreSQL Implementation Blueprint</p>
+  <div class="fade masthead-meta">
+    <div class="meta-pill">File: <span>index.html</span></div>
+    <div class="meta-pill">Audited: <span>April 03, 2026</span></div>
+    <div class="meta-pill">External API: <span>dog.ceo</span></div>
+    <div class="meta-pill">Verdict: <span>HIGH READINESS</span></div>
+  </div>
+</header>
+
+<!-- ====== SECTION 01 — OVERVIEW ====== -->
+<section class="section">
+  <div class="section-label">File Overview · Section 01</div>
+  <h2>What This File Is</h2>
+  <p class="section-intro">A fully functional, polished single-page web application — not a marketing plan, not a mockup. Paw Pound is a working "Hot or Not" voting game for dogs, complete with swipe mechanics, animated card stacks, a live leaderboard, real-time activity simulation, and live dog photos pulled from a public API. This is the most technically advanced file audited in this series.</p>
+
+  <div class="callout">
+    <p>Paw Pound is a consumer-grade entertainment app built entirely in vanilla HTML/CSS/JS. It works in a browser today. The audit isn't asking "does this function?" — it's asking "what does it take to scale this from a clever demo to a real multi-user platform with persistence, social identity, and monetization?"</p>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-box">
+      <div class="stat-number">1,095</div>
+      <div class="stat-label">Lines of Code</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number">12</div>
+      <div class="stat-label">Hardcoded Dogs</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number">1</div>
+      <div class="stat-label">External API Used</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number">0</div>
+      <div class="stat-label">Users Persist</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number">0</div>
+      <div class="stat-label">Votes Saved</div>
+    </div>
+  </div>
+
+  <p style="font-size:15px;color:var(--muted);margin-top:24px;line-height:1.85;">
+    <strong style="color:var(--text)">Core Product:</strong> A Tinder-style dog rating platform with swipe/click voting, animated card stacks with drag physics, a hot-score leaderboard, a real-time activity feed (simulated), a breed statistics chart, streak rewards, and a "match" celebration screen. Dog photos are fetched live from <code style="background:var(--bg3);padding:2px 7px;font-size:12px;color:var(--teal)">dog.ceo</code> using each dog's breed slug. Implied user roles: <strong style="color:var(--text)">anonymous voter</strong> (current), <strong style="color:var(--text)">registered member</strong> (implied by activity feed usernames), <strong style="color:var(--text)">dog owner/submitter</strong> (implied by the concept), <strong style="color:var(--text)">platform admin</strong>.
+  </p>
+</section>
+
+<!-- ====== SECTION 02 — FEATURE INVENTORY ====== -->
+<section class="section">
+  <div class="section-label">Feature Inventory · Section 02</div>
+  <h2>What It Has</h2>
+  <p class="section-intro">Every feature, UI component, and interactive system present in the current HTML — mapped to what each would require in a production application.</p>
+
+  <div class="feature-grid">
+    <div class="feature-cell">
+      <div class="feature-cell-label">Core Mechanic</div>
+      <div class="feature-cell-title">Swipeable Card Stack with Drag Physics</div>
+      <p>Full drag-to-vote with touch + mouse support, rotation physics, swipe threshold detection (±80px), HOT/POUND overlay labels, and CSS swipe-out animations. Keyboard voting (←/→/↑ keys) also supported. Works flawlessly as-is — needs zero redesign for React.</p>
+    </div>
+    <div class="feature-cell">
+      <div class="feature-cell-label">Live Photos</div>
+      <div class="feature-cell-title">dog.ceo API Integration</div>
+      <p>Each of 12 dogs has an <code style="background:var(--bg3);padding:1px 5px;font-size:12px;color:var(--teal)">apiBreed</code> slug. Photos are fetched async on load, cached in a <code style="background:var(--bg3);padding:1px 5px;font-size:12px;color:var(--teal)">photoCache</code> object, and shimmer-loaded. External dependency — must be assessed for production use (rate limits, uptime, image rights).</p>
+    </div>
+    <div class="feature-cell">
+      <div class="feature-cell-label">Left Sidebar</div>
+      <div class="feature-cell-title">Hot Board Leaderboard</div>
+      <p>Top 8 dogs ranked by hot votes, live-updating as the user votes. Shows rank badge (gold/silver/bronze/crown), dog thumbnail, name, breed, and vote count. Filter buttons for "All / Smol / Fluffy" exist but are cosmetic only — filter logic is a stub. All in-memory, resets on page refresh.</p>
+    </div>
+    <div class="feature-cell">
+      <div class="feature-cell-label">Right Sidebar</div>
+      <div class="feature-cell-title">Live Activity Feed + Breed Chart</div>
+      <p>Activity feed shows recent votes with user handles, dog names, hot/not verdict, and timestamps. Entirely simulated — a <code style="background:var(--bg3);padding:1px 5px;font-size:12px;color:var(--teal)">setInterval</code> fires every 4 seconds to fake new votes from hardcoded usernames. Breed distribution bar chart is real and renders from DOGS data.</p>
+    </div>
+    <div class="feature-cell">
+      <div class="feature-cell-label">Header</div>
+      <div class="feature-cell-title">Session Vote Stats Bar</div>
+      <p>Fixed header shows live session counters: 🔥 Hot votes, ❄️ Not votes, 🐶 Total rated. Resets to 0 on page refresh. In production these become persistent user stats tied to an account.</p>
+    </div>
+    <div class="feature-cell">
+      <div class="feature-cell-label">Match Screen</div>
+      <div class="feature-cell-title">Celebration / Social Moment</div>
+      <p>25% chance trigger on hot vote — shows a fullscreen "Super Hot!" celebration with the dog's photo, confetti cannon, and a "Keep Rating" CTA. The "your crew" text is hardcoded. In a social app this becomes "X other people also voted hot" — a real social signal requiring vote aggregation.</p>
+    </div>
+    <div class="feature-cell">
+      <div class="feature-cell-label">Engagement</div>
+      <div class="feature-cell-title">Streak Reward Banner</div>
+      <p>After 3 consecutive hot votes, a banner appears: "🔥 Hot streak ×N". Simple in-memory streak counter. In a real app this connects to a gamification / badge / reward system stored per-user.</p>
+    </div>
+    <div class="feature-cell">
+      <div class="feature-cell-label">Dog Cards</div>
+      <div class="feature-cell-title">Rich Profile Data</div>
+      <p>Each dog has: name, age, breed, apiBreed slug, personality bio, tag array with color types, hotScore percentage, and a "Recently Active" status badge. This is already a well-structured data schema. Maps almost directly to a PostgreSQL <code style="background:var(--bg3);padding:1px 5px;font-size:12px;color:var(--teal)">dogs</code> table.</p>
+    </div>
+    <div class="feature-cell">
+      <div class="feature-cell-label">Visual FX</div>
+      <div class="feature-cell-title">Confetti Cannon (Canvas)</div>
+      <p>Full canvas-based confetti system with particle physics, rotation, color variety, and RAF animation loop. Fires on hot votes and match screens. Production-ready — zero changes needed. Extract to a React utility hook.</p>
+    </div>
+    <div class="feature-cell">
+      <div class="feature-cell-label">Done State</div>
+      <div class="feature-cell-title">Deck Exhaustion + Reset</div>
+      <p>When all 12 dogs are rated, a "Every Pup Rated" screen appears with a "Rate Again" button that reshuffles the deck. In a real app this triggers "load more dogs" from the API instead of looping the same 12.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ====== SECTION 03 — TECHNOLOGY AUDIT ====== -->
+<section class="section">
+  <div class="section-label">Technology Audit · Section 03</div>
+  <h2>Violations & Technical Flags</h2>
+  <p class="section-intro">What breaks the React + FastAPI + PostgreSQL mandate — and what needs architectural replacement before this becomes a production app.</p>
+
+  <div class="violation-block" style="border-color:rgba(0,229,160,0.2);background:rgba(0,229,160,0.04);">
+    <div class="ok-badge">✓ Clean</div>
+    <div class="violation-title" style="color:var(--go)">No Prohibited Platform Dependencies</div>
+    <div class="violation-desc">No Firebase, no Databutton, no Riff, no proprietary backend SDK. Zero vendor lock-in. The only external dependency is the <code style="background:var(--bg3);padding:1px 5px;font-size:12px;color:var(--teal)">dog.ceo</code> public REST API for random dog photos — which is a data source, not a platform dependency, and can be swapped out.</div>
+  </div>
+
+  <div class="violation-block">
+    <div class="ext-badge">⚠ External API</div>
+    <div class="violation-title">dog.ceo — Uncontrolled Third-Party Image Source</div>
+    <div class="violation-desc">All dog photos are fetched from <code style="background:var(--bg3);padding:1px 5px;font-size:12px;color:var(--teal)">https://dog.ceo/api/breed/{slug}/images/random</code> at runtime. This is a free public API with no rate limiting guarantees, no SLA, and returns random images — meaning the same dog shows a different photo on every page load. For a demo this is charming. For production it breaks consistency, branding, and UX predictability. Images aren't owned or licensed by the platform.</div>
+    <div class="violation-fix"><strong>Replacement:</strong> Each dog profile gets a curated, platform-owned photo stored in S3/Cloudflare R2. FastAPI serves a signed URL per dog. dog.ceo stays as a dev/seed tool only. For user-submitted dogs, a photo upload endpoint (multipart form → S3 → CDN URL stored in PostgreSQL) replaces the API fetch entirely.</div>
+  </div>
+
+  <div class="violation-block">
+    <div class="flag-badge">⚠ Architecture</div>
+    <div class="violation-title">All State is In-Memory — Zero Persistence</div>
+    <div class="violation-desc">Every vote, leaderboard position, user session stat, and activity event exists exclusively in JavaScript variables. Reload the page: everything is gone. The leaderboard resets. Your streak resets. Your 47 hot votes for Mochi? Gone. This is the single biggest gap between "fun demo" and "real product."</div>
+    <div class="violation-fix"><strong>Replacement:</strong> FastAPI POST /votes endpoint; PostgreSQL <code style="background:var(--bg3);padding:1px 5px;font-size:12px;color:var(--teal)">votes</code> table (user_id, dog_id, verdict, created_at); aggregated leaderboard view; React Query for real-time data sync.</div>
+  </div>
+
+  <div class="violation-block">
+    <div class="flag-badge">⚠ Fake Social</div>
+    <div class="violation-title">Activity Feed is a setInterval Simulation</div>
+    <div class="violation-desc">The "Live Votes" feed — DogFan42 voted hot on Mochi, etc. — is entirely fabricated. A <code style="background:var(--bg3);padding:1px 5px;font-size:12px;color:var(--teal)">setInterval</code> fires every 4 seconds, picks a random dog and a random username from 7 hardcoded handles, and inserts a fake vote. This creates the illusion of a social platform that doesn't exist. Users who discover this feel deceived.</div>
+    <div class="violation-fix"><strong>Replacement:</strong> Real-time vote events via WebSocket (FastAPI + WebSockets) or Server-Sent Events. Actual user votes from real accounts. Optional: a "ghost mode" that seeds activity during low-traffic periods — but transparently, not by fabrication.</div>
+  </div>
+
+  <div class="violation-block">
+    <div class="flag-badge">⚠ No Auth</div>
+    <div class="violation-title">Zero User Identity — Anonymous Voting</div>
+    <div class="violation-desc">Anyone can vote infinite times. The leaderboard can be gamed trivially. Streaks are meaningless without identity. The "match" screen says "you and your crew both agree" — but there's no crew because there are no users. All social features require real identity to function.</div>
+    <div class="violation-fix"><strong>Replacement:</strong> JWT auth (FastAPI OAuth2 + bcrypt). Optional: social login (Google/Apple OAuth). Anonymous session voting allowed with a conversion prompt to save stats. Rate limiting per IP/session for unauthenticated votes.</div>
+  </div>
+
+  <div class="violation-block">
+    <div class="flag-badge">⚠ Stub Logic</div>
+    <div class="violation-title">Leaderboard Filter Buttons are Cosmetic Stubs</div>
+    <div class="violation-desc">The "All / Smol / Fluffy" filter buttons in the Hot Board sidebar have click handlers (<code style="background:var(--bg3);padding:1px 5px;font-size:12px;color:var(--teal)">filterLB(this,'smol')</code>) that toggle active styling but don't actually filter the leaderboard. The <code style="background:var(--bg3);padding:1px 5px;font-size:12px;color:var(--teal)">renderLeaderboard()</code> function ignores the filter parameter entirely.</div>
+    <div class="violation-fix"><strong>Replacement:</strong> Tag-based filtering backed by PostgreSQL. Filter query params passed to FastAPI GET /leaderboard?tag=smol. React state drives active filter → re-fetch.</div>
+  </div>
+
+  <div class="violation-block">
+    <div class="flag-badge">⚠ Content</div>
+    <div class="violation-title">12 Hardcoded Dogs — No Submission System</div>
+    <div class="violation-desc">The entire dog roster is a JavaScript constant at the top of the script: 12 dogs, all manually defined with name, breed, bio, tags, and a hotScore seed. There's no way to add a dog without editing source code. The "done" screen implies more dogs will come — but there's no mechanism for that.</div>
+    <div class="violation-fix"><strong>Replacement:</strong> PostgreSQL <code style="background:var(--bg3);padding:1px 5px;font-size:12px;color:var(--teal)">dogs</code> table. FastAPI GET /dogs/deck returns a shuffled queue for the current user. Dog submission form → photo upload → admin approval → published to deck.</div>
+  </div>
+</section>
+
+<!-- ====== SECTION 04 — GAP ANALYSIS ====== -->
+<section class="section">
+  <div class="section-label">Gap Analysis · Section 04</div>
+  <h2>What It Needs to Scale</h2>
+  <p class="section-intro">The complete functional gap list — everything required to turn this excellent demo into a persistent, multi-user, monetizable platform.</p>
+
+  <ul class="gap-list">
+    <li>
+      <span class="gap-num">01</span>
+      <div><strong>User Authentication & Identity</strong> — Zero auth exists. Needed for vote persistence, personal stats, streaks, leaderboard integrity, dog submissions, and social features. JWT + OAuth2 in FastAPI; optional Google/Apple OAuth. Anonymous session voting → conversion funnel to account creation.</div>
+    </li>
+    <li>
+      <span class="gap-num">02</span>
+      <div><strong>Vote Persistence</strong> — The entire value proposition of the app (leaderboard, hot scores, social proof) is meaningless without persisted votes. PostgreSQL <code style="background:var(--bg3);padding:1px 5px;font-size:12px;color:var(--teal)">votes</code> table with user_id, dog_id, verdict, timestamp. FastAPI POST /votes. Unique constraint per user+dog pair. Aggregated hot_score computed server-side.</div>
+    </li>
+    <li>
+      <span class="gap-num">03</span>
+      <div><strong>Dog Submission System</strong> — No mechanism to add dogs to the platform without editing source code. Needs: owner registration → dog profile form (name, age, breed, bio, tags, photo upload) → admin review queue → approval → published to deck. PostgreSQL: <code style="background:var(--bg3);padding:1px 5px;font-size:12px;color:var(--teal)">dogs</code> table with status column (pending/approved/rejected).</div>
+    </li>
+    <li>
+      <span class="gap-num">04</span>
+      <div><strong>Real-Time Activity Feed</strong> — The simulated feed needs to become real WebSocket or Server-Sent Event broadcasts. FastAPI WebSocket endpoint pushes vote events to connected clients. React subscribes and updates the feed in real time. The illusion of live activity becomes actual live activity.</div>
+    </li>
+    <li>
+      <span class="gap-num">05</span>
+      <div><strong>Photo Asset Management</strong> — dog.ceo returns random, inconsistent images on every load. Production requires curated, platform-owned photos stored in S3/R2 with CDN delivery. FastAPI multipart upload endpoint → image validation → S3 storage → signed URL in PostgreSQL dogs.photo_url column.</div>
+    </li>
+    <li>
+      <span class="gap-num">06</span>
+      <div><strong>Infinite Deck / Pagination</strong> — 12 dogs is a session, not a product. The deck needs to be generated server-side: FastAPI returns dogs the current user hasn't rated yet, paginated, shuffled, and seeded with fresh submissions from the community. PostgreSQL: JOIN dogs LEFT JOIN votes WHERE votes.user_id IS NULL for this user.</div>
+    </li>
+    <li>
+      <span class="gap-num">07</span>
+      <div><strong>Dog Owner Profiles</strong> — The app implies dogs have owners (submit your pup). Needs an owner role: profile page, manage their dog's stats, see how many votes their dog got, toggle availability in deck. PostgreSQL: <code style="background:var(--bg3);padding:1px 5px;font-size:12px;color:var(--teal)">dog_owners</code> join table + owner-facing dashboard.</div>
+    </li>
+    <li>
+      <span class="gap-num">08</span>
+      <div><strong>Gamification Backend</strong> — Streaks are in-memory and meaningless. In production: per-user streak tracking in PostgreSQL (<code style="background:var(--bg3);padding:1px 5px;font-size:12px;color:var(--teal)">user_stats</code> table: current_streak, longest_streak, total_votes, hot_ratio). Badges, achievements, and daily challenges computed server-side.</div>
+    </li>
+    <li>
+      <span class="gap-num">09</span>
+      <div><strong>Admin Panel</strong> — No tooling to approve dog submissions, moderate content, ban users, or manage the platform. React admin dashboard with FastAPI admin-only routes. Dog approval queue, user management, content moderation, vote analytics, and platform health metrics.</div>
+    </li>
+    <li>
+      <span class="gap-num">10</span>
+      <div><strong>Mobile App or PWA</strong> — The swipe mechanic is tailor-made for mobile. The current app is responsive but not a PWA. Service worker + manifest = installable PWA. Or: React Native port sharing FastAPI backend. Push notifications for "your dog got 100 votes!" are a key engagement driver.</div>
+    </li>
+  </ul>
+</section>
+
+<!-- ====== SECTION 05 — ARCHITECTURE ====== -->
+<section class="section">
+  <div class="section-label">Architecture · Section 05</div>
+  <h2>Target Stack Architecture</h2>
+  <p class="section-intro">The proposed production architecture — designed to support thousands of concurrent voters, a live leaderboard, real-time activity feeds, and a growing dog roster from community submissions.</p>
+
+  <div class="arch-grid">
+    <div class="arch-card">
+      <div class="arch-card-title">React Frontend</div>
+      <ul>
+        <li>pages/ — Feed (deck), Leaderboard, Profile, Submit, Admin</li>
+        <li>components/ — DogCard, CardStack, SwipeButtons, Leaderboard, ActivityFeed, BreedChart, StreakBanner, MatchModal, ConfettiCanvas</li>
+        <li>hooks/ — useVoting, useSwipe, useDeck, useLeaderboard, useAuth, useWebSocket</li>
+        <li>services/ — api.js (Axios), ws.js (WebSocket client)</li>
+        <li>State: React Query (server state) + Zustand (UI/session state)</li>
+        <li>PWA: service worker + web app manifest</li>
+        <li>Routing: React Router v6</li>
+      </ul>
+    </div>
+    <div class="arch-card">
+      <div class="arch-card-title">FastAPI Backend</div>
+      <ul>
+        <li>routers/ — auth, dogs, votes, leaderboard, users, admin, ws</li>
+        <li>schemas/ — DogCreate, VoteCreate, UserPublic, LeaderboardEntry</li>
+        <li>services/ — vote_service, deck_service, photo_service, streak_service</li>
+        <li>repositories/ — dogs_repo, votes_repo, users_repo (SQLAlchemy async)</li>
+        <li>models/ — User, Dog, Vote, DogOwner, UserStats, Badge</li>
+        <li>ws/ — ConnectionManager for real-time vote broadcasts</li>
+        <li>middleware/ — CORS, rate limiting (slowapi), JWT auth</li>
+      </ul>
+    </div>
+    <div class="arch-card">
+      <div class="arch-card-title">PostgreSQL Schema</div>
+      <ul>
+        <li>users (id, email, username, role, created_at)</li>
+        <li>dogs (id, name, age, breed, bio, photo_url, tags, status, owner_id)</li>
+        <li>votes (user_id, dog_id, verdict, created_at) — unique(user_id, dog_id)</li>
+        <li>dog_stats (dog_id, hot_count, not_count, hot_score) — materialized view</li>
+        <li>user_stats (user_id, total_votes, hot_ratio, streak, badges)</li>
+        <li>activities (user_id, dog_id, verdict, created_at) — fan-out for feed</li>
+        <li>dog_owners (user_id, dog_id, verified)</li>
+      </ul>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>Environment Variable</th><th>Purpose</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>DATABASE_URL</strong></td><td>PostgreSQL async connection (asyncpg)</td></tr>
+      <tr><td><strong>SECRET_KEY</strong></td><td>JWT signing secret</td></tr>
+      <tr><td><strong>S3_BUCKET / CF_R2_BUCKET</strong></td><td>Dog photo storage + CDN delivery</td></tr>
+      <tr><td><strong>REDIS_URL</strong></td><td>WebSocket pub/sub + rate limit state</td></tr>
+      <tr><td><strong>GOOGLE_CLIENT_ID</strong></td><td>Optional Google OAuth login</td></tr>
+      <tr><td><strong>CORS_ORIGINS</strong></td><td>Allowed frontend origins</td></tr>
+      <tr><td><strong>DOG_CEO_FALLBACK</strong></td><td>Toggle for dev-only photo fallback to dog.ceo</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ====== SECTION 06 — ROADMAP ====== -->
+<section class="section">
+  <div class="section-label">Implementation Roadmap · Section 06</div>
+  <h2>Build Sequence</h2>
+  <p class="section-intro">Paw Pound has a massive advantage over every other file in this audit series: the frontend is already built and working. The sequence here is primarily about adding persistence, real users, and social infrastructure beneath an already-excellent UI.</p>
+
+  <div class="roadmap">
+    <div class="roadmap-step">
+      <div class="roadmap-dot"></div>
+      <div class="step-num">Step 01 — Week 1</div>
+      <div class="step-title">Project Setup & Database Schema</div>
+      <div class="step-desc">Scaffold monorepo (frontend/, backend/). Initialize FastAPI + SQLAlchemy async + Alembic. Define all PostgreSQL models (users, dogs, votes, user_stats, activities). Run first migration. Configure .env and CI/CD. Seed the 12 existing dogs directly into the database.</div>
+    </div>
+    <div class="roadmap-step">
+      <div class="roadmap-dot"></div>
+      <div class="step-num">Step 02 — Week 1–2</div>
+      <div class="step-title">Authentication Layer</div>
+      <div class="step-desc">JWT auth with FastAPI OAuth2PasswordBearer. Registration, login, email verify, password reset. Optional: Google OAuth via Authlib. Anonymous session voting with UUID-based session ID passed as header — allows votes before account creation, attributed on registration.</div>
+    </div>
+    <div class="roadmap-step">
+      <div class="roadmap-dot"></div>
+      <div class="step-num">Step 03 — Week 2–3</div>
+      <div class="step-title">Port to React + Connect Vote API</div>
+      <div class="step-desc">Convert the HTML into React components: CardStack, DogCard, SwipeButtons, MatchModal, StreakBanner, ConfettiCanvas. The existing CSS is excellent — port it to CSS modules or Tailwind. Replace all hardcoded DOGS data with React Query fetching from FastAPI GET /dogs/deck. Connect vote() function to FastAPI POST /votes.</div>
+    </div>
+    <div class="roadmap-step">
+      <div class="roadmap-dot"></div>
+      <div class="step-num">Step 04 — Week 3–4</div>
+      <div class="step-title">Real Leaderboard + Real Activity Feed</div>
+      <div class="step-desc">FastAPI GET /leaderboard (top N dogs by hot_count, with tag filtering — fix the stub). FastAPI WebSocket /ws/activity — broadcasts vote events to all connected clients. React useWebSocket hook replaces the setInterval simulation. Leaderboard re-fetches on vote via React Query invalidation.</div>
+    </div>
+    <div class="roadmap-step">
+      <div class="roadmap-dot"></div>
+      <div class="step-num">Step 05 — Week 4–5</div>
+      <div class="step-title">Photo Asset Pipeline</div>
+      <div class="step-desc">FastAPI multipart POST /dogs/{id}/photo → validate (filetype, size) → upload to S3/R2 → store CDN URL in dogs.photo_url. Admin seeds existing dogs with curated photos. Retire dog.ceo dependency for production. Keep as dev fallback via feature flag. All DogCard images now load from CDN with consistent, owned assets.</div>
+    </div>
+    <div class="roadmap-step">
+      <div class="roadmap-dot"></div>
+      <div class="step-num">Step 06 — Week 5–6</div>
+      <div class="step-title">Dog Submission System</div>
+      <div class="step-desc">React "Submit Your Pup" form: name, age, breed, bio, personality tags, photo upload. FastAPI POST /dogs (authenticated). Dog status set to "pending." Admin approval queue. Approved dogs flow into the deck automatically. Owners get email notification on approval. Dog owner dashboard: view vote stats, manage profile.</div>
+    </div>
+    <div class="roadmap-step">
+      <div class="roadmap-dot"></div>
+      <div class="step-num">Step 07 — Week 6–7</div>
+      <div class="step-title">Gamification & User Profiles</div>
+      <div class="step-desc">Persistent streaks, badges, and vote stats tracked per user in PostgreSQL. React user profile page: voting history, hot ratio, longest streak, badges earned. Streak streak-banner now server-confirmed. Daily challenge system (e.g., "Vote on 10 pups today for a bonus badge"). Notification for "Your dog Biscuit hit 500 hot votes!"</div>
+    </div>
+    <div class="roadmap-step">
+      <div class="roadmap-dot"></div>
+      <div class="step-num">Step 08 — Week 7–8</div>
+      <div class="step-title">Admin Panel + PWA Hardening</div>
+      <div class="step-desc">React admin panel: dog approval queue, user management, content moderation, vote analytics dashboard. PWA: add service worker (offline support for cached deck) + web app manifest (installable, splash screen, push notification permission). Security hardening: rate limiting, input validation, CORS lockdown, image type validation. Full README + Docker Compose + deploy scripts.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== SECTION 07 — MONETIZATION ====== -->
+<section class="section">
+  <div class="section-label">Monetization · Section 07</div>
+  <h2>Revenue Potential</h2>
+  <p class="section-intro">Paw Pound hits a near-perfect product-market intersection: the internet's love for dogs + the addictive loop of Tinder-style swiping + the social proof mechanics of leaderboards. The monetization surface is wide and doesn't require a hard paywall on the core mechanic.</p>
+
+  <div class="money-card">
+    <div class="money-label">Estimated Monetization Range · Annual</div>
+    <div class="money-range">$40k–$250k</div>
+    <p style="font-size:15px;color:var(--muted);max-width:560px;line-height:1.8;">Driven by a freemium consumer model with viral growth potential. Dogs are inherently shareable content — every dog owner who submits their pup becomes a distribution channel. The leaderboard creates ongoing return visits.</p>
+    <div class="money-models">
+      <div class="money-model">
+        <div class="money-model-title">Model A — Freemium Consumer SaaS</div>
+        <p>Free: unlimited voting, standard leaderboard, basic profile. Premium ($4.99–$9.99/month): "Boost Your Pup" (featured placement in deck), detailed vote analytics for dog owners, ad-free experience, exclusive badge frames, early access to new breeds. At 5,000 premium subscribers: $300k–$600k ARR. At 1,000: $60k–$120k ARR.</p>
+      </div>
+      <div class="money-model">
+        <div class="money-model-title">Model B — Advertising + Sponsorships</div>
+        <p>Native sponsored dog profiles (Purina's "Golden Retriever of the Month"), breed-targeted ads in the activity feed, and sponsored challenges ("Blue Buffalo Breed Week"). Pet brands pay $2k–$15k per campaign for access to a high-intent dog-loving audience. CPM advertising on leaderboard and profile pages at 100k MAU: ~$40k–$80k/year.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-block" style="margin-top:32px;">
+    <div class="demo-block-title">🌶️ The Real Ceiling: Viral App Store Launch</div>
+    <p>The swipe-to-vote mechanic is <strong>perfectly suited for a native mobile app</strong> (iOS + Android). A React Native port sharing the FastAPI backend could hit the App Store as a $0 free download with in-app purchases. Dog rating apps with strong social loops have hit 500k–2M downloads in the pet niche. At that scale the monetization ceiling is <strong>$500k–$2M+</strong> annually from IAP + brand partnerships. The entire frontend codebase is already app-quality — this is the path worth planning for.</p>
+  </div>
+</section>
+
+<!-- ====== SECTION 08 — TARGET MARKET ====== -->
+<section class="section">
+  <div class="section-label">Target Market · Section 08</div>
+  <h2>Ideal Customers</h2>
+  <p class="section-intro">Three overlapping audiences — each with distinct value propositions and willingness to pay.</p>
+
+  <div class="target-grid">
+    <div class="target-card">
+      <div class="target-card-title">Dog Owners Who Want Validation</div>
+      <div class="target-card-role">Primary End User (Submitters)</div>
+      <p>There are 90 million dogs in U.S. households. Every single owner thinks their dog is the cutest. Paw Pound gives them a stage. They'll submit their dog, share their leaderboard rank on Instagram, and pay for "Boost" features to stay #1. This is the engine of organic growth — every submission is a social media post.</p>
+    </div>
+    <div class="target-card">
+      <div class="target-card-title">Dog Enthusiasts & Voters</div>
+      <div class="target-card-role">Core Engagement Audience</div>
+      <p>People who love dogs but don't own one — or do own one — who just want to spend 10 minutes swiping through cute pups. The TikTok-brain user who needs a satisfying tap loop. They won't pay directly but generate the vote counts that make the leaderboard valuable for dog owners. Ad-supported tier serves this audience.</p>
+    </div>
+    <div class="target-card">
+      <div class="target-card-title">Pet Brands & Advertisers</div>
+      <div class="target-card-role">B2B Revenue Source</div>
+      <p>Purina, Blue Buffalo, PetSmart, BarkBox, Chewy, pet insurance companies. They want access to a self-selected, high-intent pet owner audience in an emotional, engaged context (literally looking at cute dogs). Sponsored challenges, breed spotlights, and native profile placements at $3k–$20k per campaign.</p>
+    </div>
+    <div class="target-card">
+      <div class="target-card-title">Dog Breeders & Rescues</div>
+      <div class="target-card-role">Power Submitters</div>
+      <p>Reputable breeders and rescue organizations would pay for verified profiles and featured placement to showcase their dogs to an engaged audience. A rescue shelter "featuring" 5 adoptable dogs on the hot board is marketing. $49–$199/month for a verified organization account with bulk dog submission tools.</p>
+    </div>
+    <div class="target-card">
+      <div class="target-card-title">Dog Show & Competition Community</div>
+      <div class="target-card-role">Prestige Niche</div>
+      <p>Westminster participants, AKC competitors, and dog show enthusiasts would engage heavily with a breed-filtered leaderboard. A "Competition Season" feature during major dog shows creates organic PR and media coverage. Partnership with AKC or similar for co-branded breed rankings.</p>
+    </div>
+    <div class="target-card">
+      <div class="target-card-title">Pet Content Creators</div>
+      <div class="target-card-role">Distribution Partners</div>
+      <p>Instagram and TikTok pet accounts with 100k–10M followers (Jiffpom, Doug the Pug, etc.) would feature their dogs on the leaderboard as social content. "We're ranked #1 on Paw Pound this week!" = free distribution to millions of dog lovers. Verified creator profiles with analytics become a sponsorship unlock.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ====== SECTION 09 — VERDICT ====== -->
+<div class="verdict-wrap">
+  <div class="section-label">Go / No-Go Assessment · Section 09</div>
+
+  <div class="verdict-badge high">HIGH<br>READINESS</div>
+
+  <p style="font-size:16px;color:var(--muted);max-width:620px;line-height:1.9;margin-bottom:32px;">
+    Paw Pound is the highest-readiness file audited in this series. The frontend is production-quality — polished design, smooth animations, touch-enabled swipe mechanics, a real-time photo pipeline, and a well-structured data model. No design work is needed. No UI rethinking required. The entire effort is purely backend: add persistence, add users, add real social infrastructure beneath a UI that already works. This is the rarest outcome in an app audit: the fun part is done.
+  </p>
+
+  <p style="font-size:14px;color:var(--muted);margin-bottom:8px;"><strong style="color:var(--text)">Primary Blockers:</strong></p>
+  <ul class="blockers-list">
+    <li>Zero persistence — every vote, leaderboard position, and streak is lost on page refresh</li>
+    <li>No user accounts — the social layer (streaks, leaderboards, "your crew") is meaningless without identity</li>
+    <li>Activity feed is entirely fake (setInterval simulation) — real users will discover this</li>
+    <li>dog.ceo dependency is inconsistent and unowned — production needs CDN-hosted photos</li>
+    <li>12 dogs is a session, not a product — deck needs server-driven infinite queue</li>
+    <li>Leaderboard filter buttons are cosmetic stubs — filter logic never implemented</li>
+  </ul>
+
+  <p style="font-size:14px;color:var(--muted);margin:24px 0 8px;">
+    <strong style="color:var(--text)">Effort Estimate:</strong> <span style="color:var(--accent)">Medium — 120–160 engineering hours</span> for a fully functional MVP (auth + vote persistence + real leaderboard + real activity feed + dog submission). Shortest path to production of any file in this audit series. PWA / mobile readiness: add 40–60 hours.
+  </p>
+
+  <div class="next-actions">
+    <div class="next-card">
+      <div class="next-num">01</div>
+      <div class="next-title">Persist Votes Today</div>
+      <div class="next-desc">Set up FastAPI + PostgreSQL with a <code style="background:var(--bg);padding:1px 5px;font-size:11px;color:var(--teal)">votes</code> table. Wire the existing <code style="background:var(--bg);padding:1px 5px;font-size:11px;color:var(--teal)">vote()</code> function to POST /votes before doing anything else. That single change transforms this from a demo into a database. Everything else is features.</div>
+    </div>
+    <div class="next-card">
+      <div class="next-num">02</div>
+      <div class="next-title">Kill the Fake Feed</div>
+      <div class="next-desc">The simulated activity feed is the single biggest trust risk. Replace <code style="background:var(--bg);padding:1px 5px;font-size:11px;color:var(--teal)">setInterval</code> with a FastAPI WebSocket endpoint immediately — even if real traffic is low at launch. Authenticity is the brand. Fake social proof destroys it.</div>
+    </div>
+    <div class="next-card">
+      <div class="next-num">03</div>
+      <div class="next-title">Launch the Dog Submission Form</div>
+      <div class="next-desc">The fastest growth lever for Paw Pound is dog owners submitting their dogs and sharing their leaderboard placement on social media. Build the submission form before the PWA, before badges, before anything. Every submission is a social media post promoting the platform for free.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== FOOTER ====== -->
+<footer>
+  <div class="footer-brand">Paw Pound 🐾</div>
+  <div class="footer-meta">Audit Report · April 03, 2026 · React + FastAPI + PostgreSQL</div>
+  <div class="footer-meta" style="color:var(--dim)">Generated by App Audit Roadmap v2</div>
+</footer>
+
+</body>
+</html>
